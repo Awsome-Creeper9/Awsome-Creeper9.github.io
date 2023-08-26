@@ -1,3 +1,7 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
 body {
     background: rgb(0, 89, 89);
     background-image: url(/WebPageImages/background.png);
@@ -6,6 +10,8 @@ body {
     padding: 1vh;
     font-family: arial;
     font-size: 2vh;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 #all-contents {
   max-width: 95vw;
@@ -17,30 +23,47 @@ nav {
     background: rgb(0, 0, 179);
     margin: 0 auto;
     margin-bottom: 2vh;
-    display: flex;
     padding: 1vh;
     border-radius: 2vh;
-}
-h1 {
-    display: flex;
-    align-items: center;
-    color: white;
-    flex: 1;
-    margin: 0;
-}
-#nav-ul {
-    list-style-image: none;
-}
-.nav-li {
-    display: inline-block;
-    padding: 0 1vh;
-}
-#location {
-  color:rgba(255, 255, 0, 0.75);
-  font-style:oblique;
-}
-.nav-a {
-  color:#ffff00;
+    align-content: center;
+
+    & h1 {
+        align-items: center;
+        color: white;
+        text-align: center;
+        font-size: 3rem;
+    }
+    & #nav-ul {
+        list-style-image: none;
+        text-align: center;
+    }
+    & .nav-li {
+        display: inline-block;
+        padding: 0 1vh;
+        background-color: transparent;
+        border: transparent;
+        border-radius: 10px;
+        height: fit-content;
+        width: fit-content;
+        transition: transform 0.3s;
+
+        &:not(#location):hover {
+            transform: translateY(-5px);
+        }
+    }
+    
+    & #location {
+        background-color: #0030ff;
+        border: white solid 2px;
+    }
+    
+    & .nav-a {
+      color:#ffff00;
+      font-size: 1.375rem;
+    }
+    & :link {
+        display: inline-block;
+    }
 }
 a {
     text-decoration: none;
