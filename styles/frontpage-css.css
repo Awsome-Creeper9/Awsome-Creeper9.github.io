@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&display=swap');
+
 ::-webkit-scrollbar {
     display: none;
 }
@@ -5,26 +7,29 @@
 body {
     background: rgb(0, 89, 89);
     background-image: url(/WebPageImages/background.png);
-    background-size: 15vh;
+    background-size: 150px;
     color: rgb(255, 255, 255);
-    padding: 1vh;
+    padding: 10px;
     font-family: arial;
-    font-size: 2vh;
+    font-size: 1.125rem;
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
 #all-contents {
-  max-width: 95vw;
+  max-width: 99%;
     margin: auto;
 }
 
 /* navigation menu */
 nav {
-    background: rgb(0, 0, 179);
+    background-color: #0000b3;
+    background-image: url(/WebPageImages/navbackground.png);
+    background-size: 125px;
+    background-position-y: 7.5px;
     margin: 0 auto;
-    margin-bottom: 2vh;
-    padding: 1vh;
-    border-radius: 2vh;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 30px;
     align-content: center;
 
     & h1 {
@@ -32,14 +37,18 @@ nav {
         color: white;
         text-align: center;
         font-size: 3rem;
+        font-family: 'JetBrains Mono';
     }
     & #nav-ul {
         list-style-image: none;
-        text-align: center;
+        margin-left: calc(50% - 165px);
+        user-select: none;
+        -webkit-user-drag: none;
+        -moz-window-dragging: none;
     }
     & .nav-li {
         display: inline-block;
-        padding: 0 1vh;
+        padding: 0 10px;
         background-color: transparent;
         border: transparent;
         border-radius: 10px;
@@ -53,13 +62,15 @@ nav {
     }
     
     & #location {
-        background-color: #0030ff;
+        background-color: rgba(255, 255, 255, .25);
         border: white solid 2px;
     }
     
     & .nav-a {
       color:#ffff00;
       font-size: 1.375rem;
+      -webkit-user-drag: none;
+      -moz-window-dragging: none;
     }
     & :link {
         display: inline-block;
@@ -72,8 +83,8 @@ a {
 /* main container area beneath menu */
 main {
     background: rgb(25, 25, 25);
-    border-radius: 3vh;
+    border-radius: 30px;
 }
 .content {
-    padding: 1.5vh;
+    padding: 15px;
 }
