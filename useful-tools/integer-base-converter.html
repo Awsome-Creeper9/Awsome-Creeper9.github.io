@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Integer Base Converter</title>
+        <link rel="icon" type="image/x-icon" href="/WebPageImages/favicon.png">
+        <link rel="stylesheet" href="/styles/tools.css" />
+    </head>
+    <style>
+        label {
+          display: block;
+          margin-bottom: .5vh;
+        }
+    
+        input[type="text"], input[type="number"] {
+          width: 97.5vw;
+          padding: .5vh;
+          border: 1px solid #333 !important;
+          border-radius: .4vh;
+          margin-bottom: 1vh;
+          background: rgb(30, 30, 30);
+        }
+  
+        #bases {
+          display: inline-flex;
+          width: fit-content;
+          margin-left: auto;
+          margin-right: auto;
+          & .bases {
+            margin-right: 2vh;
+            & input {
+              width: 47.96vw;
+            }
+          }
+        }
+      </style>
+    <body>
+        <h1>Integer Base Converter</h1>
+        <div>
+          <label for="inputText">Enter Integer To Convert:</label>
+          <input autocomplete="off" type="text" id="inputText" />
+        </div>
+        <div id="bases">
+          <div class="bases">
+            <label for="base">Enter Base of Integer:</label>
+            <input autocomplete="off" type="number" id="base" max="36" min="2" />
+          </div>
+          <div class="bases">
+            <label for="toBase">Enter Base to Convert to:</label>
+            <input autocomplete="off" type="number" id="toBase" max="36" min="2" />
+          </div>
+        </div>
+        <div>
+          <button id="convertButton">Convert</button>
+        </div>
+        <div>
+          <label for="outputText">Output:</label>
+          <input autocomplete="off" type="text" id="outputText" />
+        </div>
+
+        <script>
+
+            /////////////////////
+            // Event Listeners //
+            /////////////////////
+
+            const convertButton = document.getElementById("convertButton");
+            convertButton.addEventListener("click", convertNumber);
+
+            ///////////////
+            // Functions //
+            ///////////////
+
+            function convertNumber() {
+                const inputNumber = document.getElementById("inputText").value; // Gets Input String
+                const base = document.getElementById("base").value; // Gets the Input Base
+                const toBase = document.getElementById("toBase").value; // Gets the Output Base
+                
+                const decimalNumber = parseInt(inputNumber, base); // Converts the Input String to a Decimal Number
+                const outputNumber = decimalNumber.toString(toBase); // Converts the Decimal Number to the Output Base
+                document.getElementById("outputText").value = outputNumber; // Sets the Output to the Output Number
+            }
+        </script>
+    </body>
+</html>

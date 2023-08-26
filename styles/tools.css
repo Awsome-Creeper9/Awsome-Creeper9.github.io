@@ -1,0 +1,42 @@
+* {
+    font-family: monospace, arial, sans-serif;
+    background: rgb(25, 25, 25);
+    color: #fff;
+  }
+
+  body {
+    margin: 2vh;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  button,
+  .custom-file-upload {
+    display: inline-flex;
+    width: fit-content;
+    background-color: #ff7700;
+    color: white;
+    border: none;
+    padding: 1vh 2vh;
+    border-radius: .4vh;
+    cursor: pointer;
+    line-height: 2vh;
+    font-size: 1.6vh;
+    &:hover {
+      background-color: #aa4400;
+    }
+  }
+  .custom-file-upload {
+      background-color: #33aa33;
+      &:hover {
+      background-color: #336633;
+    }
+  }
+  #copyButton {
+    background-color: #44f;
+    &:hover {
+      background-color: #22c
+    }
+  }

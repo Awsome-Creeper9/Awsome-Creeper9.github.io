@@ -1,0 +1,56 @@
+body {
+    background: rgb(0, 89, 89);
+    background-image: url(/WebPageImages/background.png);
+    background-size: 15vh;
+    color: rgb(255, 255, 255);
+    padding: 1vh;
+    font-family: arial;
+    font-size: 2vh;
+}
+#all-contents {
+  max-width: 95vw;
+    margin: auto;
+}
+
+/* navigation menu */
+nav {
+    background: rgb(0, 0, 179);
+    margin: 0 auto;
+    margin-bottom: 2vh;
+    display: flex;
+    padding: 1vh;
+    border-radius: 2vh;
+}
+h1 {
+    display: flex;
+    align-items: center;
+    color: white;
+    flex: 1;
+    margin: 0;
+}
+#nav-ul {
+    list-style-image: none;
+}
+.nav-li {
+    display: inline-block;
+    padding: 0 1vh;
+}
+#location {
+  color:rgba(255, 255, 0, 0.75);
+  font-style:oblique;
+}
+.nav-a {
+  color:#ffff00;
+}
+a {
+    text-decoration: none;
+    color: #fff;
+}
+/* main container area beneath menu */
+main {
+    background: rgb(25, 25, 25);
+    border-radius: 3vh;
+}
+.content {
+    padding: 1.5vh;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Home</title>
+        <link rel="icon" type="image/x-icon" href="WebPageImages/favicon.png">
+        <link rel="stylesheet" href="styles/frontpage-css.css" />
+        <style>
+            .header {
+                display: flex;
+                flex-direction: column;
+                padding: .5vh;
+                width: fit-content;
+                margin-left: auto;
+                margin-right: auto;
+                & h1 {
+                    width: fit-content;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                & img {
+                    margin-top: 2vh;
+                    margin-bottom: 2vh;
+                    width: 50vh;
+                    border-radius: 3vh;
+                    border: #006464 2vh ridge;
+                    border-color: #099;
+                    box-shadow: 2px 2px 2px white;
+                }
+            }
+            #contacts {
+                margin-top: 1vh;
+
+                & h3 {
+                    width:fit-content;
+                    margin-left: auto;
+                    margin-right: auto;
+                    padding-top: 1vh;
+                }
+                
+                & div {
+                    width:fit-content;
+                    margin-left: auto;
+                    margin-right: auto;
+
+                    & img {
+                        margin-bottom: 1vh;
+                        margin-left: 1vh;
+                        margin-right: 1vh;
+                        width: 10vh;
+                        background: #fff;
+                        border-radius: 2vh;
+                        cursor: pointer;
+                    }
+                }
+            }
+            #copySuccess {
+                position:absolute;
+                background: white;
+                color: black;
+                font-size: 1.5vh;
+                border: black 1px solid;
+                box-shadow: 1px 1px 2px black;
+            }
+         </style>
+    </head>
+    <body>
+        <div id="all-contents">
+            <!-- All content goes here -->
+            <nav>
+                <h1>Gavin's Website</h1>
+                <ul id="nav-ul">
+                    <li class="nav-li">
+                        <a class="nav-a" id="location" href="index.html">Home</a>
+                      </li>
+                      <li class="nav-li">
+                        <a class="nav-a" href="portfolio.html">Portfolio</a>
+                      </li>
+                      <li class="nav-li">
+                        <a class="nav-a" href="tools.html">Tools</a>
+                      </li>
+                </ul>
+            </nav>
+            <main>
+                <div class="header">
+                    <h1>Gavin Herdt</h1>
+                    <img src="WebPageImages/MeIRL.png">
+                </div>
+            </main>
+            <main id="contacts">
+                <h3>FIND ME:</h3>
+                <div>
+                    <a href="mailto:gherdt@outlook.com"><img src="WebPageImages/outlook.png"></a>
+                    <a id="discord"><img src="WebPageImages/discord.png"><div id="copiedText" style="display: none;">awsome_creeper9</div></a>
+                    <a href="https://thebuildybunch.github.io"><img src="WebPageImages/thebuildybunch.png"></a>
+                </div>
+            </main>
+        </div>
+    </body>
+    <script>
+        document.getElementById("discord").addEventListener("click", function (e) {
+            const textToCopy = document.getElementById("copiedText");
+            const textarea = document.createElement('textarea');
+            textarea.value = textToCopy.textContent;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            const copySuccess = document.createElement('p');
+            copySuccess.id = "copySuccess"
+            copySuccess.innerHTML = "Copied to Clipboard"
+            document.body.appendChild(copySuccess);
+            copySuccess.style.left = e.pageX + "px";
+            copySuccess.style.top = e.pageY + "px";
+            setTimeout(function () {document.body.removeChild(copySuccess)}, 1000)
+        })
+    </script>
+</html>

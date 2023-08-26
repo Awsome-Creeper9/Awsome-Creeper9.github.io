@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Color Picker</title>
+        <link rel="icon" type="image/x-icon" href="/WebPageImages/favicon.png">
+        <link rel="stylesheet" href="/styles/tools.css" />
+    </head>
+    <style>
+        label ~ input{
+          display: block;
+          margin-bottom: .5vh;
+        }
+
+        div {
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            & input[type="color"] {
+                width: 47vh;
+                height: 4vh;
+            }
+        }
+
+        div {
+            width: fit-content;
+            margin-left: auto;
+            margin-right:auto;
+        }
+
+        input[type="text"], input[type="number"] {
+          width: 45vh;
+          margin-left: auto;
+          margin-right:auto;
+          padding: .5vh;
+          border: 1px solid #333 !important;
+          border-radius: .4vh;
+          margin-bottom: 1vh;
+          background: rgb(30, 30, 30);
+        }
+
+        .rgbSelect {
+            width: 10vh ! important;
+            display: inline;
+            margin-top: 2.5vh;
+        }
+        .hsvSelect {
+            width: 10vh ! important;
+            display: inline;
+            margin-top: 2.5vh;
+        }
+        .cmykSelect {
+            width: 7.5vh ! important;
+            display: inline;
+            margin-top: 2.5vh;
+        }
+    </style>
+    <body>
+        <h1>Color Picker</h1>
+        <div id="inputType">
+            <label for="inputSelect">Input:</label>
+            <select id="inputSelect">
+                <option>COLOR</option>
+                <option>HEX</option>
+                <option>RGB</option>
+                <option>HSV</option>
+                <option>CMYK</option>
+                <option>HEX INT</option>
+            </select>
+        </div>
+        <div id="inputs">
+            <div id="colorInput">
+                <label for="colorSelect">COLOR:</label>
+                <input type="color" id="colorSelect" />
+            </div>
+            <div id="hexInput">
+                <label for="hexSelect">HEX:</label>
+                <input type="text" id="hexSelect" />
+            </div>
+            <div id="rgbInput">
+                <label for="rSelect">R:</label>
+                <input type="number" id="rSelect" class="rgbSelect" min="0" max="255" />
+                <label for="gSelect">G:</label>
+                <input type="number" id="gSelect" class="rgbSelect" min="0" max="255" />
+                <label for="bSelect">B:</label>
+                <input type="number" id="bSelect" class="rgbSelect" min="0" max="255" />
+            </div>
+            <div id="hsvInput">
+                <label for="hSelect">H:</label>
+                <input type="number" id="hSelect" class="hsvSelect" min="0" max="360" />
+                <label for="sSelect">S:</label>
+                <input type="number" id="sSelect" class="hsvSelect" min="0" max="100" />
+                <label for="vSelect">V:</label>
+                <input type="number" id="vSelect" class="hsvSelect" min="0" max="100" />
+            </div>
+            <div id="cmykInput">
+                <label for="cSelect">C:</label>
+                <input type="number" id="cSelect" class="cmykSelect" min="0" max="100" />
+                <label for="mSelect">M:</label>
+                <input type="number" id="mSelect" class="cmykSelect" min="0" max="100" />
+                <label for="ySelect">Y:</label>
+                <input type="number" id="ySelect" class="cmykSelect" min="0" max="100" />
+                <label for="kSelect">K:</label>
+                <input type="number" id="kSelect" class="cmykSelect" min="0" max="100" />
+            </div>
+            <div id="hexIntInput">
+                <label for="hexIntSelect">HEX INT:</label>
+                <input type="text" id="hexIntSelect" />
+            </div>
+        </div>
+        <hr>
+        <div id="outputs">
+            <div id="colorOutput">
+                <label for="color">COLOR:</label>
+                <input autocomplete="off" type="color" id="color" />
+            </div>
+            <div id="hexOutput">
+                <label for="hex">HEX:</label>
+                <input autocomplete="off" type="text" id="hex" />
+            </div>
+            <div id="rgbOutput">
+                <label for="rgb">RGB:</label>
+                <input autocomplete="off" type="text" id="rgb" />
+            </div>
+            <div id="hsvOutput">
+                <label for="hsv">HSV:</label>
+                <input autocomplete="off" type="text" id="hsv" />
+            </div>
+            <div id="cmykOutput">
+                <label for="cmyk">CMYK:</label>
+                <input autocomplete="off" type="text" id="cmyk" />
+            </div>
+            <div id="hexIntOutput">
+                <label for="hexint">HEX INT:</label>
+                <input autocomplete="off" type="text" id="hexint" />
+            </div>
+        </div>
+        
+        <script>
+
+            /////////////////////
+            // Update Function //
+            /////////////////////
+
+            setInterval(update, 50) // update every 50ms
+
+            function update() { // update function
+
+                inputSelect(); // calls the inputSelect function
+
+                const selectedColor = inputColor(); // calls the inputColor function
+
+                document.getElementById("color").value = selectedColor; // sets the color output to the selected color
+                document.getElementById("hex").value = selectedColor; // sets the hex output to the selected color
+                document.getElementById("rgb").value = hexToRGB(selectedColor); // sets the rgb output to the selected color
+                document.getElementById("hsv").value = hexToHSV(selectedColor); // sets the hsv output to the selected color
+                document.getElementById("cmyk").value = hexToCMYK(selectedColor); // sets the cmyk output to the selected color
+                document.getElementById("hexint").value = hexToHexInt(selectedColor); // sets the hexint output to the selected color
+            }
+
+            //////////////////////////
+            // Input Type Selection //
+            //////////////////////////
+
+            function inputSelect() { // inputSelect function
+                const selectedType = document.getElementById("inputSelect").value // gets the selected type of input
+                if (selectedType === "COLOR") { // if the selected type is COLOR
+                    document.getElementById("colorInput").style.display = "unset" // shows the color input
+                    document.getElementById("hexInput").style.display = "none" // hides the hex input
+                    document.getElementById("rgbInput").style.display = "none" // hides the rgb input
+                    document.getElementById("hsvInput").style.display = "none" // hides the hsv input
+                    document.getElementById("cmykInput").style.display = "none" // hides the cmyk input
+                    document.getElementById("hexIntInput").style.display = "none" // hides the hexint input
+                    document.getElementById("colorOutput").style.display = "none" // hides the color output
+                    document.getElementById("hexOutput").style.display = "unset" // shows the hex output
+                    document.getElementById("rgbOutput").style.display = "unset" // shows the rgb output
+                    document.getElementById("hsvOutput").style.display = "unset" // shows the hsv output
+                    document.getElementById("cmykOutput").style.display = "unset" // shows the cmyk output
+                    document.getElementById("hexIntOutput").style.display = "unset" // shows the hexint output
+                }
+                else if (selectedType === "HEX") { // if the selected type is HEX
+                    document.getElementById("colorInput").style.display = "none" // hides the color input
+                    document.getElementById("hexInput").style.display = "unset" // shows the hex input
+                    document.getElementById("rgbInput").style.display = "none" // hides the rgb input
+                    document.getElementById("hsvInput").style.display = "none" // hides the hsv input
+                    document.getElementById("cmykInput").style.display = "none" // hides the cmyk input
+                    document.getElementById("hexIntInput").style.display = "none" // hides the hexint input
+                    document.getElementById("colorOutput").style.display = "unset" // shows the color output
+                    document.getElementById("hexOutput").style.display = "none" // hides the hex output
+                    document.getElementById("rgbOutput").style.display = "unset" // shows the rgb output
+                    document.getElementById("hsvOutput").style.display = "unset" // shows the hsv output
+                    document.getElementById("cmykOutput").style.display = "unset" // shows the cmyk output
+                    document.getElementById("hexIntOutput").style.display = "unset" // shows the hexint output
+                }
+                else if (selectedType === "RGB") { // if the selected type is RGB
+                    document.getElementById("colorInput").style.display = "none" // hides the color input
+                    document.getElementById("hexInput").style.display = "none" // hides the hex input
+                    document.getElementById("rgbInput").style.display = "unset" // shows the rgb input
+                    document.getElementById("hsvInput").style.display = "none" // hides the hsv input
+                    document.getElementById("cmykInput").style.display = "none" // hides the cmyk input
+                    document.getElementById("hexIntInput").style.display = "none" // hides the hexint input
+                    document.getElementById("colorOutput").style.display = "unset" // shows the color output
+                    document.getElementById("hexOutput").style.display = "unset" // shows the hex output
+                    document.getElementById("rgbOutput").style.display = "none" // hides the rgb output
+                    document.getElementById("hsvOutput").style.display = "unset" // shows the hsv output
+                    document.getElementById("cmykOutput").style.display = "unset" // shows the cmyk output
+                    document.getElementById("hexIntOutput").style.display = "unset" // shows the hexint output
+                }
+                else if (selectedType === "HSV") { // if the selected type is HSV
+                    document.getElementById("colorInput").style.display = "none" // hides the color input
+                    document.getElementById("hexInput").style.display = "none" // hides the hex input
+                    document.getElementById("rgbInput").style.display = "none" // hides the rgb input
+                    document.getElementById("hsvInput").style.display = "unset" // shows the hsv input
+                    document.getElementById("cmykInput").style.display = "none" // hides the cmyk input
+                    document.getElementById("hexIntInput").style.display = "none" // hides the hexint input
+                    document.getElementById("colorOutput").style.display = "unset" // shows the color output
+                    document.getElementById("hexOutput").style.display = "unset" // shows the hex output
+                    document.getElementById("rgbOutput").style.display = "unset" // shows the rgb output
+                    document.getElementById("hsvOutput").style.display = "none" // hides the hsv output
+                    document.getElementById("cmykOutput").style.display = "unset" // shows the cmyk output
+                    document.getElementById("hexIntOutput").style.display = "unset" // shows the hexint output
+                }
+                else if (selectedType === "CMYK") { // if the selected type is CMYK
+                    document.getElementById("colorInput").style.display = "none" // hides the color input
+                    document.getElementById("hexInput").style.display = "none" // hides the hex input
+                    document.getElementById("rgbInput").style.display = "none" // hides the rgb input
+                    document.getElementById("hsvInput").style.display = "none" // hides the hsv input
+                    document.getElementById("cmykInput").style.display = "unset" // shows the cmyk input
+                    document.getElementById("hexIntInput").style.display = "none" // hides the hexint input
+                    document.getElementById("colorOutput").style.display = "unset" // shows the color output
+                    document.getElementById("hexOutput").style.display = "unset" // shows the hex output
+                    document.getElementById("rgbOutput").style.display = "unset" // shows the rgb output
+                    document.getElementById("hsvOutput").style.display = "unset" // shows the hsv output
+                    document.getElementById("cmykOutput").style.display = "none" // hides the cmyk output
+                    document.getElementById("hexIntOutput").style.display = "unset" // shows the hexint output
+                }
+                else if (selectedType === "HEX INT") { // if the selected type is HEX INT
+                    document.getElementById("colorInput").style.display = "none" // hides the color input
+                    document.getElementById("hexInput").style.display = "none" // hides the hex input
+                    document.getElementById("rgbInput").style.display = "none" // hides the rgb input
+                    document.getElementById("hsvInput").style.display = "none" // hides the hsv input
+                    document.getElementById("cmykInput").style.display = "none" // hides the cmyk input
+                    document.getElementById("hexIntInput").style.display = "unset" // shows the hexint input
+                    document.getElementById("colorOutput").style.display = "unset" // shows the color output
+                    document.getElementById("hexOutput").style.display = "unset" // shows the hex output
+                    document.getElementById("rgbOutput").style.display = "unset" // shows the rgb output
+                    document.getElementById("hsvOutput").style.display = "unset" // shows the hsv output
+                    document.getElementById("cmykOutput").style.display = "unset" // shows the cmyk output
+                    document.getElementById("hexIntOutput").style.display = "none" // hides the hexint output
+                }
+            }
+
+            //////////////////////
+            // Input Color Type //
+            //////////////////////
+
+            function inputColor() { // inputColor function
+                const selectedType = document.getElementById("inputSelect").value // gets the selected type of input
+                if (selectedType === "COLOR") { // if the selected type is COLOR
+                    return document.getElementById("colorSelect").value // returns the color value
+                }
+                else if (selectedType === "HEX") { // if the selected type is HEX
+                    return document.getElementById("hexSelect").value // returns the hex value
+                }
+                else if (selectedType === "RGB") { // if the selected type is RGB
+                    let R = document.getElementById("rSelect").value // gets the red value
+                    let G = document.getElementById("gSelect").value // gets the green value
+                    let B = document.getElementById("bSelect").value // gets the blue value
+
+                    R = Math.max(0, Math.min(255, R)) // makes sure R is in bounds
+                    G = Math.max(0, Math.min(255, G)) // makes sure G is in bounds
+                    B = Math.max(0, Math.min(255, B)) // makes sure B is in bounds
+
+                    let hexR = parseInt(R, 10).toString(16) // converts R to hex
+                    let hexG = parseInt(G, 10).toString(16) // converts G to hex
+                    let hexB = parseInt(B, 10).toString(16) // converts B to hex
+
+                    if (R < 16) { // if R is less than 16
+                        hexR = 0 + hexR // add a 0 to the front of the hex value
+                    }
+                    if (G < 16) { // if G is less than 16
+                        hexG = 0 + hexG // add a 0 to the front of the hex value
+                    }
+                    if (B < 16) { // if B is less than 16
+                        hexB = 0 + hexB // add a 0 to the front of the hex value
+                    }
+
+                    return "#" + hexR + hexG + hexB // returns the hex value
+                }
+                else if (selectedType === "HSV") { // if the selected type is HSV
+                    let h = parseInt(document.getElementById("hSelect").value) // gets the hue value
+                    let s = parseInt(document.getElementById("sSelect").value) // gets the saturation value
+                    let v = parseInt(document.getElementById("vSelect").value) // gets the value value
+
+                    h = (h % 360 + 360) % 360; // makes sure h is in bounds
+                    s = Math.max(0, Math.min(100, s)); // makes sure s is in bounds
+                    v = Math.max(0, Math.min(100, v)); // makes sure v is in bounds
+
+                    s /= 100; // Divides s by 100
+                    v /= 100; // Divides v by 100
+
+                    const c = v * s; // Calculates c
+                    const x = c * (1 - Math.abs(((h / 60) % 2) - 1)); // Calculates x
+                    const m = v - c; // Calculates m
+
+                    let r, g, b; // Creates the variables r, g, and b
+                    if (h >= 0 && h < 60) { // if h is between 0 (inclusive) and 60 (exclusive)
+                        r = c; // Sets r equal to c
+                        g = x; // Sets g equal to x
+                        b = 0; // Sets b equal to 0
+                    } else if (h >= 60 && h < 120) { // if h is between 60 (inclusive) and 120 (exclusive)
+                        r = x; // Sets r equal to x
+                        g = c; // Sets g equal to c
+                        b = 0; // Sets b equal to 0
+                    } else if (h >= 120 && h < 180) { // if h is between 120 (inclusive) and 180 (exclusive)
+                        r = 0; // Sets r equal to 0
+                        g = c; // Sets g equal to c
+                        b = x; // Sets b equal to x
+                    } else if (h >= 180 && h < 240) { // if h is between 180 (inclusive) and 240 (exclusive)
+                        r = 0; // Sets r equal to 0
+                        g = x; // Sets g equal to x
+                        b = c; // Sets b equal to c
+                    } else if (h >= 240 && h < 300) { // if h is between 240 (inclusive) and 300 (exclusive)
+                        r = x; // Sets r equal to x
+                        g = 0; // Sets g equal to 0
+                        b = c; // Sets b equal to c
+                    } else { // in any other case
+                        r = c; // Sets r equal to c
+                        g = 0; // Sets g equal to 0
+                        b = x; // Sets b equal to x
+                    }
+
+                    const toHex = (num) => { // Creates the function toHex
+                        const hex = Math.round(num * 255).toString(16); // Converts r, g, or b value to hex
+                        return hex.length === 1 ? "0" + hex : hex; // Adds a 0 to the front of the hex value if it is less than 16
+                    };
+
+                    const hexR = toHex(r + m); // Converts r value to hex
+                    const hexG = toHex(g + m); // Converts g value to hex
+                    const hexB = toHex(b + m); // Converts b value to hex
+
+                    return "#" + hexR + hexG + hexB // Returns the hex value
+                }
+                else if (selectedType === "CMYK") { // if the selected type is CMYK
+                    let c = parseInt(document.getElementById("cSelect").value) // gets the cyan value
+                    let m = parseInt(document.getElementById("mSelect").value) // gets the magenta value
+                    let y = parseInt(document.getElementById("ySelect").value) // gets the yellow value
+                    let k = parseInt(document.getElementById("kSelect").value) // gets the black value
+
+                    c = Math.max(0, Math.min(100, c)); // makes sure c is in bounds
+                    m = Math.max(0, Math.min(100, m)); // makes sure m is in bounds
+                    y = Math.max(0, Math.min(100, y)); // makes sure y is in bounds
+                    k = Math.max(0, Math.min(100, k)); // makes sure k is in bounds
+
+                    c /= 100; // Divides c by 100
+                    m /= 100; // Divides m by 100
+                    y /= 100; // Divides y by 100
+                    k /= 100; // Divides k by 100
+
+                    const r = Math.round(255 * (1 - c) * (1 - k)); // Calculates r
+                    const g = Math.round(255 * (1 - m) * (1 - k)); // Calculates g
+                    const b = Math.round(255 * (1 - y) * (1 - k)); // Calculates b
+
+                    const toHex = (num) => { // Creates the function toHex
+                        const hex = num.toString(16); // Converts r, g, or b value to hex
+                        return hex.length === 1 ? "0" + hex : hex; // Adds a 0 to the front of the hex value if it is less than 16
+                    };
+
+                    const hexR = toHex(r); // Converts r value to hex
+                    const hexG = toHex(g); // Converts g value to hex
+                    const hexB = toHex(b); // Converts b value to hex
+
+                    return "#" + hexR + hexG + hexB // Returns the hex value
+                }
+                else if (selectedType === "HEX INT") { // if the selected type is HEX INT
+                    const HexInt = document.getElementById("hexIntSelect").value.toUpperCase().replace('0XFF', '#') // Removes the '0x' and replaces it with '#' to gets the hex value
+                    return HexInt // Returns the hex value
+                }
+            }
+
+            //////////////////////////
+            // Conversion Functions //
+            //////////////////////////
+
+            function hexToRGB(hex) { // Converts hex to rgb
+                hex = hex.replace('#', ''); // Removes the #
+                const r = parseInt(hex.substring(0, 2), 16); // Converts the first 2 characters to a decimal number = r
+                const g = parseInt(hex.substring(2, 4), 16); // Converts the next 2 characters to a decimal number = g
+                const b = parseInt(hex.substring(4, 6), 16); // Converts the last 2 characters to a decimal number = b
+                return `rgb(${r}, ${g}, ${b})`; // Returns the rgb value
+            }
+
+            function hexToHSV(hex) { // Converts hex to hsv
+                hex = hex.replace('#', ''); // Removes the #
+
+                const r = parseInt(hex.substring(0, 2), 16) / 255; // Converts the first 2 characters to a decimal number = r
+                const g = parseInt(hex.substring(2, 4), 16) / 255; // Converts the next 2 characters to a decimal number = g
+                const b = parseInt(hex.substring(4, 6), 16) / 255; // Converts the last 2 characters to a decimal number = b
+
+                const max = Math.max(r, g, b); // Finds the maximum value between r, g, and b
+                const min = Math.min(r, g, b); // Finds the minimum value between r, g, and b
+
+                const v = max; // Sets v equal to max
+
+                let s = 0; // Sets s equal to 0
+                if (max !== 0) { // if max is not 0
+                s = (max - min) / max; // Divides max - min by max = s
+                }
+
+                let h = 0; // Sets h equal to 0
+                if (max !== min) { // if max is not equal to min
+                    if (max === r) { // if max is r
+                        h = (g - b) / (max - min); // Divides (g - b) by (max - min) = h
+                    } else if (max === g) { // if max is g
+                        h = 2 + (b - r) / (max - min); // Divides (b - r) by (max - min) = h
+                    } else { // if max is b
+                        h = 4 + (r - g) / (max - min); // Divides (r - g) by (max - min) = h
+                    }
+                    h *= 60; // Multiplies h by 60
+                    if (h < 0) { // if h is less than 0
+                        h += 360; // Adds 360 to h
+                    }
+                }
+
+                return `hsv(${Math.round(h)}, ${Math.round(s * 100)}%, ${Math.round(v * 100)}%)`; // Returns the hsv value
+            }
+
+            function hexToCMYK(hex) { // Converts hex to cmyk
+                hex = hex.replace('#', ''); // Removes the #
+
+                const r = parseInt(hex.substring(0, 2), 16) / 255; // Converts the first 2 characters to a decimal number = r
+                const g = parseInt(hex.substring(2, 4), 16) / 255; // Converts the next 2 characters to a decimal number = g
+                const b = parseInt(hex.substring(4, 6), 16) / 255; // Converts the last 2 characters to a decimal number = b
+
+                const K = 1 - Math.max(r, g, b); // Subtracts the maximum value between r, g, and b from 1 = K
+                const C = (1 - r - K) / (1 - K); // Divides (1 - r - K) by (1 - K) = C
+                const M = (1 - g - K) / (1 - K); // Divides (1 - g - K) by (1 - K) = M
+                const Y = (1 - b - K) / (1 - K); // Divides (1 - b - K) by (1 - K) = Y
+
+                if (K === 1) { // if K is equal to 1
+                    return `cmyk(0%, 0%, 0%, ${Math.round(K * 100)}%)`; // Returns the cmyk value (to prevent a divide by 0 error)
+                }
+
+                return `cmyk(${Math.round(C * 100)}%, ${Math.round(M * 100)}%, ${Math.round(Y * 100)}%, ${Math.round(K * 100)}%)`; // Returns the cmyk value
+            }
+
+            function hexToHexInt(hex) { // Converts hex to hexint
+                hex = hex.replace('#', ''); // Removes the #
+                hex = hex.toUpperCase(); // Converts the hex value to uppercase
+                return `0xFF${hex}` // Returns the hexint value
+            }
+
+        </script>
+    </body>
+</html>
