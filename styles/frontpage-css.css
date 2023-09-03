@@ -45,6 +45,12 @@ nav {
         text-align: center;
         font-size: 3rem;
         font-family: 'JetBrains Mono';
+        padding-top: 0px;
+        margin-top: 0px;
+        display: inline-box;
+        user-select: none;
+        -webkit-user-drag: none;
+        -moz-window-dragging: none;
     }
     & #nav-ul {
         list-style-image: none;
@@ -52,6 +58,24 @@ nav {
         user-select: none;
         -webkit-user-drag: none;
         -moz-window-dragging: none;
+    }
+    & #theme-ul {
+        display: inline-box;
+        list-style-image: none;
+        margin-left: calc(100% - 100px);
+        user-select: none;
+        -webkit-user-drag: none;
+        -moz-window-dragging: none;
+        padding-bottom: 0px;
+        color: white;
+        & .mode-li {
+            display: inline-block;
+            padding-bottom: 0px;
+
+            & span {
+                cursor: pointer;
+            }
+        }
     }
     & #portnav-ul {
         list-style-image: none;
@@ -101,4 +125,25 @@ main {
 }
 .content {
     padding: 15px;
+}
+
+.content h1 {
+    color: white;
+}
+#portfolio, #tools {
+    list-style-type: none;
+    padding-left: 0;
+}
+#portfolio li, #tools li {
+    background: rgb(0, 0, 0);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+#portfolio li:hover, #tools li:hover {
+    background: rgb(15, 15, 15);
+}
+#portfolio a, #tools a {
+    text-decoration: none;
+    color: #fff;
 }
