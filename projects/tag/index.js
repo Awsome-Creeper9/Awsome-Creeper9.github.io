@@ -113,36 +113,36 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("keyup", (e) => {
     if (e.key === 'w') {
         player1Info.speedy = 0;
-        setTimeout(() => {player1Info.direction = ""}, 2000)
+        setTimeout(() => {player1Info.direction = ""}, 250)
     }
     if (e.key === 's') {
         player1Info.speedy = 0;
-        setTimeout(() => {player1Info.direction = ""}, 2000)
+        setTimeout(() => {player1Info.direction = ""}, 250)
     }
     if (e.key === 'a') {
         player1Info.speedx = 0;
-        setTimeout(() => {player1Info.direction = ""}, 2000)
+        setTimeout(() => {player1Info.direction = ""}, 250)
     }
     if (e.key === 'd') {
         player1Info.speedx = 0;
-        setTimeout(() => {player1Info.direction = ""}, 2000)
+        setTimeout(() => {player1Info.direction = ""}, 250)
     }
 
     if (e.key === 'ArrowUp') {
         player2Info.speedy = 0;
-        setTimeout(() => {player2Info.direction = ""}, 2000)
+        setTimeout(() => {player2Info.direction = ""}, 250)
     }
     if (e.key === 'ArrowDown') {
         player2Info.speedy = 0;
-        setTimeout(() => {player2Info.direction = ""}, 2000)
+        setTimeout(() => {player2Info.direction = ""}, 250)
     }
     if (e.key === 'ArrowLeft') {
         player2Info.speedx = 0;
-        setTimeout(() => {player2Info.direction = ""}, 2000)
+        setTimeout(() => {player2Info.direction = ""}, 250)
     }
     if (e.key === 'ArrowRight') {
         player2Info.speedx = 0;
-        setTimeout(() => {player2Info.direction = ""}, 2000)
+        setTimeout(() => {player2Info.direction = ""}, 250)
     }
 })
 
