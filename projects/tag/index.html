@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tag | Awsome_Creeper9</title>
+    <link rel="icon" type="image/x-icon" href="/WebPageImages/favicon.png">
+    <script src="index.js"></script>
+</head>
+<style>
+    body {
+        background: green;
+    }
+    #board {
+        width: 1313px;
+        height: 675px;
+        background: black;
+        border: 2px solid #fff;
+    }
+    .display {
+        position: absolute !important;
+        color: #fff;
+    }
+    .player {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        color: white;
+        font-size: 30px;
+        text-align: center;
+        line-height: 50px;
+    }
+    #player1 {
+        background: #0000ff;
+        top: 20px;
+        left: 20px;
+    }
+    #player2 {
+        background: #ff8000;
+        top: 605px;
+        left: 1247px;
+    }
+    #gameType {
+        left: 80vw;
+        top: 0px;
+    }
+    #time {
+        left: 75vw;
+        top: 100px;
+    }
+    #tagCooldown {
+        left: 75vw;
+        top: 150px;
+    }
+    #player2Info, #p2Controls, #p2Cooldown {
+        left: 500px;
+    }
+    #p1Controls, #p2Controls {
+        top: 755px
+    }
+    #p1Cooldown, #p2Cooldown {
+        top: 800px
+    }
+    h1 {
+        font-size: 50px;
+    }
+    p {
+        font-size: 30px;
+    }
+</style>
+<body>
+    <div id="board"></div>
+    <h1 class="display" id="gameType">Freeplay:</h1>
+    <p class="display" id="time">Time Elapsed: 0:00</p>
+    <p class="display" id="tagCooldown">Tag Cooldown: 0 seconds</p>
+
+    <h1 class="display" id="player1Info">Player 1:</h1>
+    <p class="display" id="p1Controls">Controls: W, A, S, D, LShift</p>
+    <p class="display" id="p1Cooldown">Dash Cooldown: 0 seconds</p>
+    <h1 class="display" id="player2Info">Player 2:</h1>
+    <p class="display" id="p2Controls">Controls: Up, Left, Down, Right, RShift</p>
+    <p class="display" id="p2Cooldown">Dash Cooldown: 0 seconds</p>
+
+    <div id="player1" class="player">P1</div>
+    <div id="player2" class="player">P2</div>
+</body>
+</html>
