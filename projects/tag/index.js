@@ -279,12 +279,16 @@ function update() {
         document.getElementById("player2Info").innerHTML = "Player 2:";
         document.getElementById('player1').style.background = '#ff0000';
         document.getElementById('player2').style.background = '#ff8000';
+        document.getElementById('player1').style.zIndex = 5;
+        document.getElementById('player2').style.zIndex = 3;
     }
     if (player2Info.tagged) {
         document.getElementById("player2Info").innerHTML = "Player 2 (Tagged):";
         document.getElementById("player1Info").innerHTML = "Player 1:";
         document.getElementById('player2').style.background = '#ff0000';
         document.getElementById('player1').style.background = '#0000ff';
+        document.getElementById('player1').style.zIndex = 3;
+        document.getElementById('player2').style.zIndex = 5;
     }
 
     document.getElementById("edgeBehavior").innerHTML = "Edge Behavior: " + settings.edgeBehavior
