@@ -31,23 +31,23 @@ else if (startingPlayer === 1) {
 }
 
 document.addEventListener("keydown", (e) => {
-    if (e.key === 'w' && player1Info.direction !== "down") {
+    if (e.key === 'w') {
         player1Info.speedy = -10;
         player1Info.direction = "up";
     }
-    if (e.key === 's' && player1Info.direction !== "up") {
+    if (e.key === 's') {
         player1Info.speedy = 10;
         player1Info.direction = "down";
     }
-    if (e.key === 'a' && player1Info.direction !== "right") {
+    if (e.key === 'a') {
         player1Info.speedx = -10;
         player1Info.direction = "left";
     }
-    if (e.key === 'd' && player1Info.direction !== "left") {
+    if (e.key === 'd') {
         player1Info.speedx = 10;
         player1Info.direction = "right";
     }
-    if (e.code=== 'ShiftLeft' && player1Info.dashCooldown === 0) {
+    if (e.key === 'e' && player1Info.dashCooldown === 0) {
         if (player1Info.direction === "up") {
             player1Info.speedy -= 10;
             player1Info.dashCooldown = 10;
@@ -70,23 +70,23 @@ document.addEventListener("keydown", (e) => {
         }
     }
 
-    if (e.key === 'ArrowUp' && player2Info.direction !== "down") {
+    if (e.key === 'i') {
         player2Info.speedy = -10;
         player2Info.direction = "up";
     }
-    if (e.key === 'ArrowDown' && player2Info.direction !== "up") {
+    if (e.key === 'k') {
         player2Info.speedy = 10;
         player2Info.direction = "down";
     }
-    if (e.key === 'ArrowLeft' && player2Info.direction !== "right") {
+    if (e.key === 'j') {
         player2Info.speedx = -10;
         player2Info.direction = "left";
     }
-    if (e.key === 'ArrowRight' && player2Info.direction !== "left") {
+    if (e.key === 'l') {
         player2Info.speedx = 10;
         player2Info.direction = "right";
     }
-    if (e.code=== 'ShiftRight' && player2Info.dashCooldown === 0) {
+    if (e.key === 'o' && player2Info.dashCooldown === 0) {
         if (player2Info.direction === "up") {
             player2Info.speedy -= 10;
             player2Info.dashCooldown = 10;
@@ -111,38 +111,38 @@ document.addEventListener("keydown", (e) => {
 })
 
 document.addEventListener("keyup", (e) => {
-    if (e.key === 'w') {
+    if (e.key === 'w' && player1Info.direction !== "down") {
         player1Info.speedy = 0;
-        setTimeout(() => {player1Info.direction = ""}, 250)
+        player1Info.direction = ""
     }
-    if (e.key === 's') {
+    if (e.key === 's' && player1Info.direction !== "up") {
         player1Info.speedy = 0;
-        setTimeout(() => {player1Info.direction = ""}, 250)
+        player1Info.direction = ""
     }
-    if (e.key === 'a') {
+    if (e.key === 'a' && player1Info.direction !== "right") {
         player1Info.speedx = 0;
-        setTimeout(() => {player1Info.direction = ""}, 250)
+        player1Info.direction = ""
     }
-    if (e.key === 'd') {
+    if (e.key === 'd' && player1Info.direction !== "left") {
         player1Info.speedx = 0;
-        setTimeout(() => {player1Info.direction = ""}, 250)
+        player1Info.direction = ""
     }
 
-    if (e.key === 'ArrowUp') {
+    if (e.key === 'i' && player2Info.direction !== "down") {
         player2Info.speedy = 0;
-        setTimeout(() => {player2Info.direction = ""}, 250)
+        player2Info.direction = ""
     }
-    if (e.key === 'ArrowDown') {
+    if (e.key === 'k' && player2Info.direction !== "up") {
         player2Info.speedy = 0;
-        setTimeout(() => {player2Info.direction = ""}, 250)
+        player2Info.direction = ""
     }
-    if (e.key === 'ArrowLeft') {
+    if (e.key === 'j' && player2Info.direction !== "right") {
         player2Info.speedx = 0;
-        setTimeout(() => {player2Info.direction = ""}, 250)
+        player2Info.direction = ""
     }
-    if (e.key === 'ArrowRight') {
+    if (e.key === 'l' && player2Info.direction !== "left") {
         player2Info.speedx = 0;
-        setTimeout(() => {player2Info.direction = ""}, 250)
+        player2Info.direction = ""
     }
 })
 
@@ -214,12 +214,14 @@ function update() {
         if (player1Info.tagged && tagCooldown === 0) {
             player2Info.tagged = true;
             player1Info.tagged = false;
-            tagCooldown = 5;
+            player1Info.dashCooldown = 0;
+            tagCooldown = 3;
         }
         else if (player2Info.tagged && tagCooldown === 0) {
             player1Info.tagged = true;
             player2Info.tagged = false;
-            tagCooldown = 5;
+            player2Info.dashCooldown = 0;
+            tagCooldown = 3;
         }
     }
 
