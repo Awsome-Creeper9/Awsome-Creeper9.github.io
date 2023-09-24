@@ -60,16 +60,16 @@
         left: 1313px;
     }
     #gameType {
-        left: 80vw;
+        left: 75vw;
         top: 0px;
     }
     #time {
         left: 75vw;
-        top: 100px;
+        top: 75px;
     }
     #tagCooldown {
         left: 75vw;
-        top: 150px;
+        top: 125px;
     }
     #player2Info, #p2Controls, #p2Cooldown {
         left: 500px;
@@ -101,7 +101,7 @@
         border-radius: 10px;
         border: 2px solid #fff;
         color: white;
-        visibility: hidden;
+        visibility: visible;
     }
     .optionButton {
         cursor: pointer;
@@ -117,6 +117,7 @@
         margin-left: 10px;
         display: inline-block;
         box-shadow: black 2px 2px 3px;
+        font-size: small;
     }
     .optionInput {
         width: 100px;
@@ -168,6 +169,11 @@
     <div id="menu">
         <h1 class="optionDisplay" id="settingsLabel">Settings:</h1>
 
+        <h2 class="optionDisplay" id="gameTypeOption">Game Type: Freeplay</h2>
+        <div class="optionButton optionSelect" id="gameFreeplay">Freeplay</div>
+        <div class="optionButton optionSelect" id="gameTimeLimit">Time Limited</div>
+        <input class="optionInput optionSelect" id="gameTypeTime" min="30" type="number" placeholder="Time Limit"></input>
+
         <h2 class="optionDisplay" id="edgeBehavior">Edge Behavior: Wall</h2>
         <div class="optionButton optionSelect" id="edgeWall">Wall</div>
         <div class="optionButton optionSelect" id="edgeWrap">Wrap</div>
@@ -176,7 +182,7 @@
         <div class="optionButton optionSelect" id="dash5s">5</div>
         <div class="optionButton optionSelect" id="dash10s">10</div>
         <div class="optionButton optionSelect" id="dash30s">30</div>
-        <input class="optionInput optionSelect" id="dashInput" min="0" max="60" type="number"></input>
+        <input class="optionInput optionSelect" id="dashInput" min="0" max="60" type="number" placeholder="Cooldown"></input>
 
         <h2 class="optionDisplay" id="tagCooldownTime">Tag Cooldown: 3s</h2>
         <div class="optionButton optionSelect" id="tag3s">3</div>
@@ -184,7 +190,7 @@
         <div class="optionButton optionSelect" id="tag10s">10</div>
         <div class="optionButton optionSelect" id="tag30s">30</div>
         <div class="optionButton optionSelect" id="tag60s">60</div>
-        <input class="optionInput optionSelect" id="tagInput" min="1" max="60" type="number"></input>
+        <input class="optionInput optionSelect" id="tagInput" min="1" max="60" type="number" placeholder="Cooldown"></input>
 
         <div id="saveButton">Save</div>
     </div>

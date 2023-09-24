@@ -1,10 +1,14 @@
 let timeElapsed = 0,
     timeMinutes = 0,
     timeSeconds = 0,
-    tagCooldown = 0;
+    tagCooldown = 0,
+    paused = true,
+    gameTimeSeconds = 0,
+    gameTimeMinutes = 0;
 
 let settings = {
-    gameType: "freeplay", //for future needs
+    gameType: "Freeplay",
+    gameTimeLimit: 120,
     players: 2, //for future needs
     tagCooldown: 3,
     dashCooldown: 10,
@@ -18,7 +22,9 @@ let player1Info = {
     speedy: 0,
     direction: "",
     dashCooldown: 0,
-    tagged: false
+    tagged: false,
+    totalTagTime: 0,
+    currentTagTime: 0,
 }
 let player2Info = {
     x: 1313 - 290,
@@ -27,7 +33,9 @@ let player2Info = {
     speedy: 0,
     direction: "",
     dashCooldown: 0,
-    tagged: false
+    tagged: false,
+    totalTagTime: 0,
+    currentTagTime: 0,
 }
 
 let startingPlayer = Math.round(Math.random())
@@ -41,23 +49,23 @@ else if (startingPlayer === 1) {
 
 
 document.addEventListener("keydown", (e) => {
-    if (e.key === 'w') {
+    if (e.key === 'w' && !paused) {
         player1Info.speedy = -10;
         player1Info.direction = "up";
     }
-    if (e.key === 's') {
+    if (e.key === 's' && !paused) {
         player1Info.speedy = 10;
         player1Info.direction = "down";
     }
-    if (e.key === 'a') {
+    if (e.key === 'a' && !paused) {
         player1Info.speedx = -10;
         player1Info.direction = "left";
     }
-    if (e.key === 'd') {
+    if (e.key === 'd' && !paused) {
         player1Info.speedx = 10;
         player1Info.direction = "right";
     }
-    if (e.key === 'e' && player1Info.dashCooldown === 0) {
+    if (e.key === 'e' && player1Info.dashCooldown === 0 && !paused) {
         if (player1Info.direction === "up") {
             player1Info.speedy -= 10;
             player1Info.dashCooldown = settings.dashCooldown;
@@ -84,23 +92,23 @@ document.addEventListener("keydown", (e) => {
         }
     }
 
-    if (e.key === 'i') {
+    if (e.key === 'i' && !paused) {
         player2Info.speedy = -10;
         player2Info.direction = "up";
     }
-    if (e.key === 'k') {
+    if (e.key === 'k' && !paused) {
         player2Info.speedy = 10;
         player2Info.direction = "down";
     }
-    if (e.key === 'j') {
+    if (e.key === 'j' && !paused) {
         player2Info.speedx = -10;
         player2Info.direction = "left";
     }
-    if (e.key === 'l') {
+    if (e.key === 'l' && !paused) {
         player2Info.speedx = 10;
         player2Info.direction = "right";
     }
-    if (e.key === 'o' && player2Info.dashCooldown === 0) {
+    if (e.key === 'o' && player2Info.dashCooldown === 0 && !paused) {
         if (player2Info.direction === "up") {
             player2Info.speedy -= 10;
             player2Info.dashCooldown = settings.dashCooldown;
@@ -165,19 +173,22 @@ document.addEventListener("keyup", (e) => {
 })
 
 setInterval( () => {
-    player1Info.dashCooldown = (player1Info.dashCooldown > 0) ? player1Info.dashCooldown - 1 : 0;
-    player2Info.dashCooldown = (player2Info.dashCooldown > 0) ? player2Info.dashCooldown - 1 : 0;
-    tagCooldown = (tagCooldown > 0) ? tagCooldown - 1 : 0;
+    if (!paused) {player1Info.dashCooldown = (player1Info.dashCooldown > 0) ? player1Info.dashCooldown - 1 : 0;}
+    if (!paused) {player2Info.dashCooldown = (player2Info.dashCooldown > 0) ? player2Info.dashCooldown - 1 : 0;}
+    if (!paused) {tagCooldown = (tagCooldown > 0) ? tagCooldown - 1 : 0;}
     document.getElementById("p1Cooldown").innerHTML = "Dash Cooldown: " + player1Info.dashCooldown + " seconds";
     document.getElementById("p2Cooldown").innerHTML = "Dash Cooldown: " + player2Info.dashCooldown + " seconds";
     document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
 
-    timeElapsed += 1;
-    if (timeElapsed > 60) {
+    if (!paused) {
+        timeElapsed += 1;
+    }
+    if (timeElapsed >= 60) {
         timeMinutes = Math.floor(timeElapsed / 60);
         timeSeconds = timeElapsed % 60;
     }
     else {
+        timeMinutes = 0;
         timeSeconds = timeElapsed;
     }
 
@@ -186,6 +197,27 @@ setInterval( () => {
     }
 
     document.getElementById("time").innerHTML = "Time Elapsed: " + timeMinutes + ":" + timeSeconds
+
+    if (settings.gameType === "Time Limited") {
+        if (timeElapsed >= settings.gameTimeLimit) {
+            alert(`Game Over!\n${(!player1Info.tagged) ? 'Player 1' : 'Player 2'} Wins!`);
+            paused = true;
+            timeElapsed = 0;
+            document.getElementById("menu").style.visibility = "visible";
+        }
+        if (settings.gameTimeLimit >= 60) {
+            gameTimeMinutes = Math.floor(settings.gameTimeLimit / 60);
+            gameTimeSeconds = settings.gameTimeLimit % 60;
+        }
+        else {
+            gameTimeMinutes = 0;
+            gameTimeSeconds = settings.gameTimeLimit;
+        }
+        if (gameTimeSeconds < 10) {
+            gameTimeSeconds = "0" + gameTimeSeconds;
+        }
+        document.getElementById("time").innerHTML = "Time Elapsed: " + timeMinutes + ":" + timeSeconds + "/" + gameTimeMinutes + ":" + gameTimeSeconds;
+    }
 
 }, 1000)
 
@@ -291,6 +323,13 @@ function update() {
         document.getElementById('player2').style.zIndex = 5;
     }
 
+    document.getElementById("gameTypeOption").innerHTML = "Game Type: " + settings.gameType + `${(settings.gameType === "Time Limited") ? " - " + settings.gameTimeLimit + "s" : ""}`
+    document.getElementById("gameType").innerHTML = settings.gameType + ":"
+
+    if (document.getElementById("gameTypeTime").value) {
+        settings.gameTimeLimit = Number(document.getElementById("gameTypeTime").value);
+    }
+
     document.getElementById("edgeBehavior").innerHTML = "Edge Behavior: " + settings.edgeBehavior
     document.getElementById("dashCooldownTime").innerHTML = "Dash Cooldown: " + settings.dashCooldown + "s"
     document.getElementById("tagCooldownTime").innerHTML = "Tag Cooldown: " + settings.tagCooldown + "s"
@@ -305,7 +344,16 @@ function update() {
 
 function settingsOpen() {
     document.getElementById("menu").style.visibility = "visible";
+    paused = true;
 }
+
+document.getElementById("gameFreeplay").addEventListener("click", () => {
+    settings.gameType = "Freeplay";
+})
+
+document.getElementById("gameTimeLimit").addEventListener("click", () => {
+    settings.gameType = "Time Limited";
+})
 
 document.getElementById("edgeWrap").addEventListener("click", () => {
     settings.edgeBehavior = "Wrap";
@@ -349,15 +397,19 @@ document.getElementById("tag60s").addEventListener("click", () => {
 })
 
 document.getElementById("saveButton").addEventListener("click", () => {
-    if ((settings.tagCooldown % 2 === 0 || (settings.tagCooldown + 1) % 2 === 0) && (settings.tagCooldown > 0)) {
-        if ((settings.dashCooldown % 2 === 0 || (settings.dashCooldown + 1) % 2 === 0) && (settings.dashCooldown >= 0)) {
-            document.getElementById("menu").style.visibility = "hidden";
-        }
-        else {
-            alert("Dash Cooldown must be a positive integer (or 0)");
+    if ((settings.gameType === "Time Limited" && (settings.gameTimeLimit >= 30 && (settings.gameTimeLimit % 2 === 0 || (settings.gameTimeLimit + 1) % 2 === 0))) || (settings.gameType === "Freeplay")) {
+        if ((settings.tagCooldown % 2 === 0 || (settings.tagCooldown + 1) % 2 === 0) && (settings.tagCooldown > 0)) {
+            if ((settings.dashCooldown % 2 === 0 || (settings.dashCooldown + 1) % 2 === 0) && (settings.dashCooldown >= 0)) {
+                document.getElementById("menu").style.visibility = "hidden";
+                paused = false;
+            } else {
+                alert("Dash Cooldown must be a positive integer (or 0)");
+            }
+        } else {
+            alert("Tag Cooldown must be a positive integer");
         }
     }
     else {
-        alert("Tag Cooldown must be a positive integer");
+        alert("Game Time Limit must be a positive integer above 29");
     }
 })
