@@ -49,23 +49,23 @@ else if (startingPlayer === 1) {
 
 
 document.addEventListener("keydown", (e) => {
-    if (e.key === 'w' && !paused) {
+    if (e.code === 'KeyW' && !paused) {
         player1Info.speedy = -10;
         player1Info.direction = "up";
     }
-    if (e.key === 's' && !paused) {
+    if (e.code === 'KeyS' && !paused) {
         player1Info.speedy = 10;
         player1Info.direction = "down";
     }
-    if (e.key === 'a' && !paused) {
+    if (e.code === 'KeyA' && !paused) {
         player1Info.speedx = -10;
         player1Info.direction = "left";
     }
-    if (e.key === 'd' && !paused) {
+    if (e.code === 'KeyD' && !paused) {
         player1Info.speedx = 10;
         player1Info.direction = "right";
     }
-    if (e.key === 'e' && player1Info.dashCooldown === 0 && !paused) {
+    if (e.code === 'ShiftLeft' && player1Info.dashCooldown === 0 && !paused) {
         if (player1Info.direction === "up") {
             player1Info.speedy -= 10;
             player1Info.dashCooldown = settings.dashCooldown;
@@ -92,23 +92,23 @@ document.addEventListener("keydown", (e) => {
         }
     }
 
-    if (e.key === 'i' && !paused) {
+    if (e.code === 'ArrowUp' && !paused) {
         player2Info.speedy = -10;
         player2Info.direction = "up";
     }
-    if (e.key === 'k' && !paused) {
+    if (e.code === 'ArrowDown' && !paused) {
         player2Info.speedy = 10;
         player2Info.direction = "down";
     }
-    if (e.key === 'j' && !paused) {
+    if (e.code === 'ArrowLeft' && !paused) {
         player2Info.speedx = -10;
         player2Info.direction = "left";
     }
-    if (e.key === 'l' && !paused) {
+    if (e.code === 'ArrowRight' && !paused) {
         player2Info.speedx = 10;
         player2Info.direction = "right";
     }
-    if (e.key === 'o' && player2Info.dashCooldown === 0 && !paused) {
+    if (e.code === 'ShiftRight' && player2Info.dashCooldown === 0 && !paused) {
         if (player2Info.direction === "up") {
             player2Info.speedy -= 10;
             player2Info.dashCooldown = settings.dashCooldown;
@@ -137,36 +137,36 @@ document.addEventListener("keydown", (e) => {
 })
 
 document.addEventListener("keyup", (e) => {
-    if (e.key === 'w' && player1Info.direction !== "down") {
+    if (e.code === 'KeyW' && player1Info.direction !== "down") {
         player1Info.speedy = 0;
         player1Info.direction = ""
     }
-    if (e.key === 's' && player1Info.direction !== "up") {
+    if (e.code === 'KeyS' && player1Info.direction !== "up") {
         player1Info.speedy = 0;
         player1Info.direction = ""
     }
-    if (e.key === 'a' && player1Info.direction !== "right") {
+    if (e.code === 'KeyA' && player1Info.direction !== "right") {
         player1Info.speedx = 0;
         player1Info.direction = ""
     }
-    if (e.key === 'd' && player1Info.direction !== "left") {
+    if (e.code === 'KeyD' && player1Info.direction !== "left") {
         player1Info.speedx = 0;
         player1Info.direction = ""
     }
 
-    if (e.key === 'i' && player2Info.direction !== "down") {
+    if (e.code === 'ArrowUp' && player2Info.direction !== "down") {
         player2Info.speedy = 0;
         player2Info.direction = ""
     }
-    if (e.key === 'k' && player2Info.direction !== "up") {
+    if (e.code === 'ArrowDown' && player2Info.direction !== "up") {
         player2Info.speedy = 0;
         player2Info.direction = ""
     }
-    if (e.key === 'j' && player2Info.direction !== "right") {
+    if (e.code === 'ArrowLeft' && player2Info.direction !== "right") {
         player2Info.speedx = 0;
         player2Info.direction = ""
     }
-    if (e.key === 'l' && player2Info.direction !== "left") {
+    if (e.code === 'ArrowRight' && player2Info.direction !== "left") {
         player2Info.speedx = 0;
         player2Info.direction = ""
     }
