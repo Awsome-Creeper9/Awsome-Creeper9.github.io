@@ -108,12 +108,12 @@
         user-select: none;
         color: white;
         width: 75px;
-        height: 50px;
+        height: 25px;
         background: #a0cc00a0;
         border-radius: 10px;
         border: 2px solid #fff;
         text-align: center;
-        line-height: 50px;
+        line-height: 25px;
         margin-left: 10px;
         display: inline-block;
         box-shadow: black 2px 2px 3px;
@@ -121,7 +121,7 @@
     }
     .optionInput {
         width: 100px;
-        height: 50px;
+        height: 25px;
         margin-left: 10px;
         border-radius: 10px;
         border: 2px solid #fff;
@@ -191,6 +191,12 @@
         <div class="optionButton optionSelect" id="tag30s">30</div>
         <div class="optionButton optionSelect" id="tag60s">60</div>
         <input class="optionInput optionSelect" id="tagInput" min="1" max="60" type="number" placeholder="Cooldown"></input>
+
+        <h2 class="optionDisplay" id="playerSpeed">Player Speed: 500px/s</h2>
+        <div class="optionButton optionSelect" id="speed250">250</div>
+        <div class="optionButton optionSelect" id="speed500">500</div>
+        <div class="optionButton optionSelect" id="speed1000">1000</div>
+        <input class="optionInput optionSelect" id="speedInput" min="50" type="number" placeholder="Speed"></input>
 
         <div id="saveButton">Save</div>
     </div>
