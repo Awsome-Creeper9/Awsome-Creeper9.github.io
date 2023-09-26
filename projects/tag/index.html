@@ -55,7 +55,7 @@
         left: 0px;
     }
     #player2 {
-        background: #ff8000;
+        background: #cccc00;
         top: 675px;
         left: 1313px;
     }
@@ -71,7 +71,7 @@
         left: 75vw;
         top: 125px;
     }
-    #player2Info, #p2Controls, #p2Cooldown {
+    #player2Info, #p2Controls, #p2Cooldown, #p2TagTime {
         left: 500px;
     }
     #p1Controls, #p2Controls {
@@ -79,6 +79,9 @@
     }
     #p1Cooldown, #p2Cooldown {
         top: 800px
+    }
+    #p1TagTime, #p2TagTime {
+        top: 845px
     }
     h1 {
         font-size: 50px;
@@ -107,21 +110,22 @@
         cursor: pointer;
         user-select: none;
         color: white;
-        width: 75px;
-        height: 25px;
+        width: 80px;
+        height: 35px;
         background: #a0cc00a0;
         border-radius: 10px;
         border: 2px solid #fff;
         text-align: center;
-        line-height: 25px;
+        line-height: 35px;
         margin-left: 10px;
         display: inline-block;
         box-shadow: black 2px 2px 3px;
-        font-size: small;
+        font-size: 12.5px;
+        margin-top: 0px;
     }
     .optionInput {
-        width: 100px;
-        height: 25px;
+        width: 80px;
+        height: 35px;
         margin-left: 10px;
         border-radius: 10px;
         border: 2px solid #fff;
@@ -159,9 +163,11 @@
     <h1 class="display" id="player1Info">Player 1:</h1>
     <p class="display" id="p1Controls">Controls: W, A, S, D, LShift</p>
     <p class="display" id="p1Cooldown">Dash Cooldown: 0 seconds</p>
+    <p class="display" id="p1TagTime">Total Time Tagged: 0:00</p>
     <h1 class="display" id="player2Info">Player 2:</h1>
     <p class="display" id="p2Controls">Controls: Up, Left, Down, Right, RShift</p>
     <p class="display" id="p2Cooldown">Dash Cooldown: 0 seconds</p>
+    <p class="display" id="p2TagTime">Total Time Tagged: 0:00</p>
 
     <div id="player1" class="player">P1</div>
     <div id="player2" class="player">P2</div>
@@ -172,6 +178,7 @@
         <h2 class="optionDisplay" id="gameTypeOption">Game Type: Freeplay</h2>
         <div class="optionButton optionSelect" id="gameFreeplay">Freeplay</div>
         <div class="optionButton optionSelect" id="gameTimeLimit">Time Limited</div>
+        <div class="optionButton optionSelect" id="gameTagTimeLimit">Tag Time Limit</div>
         <input class="optionInput optionSelect" id="gameTypeTime" min="30" type="number" placeholder="Time Limit"></input>
 
         <h2 class="optionDisplay" id="edgeBehavior">Edge Behavior: Wall</h2>

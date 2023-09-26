@@ -4,7 +4,8 @@ let timeElapsed = 0,
     tagCooldown = 0,
     paused = true,
     gameTimeSeconds = 0,
-    gameTimeMinutes = 0;
+    gameTimeMinutes = 0,
+    tagTimer = 0;
 
 let settings = {
     gameType: "Freeplay",
@@ -25,7 +26,8 @@ let player1Info = {
     dashCooldown: 0,
     tagged: false,
     totalTagTime: 0,
-    currentTagTime: 0,
+    totalTagMinutes: 0,
+    totalTagSeconds: 0
 }
 let player2Info = {
     x: 1313 - 290,
@@ -36,7 +38,8 @@ let player2Info = {
     dashCooldown: 0,
     tagged: false,
     totalTagTime: 0,
-    currentTagTime: 0,
+    totalTagMinutes: 0,
+    totalTagSeconds: 0
 }
 
 let startingPlayer = Math.round(Math.random())
@@ -199,11 +202,50 @@ setInterval( () => {
 
     document.getElementById("time").innerHTML = "Time Elapsed: " + timeMinutes + ":" + timeSeconds
 
+    if (player1Info.tagged === true && !paused) {
+        player1Info.totalTagTime++
+    }
+
+    if (player1Info.totalTagTime >= 60) {
+        player1Info.totalTagMinutes = Math.floor(player1Info.totalTagTime / 60);
+        player1Info.totalTagSeconds = player1Info.totalTagTime % 60;
+    }
+    else {
+        player1Info.totalTagMinutes = 0;
+        player1Info.totalTagSeconds = player1Info.totalTagTime;
+    }
+
+    if (player1Info.totalTagSeconds < 10) {
+        player1Info.totalTagSeconds = "0" + player1Info.totalTagSeconds;
+    }
+
+    if (player2Info.tagged === true && !paused) {
+        player2Info.totalTagTime++
+    }
+
+    if (player2Info.totalTagTime >= 60) {
+        player2Info.totalTagMinutes = Math.floor(player2Info.totalTagTime / 60);
+        player2Info.totalTagSeconds = player2Info.totalTagTime % 60;
+    }
+    else {
+        player2Info.totalTagMinutes = 0;
+        player2Info.totalTagSeconds = player2Info.totalTagTime;
+    }
+
+    if (player2Info.totalTagSeconds < 10) {
+        player2Info.totalTagSeconds = "0" + player2Info.totalTagSeconds;
+    }
+
+    document.getElementById('p1TagTime').innerHTML = "Total Time Tagged: " + player1Info.totalTagMinutes + ":" + player1Info.totalTagSeconds;
+    document.getElementById('p2TagTime').innerHTML = "Total Time Tagged: " + player2Info.totalTagMinutes + ":" + player2Info.totalTagSeconds;
+
     if (settings.gameType === "Time Limited") {
         if (timeElapsed >= settings.gameTimeLimit) {
             alert(`Game Over!\n${(!player1Info.tagged) ? 'Player 1' : 'Player 2'} Wins!`);
             paused = true;
             timeElapsed = 0;
+            player1Info.totalTagTime = 0;
+            player2Info.totalTagTime = 0;
             document.getElementById("menu").style.visibility = "visible";
         }
         if (settings.gameTimeLimit >= 60) {
@@ -218,6 +260,38 @@ setInterval( () => {
             gameTimeSeconds = "0" + gameTimeSeconds;
         }
         document.getElementById("time").innerHTML = "Time Elapsed: " + timeMinutes + ":" + timeSeconds + "/" + gameTimeMinutes + ":" + gameTimeSeconds;
+    }
+
+    if (settings.gameType === "Tag Time Limited") {
+        if (player1Info.totalTagTime >= settings.gameTimeLimit) {
+            alert(`Game Over!\nPlayer 2 Wins!`)
+            paused = true;
+            timeElapsed = 0;
+            player1Info.totalTagTime = 0;
+            player2Info.totalTagTime = 0;
+            document.getElementById("menu").style.visibility = "visible";
+        }
+        if (player2Info.totalTagTime >= settings.gameTimeLimit) {
+            alert(`Game Over!\nPlayer 1 Wins!`)
+            paused = true;
+            timeElapsed = 0;
+            player1Info.totalTagTime = 0;
+            player2Info.totalTagTime = 0;
+            document.getElementById("menu").style.visibility = "visible";
+        }
+        if (settings.gameTimeLimit >= 60) {
+            gameTimeMinutes = Math.floor(settings.gameTimeLimit / 60);
+            gameTimeSeconds = settings.gameTimeLimit % 60;
+        }
+        else {
+            gameTimeMinutes = 0;
+            gameTimeSeconds = settings.gameTimeLimit;
+        }
+        if (gameTimeSeconds < 10) {
+            gameTimeSeconds = "0" + gameTimeSeconds;
+        }
+        document.getElementById('p1TagTime').innerHTML = "Total Time Tagged: " + player1Info.totalTagMinutes + ":" + player1Info.totalTagSeconds + "/" + gameTimeMinutes + ":" + gameTimeSeconds;
+        document.getElementById('p2TagTime').innerHTML = "Total Time Tagged: " + player2Info.totalTagMinutes + ":" + player2Info.totalTagSeconds + "/" + gameTimeMinutes + ":" + gameTimeSeconds;
     }
 
 }, 1000)
@@ -311,7 +385,7 @@ function update() {
         document.getElementById("player1Info").innerHTML = "Player 1 (Tagged):";
         document.getElementById("player2Info").innerHTML = "Player 2:";
         document.getElementById('player1').style.background = '#ff0000';
-        document.getElementById('player2').style.background = '#ff8000';
+        document.getElementById('player2').style.background = '#cccc00';
         document.getElementById('player1').style.zIndex = 5;
         document.getElementById('player2').style.zIndex = 3;
     }
@@ -324,7 +398,7 @@ function update() {
         document.getElementById('player2').style.zIndex = 5;
     }
 
-    document.getElementById("gameTypeOption").innerHTML = "Game Type: " + settings.gameType + `${(settings.gameType === "Time Limited") ? " - " + settings.gameTimeLimit + "s" : ""}`
+    document.getElementById("gameTypeOption").innerHTML = "Game Type: " + settings.gameType + `${(settings.gameType === "Time Limited" || settings.gameType === "Tag Time Limited") ? " - " + settings.gameTimeLimit + "s" : ""}`
     document.getElementById("gameType").innerHTML = settings.gameType + ":"
 
     if (document.getElementById("gameTypeTime").value) {
@@ -359,6 +433,10 @@ document.getElementById("gameFreeplay").addEventListener("click", () => {
 
 document.getElementById("gameTimeLimit").addEventListener("click", () => {
     settings.gameType = "Time Limited";
+})
+
+document.getElementById("gameTagTimeLimit").addEventListener("click", () => {
+    settings.gameType = "Tag Time Limited";
 })
 
 document.getElementById("edgeWrap").addEventListener("click", () => {
@@ -417,7 +495,7 @@ document.getElementById("speed1000").addEventListener("click", () => {
 })
 
 document.getElementById("saveButton").addEventListener("click", () => {
-    if ((settings.gameType === "Time Limited" && (settings.gameTimeLimit >= 30 && (settings.gameTimeLimit % 2 === 0 || (settings.gameTimeLimit + 1) % 2 === 0))) || (settings.gameType === "Freeplay")) {
+    if (((settings.gameType === "Time Limited" || settings.gameType === "Tag Time Limited") && (settings.gameTimeLimit >= 30 && (settings.gameTimeLimit % 2 === 0 || (settings.gameTimeLimit + 1) % 2 === 0))) || (settings.gameType === "Freeplay")) {
         if ((settings.tagCooldown % 2 === 0 || (settings.tagCooldown + 1) % 2 === 0) && (settings.tagCooldown > 0)) {
             if ((settings.dashCooldown % 2 === 0 || (settings.dashCooldown + 1) % 2 === 0) && (settings.dashCooldown >= 0)) {
                 if ((settings.playerSpeed * 50 % 2 === 0 || (settings.playerSpeed * 50 + 1) % 2 === 0) && (settings.playerSpeed * 50 > 49)) {
