@@ -35,9 +35,55 @@
         user-select: none;
         z-index: 10;
     }
-    .display {
+    #sideDisplay {
+        background: #303030;
+        border-radius: 10px;
+        border: 2px solid #fff;
         position: absolute !important;
         color: #fff;
+        left: calc(100% - 550px);
+        top: 20px;
+        line-height: 10px;
+        width: 480px;
+        padding-left: 20px;
+
+        & h1 {
+            padding-bottom: 30px;
+            text-align: center;
+        }
+    }
+    #p1Display {
+        background: #0000ff;
+        position: absolute !important;
+        border-radius: 10px;
+        border: 2px solid #fff;
+        top: 700px;
+        color: white;
+        padding-left: 20px;
+        line-height: 10px;
+        width: 480px;
+
+        & h1 {
+            padding-bottom: 30px;
+            text-align: center;
+        }
+    }
+    #p2Display {
+        background: #cccc00;
+        position: absolute !important;
+        border-radius: 10px;
+        border: 2px solid #fff;
+        top: 700px;
+        color: white;
+        padding-left: 20px;
+        line-height: 10px;
+        width: 480px;
+        left: 520px;
+
+        & h1 {
+            padding-bottom: 30px;
+            text-align: center;
+        }
     }
     .player {
         position: absolute;
@@ -58,30 +104,6 @@
         background: #cccc00;
         top: 675px;
         left: 1313px;
-    }
-    #gameType {
-        left: 75vw;
-        top: 0px;
-    }
-    #time {
-        left: 75vw;
-        top: 75px;
-    }
-    #tagCooldown {
-        left: 75vw;
-        top: 125px;
-    }
-    #player2Info, #p2Controls, #p2Cooldown, #p2TagTime {
-        left: 500px;
-    }
-    #p1Controls, #p2Controls {
-        top: 755px
-    }
-    #p1Cooldown, #p2Cooldown {
-        top: 800px
-    }
-    #p1TagTime, #p2TagTime {
-        top: 845px
     }
     h1 {
         font-size: 50px;
@@ -156,18 +178,25 @@
 <body>
     <div id="board"></div>
     <div id="settings" onclick="settingsOpen()"><span class="material-symbols-outlined">settings</span></div>
-    <h1 class="display" id="gameType">Freeplay:</h1>
-    <p class="display" id="time">Time Elapsed: 0:00</p>
-    <p class="display" id="tagCooldown">Tag Cooldown: 0 seconds</p>
 
+    <div id="sideDisplay">
+        <h1 class="display" id="gameType">Freeplay:</h1>
+        <p class="display" id="time">Time Elapsed: 0:00</p>
+        <p class="display" id="tagCooldown">Tag Cooldown: 0 seconds</p>
+    </div>
+<div id="p1Display">
     <h1 class="display" id="player1Info">Player 1:</h1>
     <p class="display" id="p1Controls">Controls: W, A, S, D, LShift</p>
     <p class="display" id="p1Cooldown">Dash Cooldown: 0 seconds</p>
     <p class="display" id="p1TagTime">Total Time Tagged: 0:00</p>
+</div>
+
+<div id="p2Display">
     <h1 class="display" id="player2Info">Player 2:</h1>
-    <p class="display" id="p2Controls">Controls: Up, Left, Down, Right, RShift</p>
+    <p class="display" id="p2Controls">Controls: 🠝, 🠜, 🠟, 🠞, RShift</p>
     <p class="display" id="p2Cooldown">Dash Cooldown: 0 seconds</p>
     <p class="display" id="p2TagTime">Total Time Tagged: 0:00</p>
+</div>
 
     <div id="player1" class="player">P1</div>
     <div id="player2" class="player">P2</div>

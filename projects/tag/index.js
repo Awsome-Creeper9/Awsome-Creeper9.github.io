@@ -138,6 +138,9 @@ document.addEventListener("keydown", (e) => {
             document.getElementById("p2Cooldown").innerHTML = "Dash Cooldown: " + player2Info.dashCooldown + " seconds"
         }
     }
+    if (e.code === 'Escape') {
+        settingsOpen();
+    }
 })
 
 document.addEventListener("keyup", (e) => {
@@ -386,6 +389,8 @@ function update() {
         document.getElementById("player2Info").innerHTML = "Player 2:";
         document.getElementById('player1').style.background = '#ff0000';
         document.getElementById('player2').style.background = '#cccc00';
+        document.getElementById('p1Display').style.background = '#ff0000';
+        document.getElementById('p2Display').style.background = '#cccc00';
         document.getElementById('player1').style.zIndex = 5;
         document.getElementById('player2').style.zIndex = 3;
     }
@@ -394,6 +399,8 @@ function update() {
         document.getElementById("player1Info").innerHTML = "Player 1:";
         document.getElementById('player2').style.background = '#ff0000';
         document.getElementById('player1').style.background = '#0000ff';
+        document.getElementById('p1Display').style.background = '#0000ff';
+        document.getElementById('p2Display').style.background = '#ff0000';
         document.getElementById('player1').style.zIndex = 3;
         document.getElementById('player2').style.zIndex = 5;
     }
