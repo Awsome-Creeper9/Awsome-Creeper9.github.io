@@ -139,7 +139,12 @@ document.addEventListener("keydown", (e) => {
         }
     }
     if (e.code === 'Escape') {
-        settingsOpen();
+        if (!paused) {
+            settingsOpen();
+        }
+        else {
+            unpause()
+        }
     }
 })
 
@@ -502,6 +507,10 @@ document.getElementById("speed1000").addEventListener("click", () => {
 })
 
 document.getElementById("saveButton").addEventListener("click", () => {
+    unpause()
+})
+
+function unpause() {
     if (((settings.gameType === "Time Limited" || settings.gameType === "Tag Time Limited") && (settings.gameTimeLimit >= 30 && (settings.gameTimeLimit % 2 === 0 || (settings.gameTimeLimit + 1) % 2 === 0))) || (settings.gameType === "Freeplay")) {
         if ((settings.tagCooldown % 2 === 0 || (settings.tagCooldown + 1) % 2 === 0) && (settings.tagCooldown > 0)) {
             if ((settings.dashCooldown % 2 === 0 || (settings.dashCooldown + 1) % 2 === 0) && (settings.dashCooldown >= 0)) {
@@ -522,4 +531,4 @@ document.getElementById("saveButton").addEventListener("click", () => {
     else {
         alert("Game Time Limit must be a positive integer above 29");
     }
-})
+}
