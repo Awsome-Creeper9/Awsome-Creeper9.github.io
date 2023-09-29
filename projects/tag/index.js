@@ -5,7 +5,7 @@ let timeElapsed = 0,
     paused = true,
     gameTimeSeconds = 0,
     gameTimeMinutes = 0,
-    tagTimer = 0;
+    tagTimer = -1;
 
 let settings = {
     gameType: "Freeplay",
@@ -271,6 +271,7 @@ setInterval( () => {
     }
 
     if (settings.gameType === "Tag Time Limited") {
+
         if (player1Info.totalTagTime >= settings.gameTimeLimit) {
             alert(`Game Over!\nPlayer 2 Wins!`)
             paused = true;
@@ -300,6 +301,39 @@ setInterval( () => {
         }
         document.getElementById('p1TagTime').innerHTML = "Total Time Tagged: " + player1Info.totalTagMinutes + ":" + player1Info.totalTagSeconds + "/" + gameTimeMinutes + ":" + gameTimeSeconds;
         document.getElementById('p2TagTime').innerHTML = "Total Time Tagged: " + player2Info.totalTagMinutes + ":" + player2Info.totalTagSeconds + "/" + gameTimeMinutes + ":" + gameTimeSeconds;
+    }
+
+    if (settings.gameType === "Tag Timer") {
+        document.getElementById('tagTimer').style.visibility = "visible";
+        document.getElementById('sideDisplay').style.height= "210px";
+        if (tagTimer < 0 || document.getElementById('gameTypeTime').value) {tagTimer = settings.gameTimeLimit}
+
+        if (!paused && tagTimer > 0) {tagTimer--;}
+        if (tagTimer <= 0) {
+            alert(`Game Over!\n${(!player1Info.tagged) ? 'Player 1' : 'Player 2'} Wins!`);
+            paused = true;
+            timeElapsed = 0;
+            tagTimer = settings.gameTimeLimit
+            document.getElementById("menu").style.visibility = "visible";
+        }
+
+        if (tagTimer >= 60) {
+            gameTimeMinutes = Math.floor(tagTimer / 60);
+            gameTimeSeconds = tagTimer % 60;
+        }
+        else {
+            gameTimeMinutes = 0;
+            gameTimeSeconds = tagTimer;
+        }
+        if (gameTimeSeconds < 10) {
+            gameTimeSeconds = "0" + gameTimeSeconds;
+        }
+
+        document.getElementById('tagTimer').innerHTML = "Tag Timer: " + gameTimeMinutes + ":" + gameTimeSeconds
+    }
+    else {
+        document.getElementById('tagTimer').style.visibility = "hidden";
+        document.getElementById('sideDisplay').style.height= "180px";
     }
 
 }, 1000)
@@ -379,6 +413,10 @@ function update() {
             player1Info.dashCooldown = 0;
             tagCooldown = settings.tagCooldown;
             document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+
+            if (settings.gameType === "Tag Timer") {
+                tagTimer = settings.gameTimeLimit
+            }
         }
         else if (player2Info.tagged && tagCooldown === 0) {
             player1Info.tagged = true;
@@ -386,12 +424,16 @@ function update() {
             player2Info.dashCooldown = 0;
             tagCooldown = settings.tagCooldown;
             document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+
+            if (settings.gameType === "Tag Timer") {
+                tagTimer = settings.gameTimeLimit
+            }
         }
     }
 
     if (player1Info.tagged) {
-        document.getElementById("player1Info").innerHTML = "Player 1 (Tagged):";
-        document.getElementById("player2Info").innerHTML = "Player 2:";
+        document.getElementById("player1Tag").style.visibility = "visible";
+        document.getElementById("player2Tag").style.visibility = "hidden";
         document.getElementById('player1').style.background = '#ff0000';
         document.getElementById('player2').style.background = '#cccc00';
         document.getElementById('p1Display').style.background = '#ff0000';
@@ -400,8 +442,8 @@ function update() {
         document.getElementById('player2').style.zIndex = 3;
     }
     if (player2Info.tagged) {
-        document.getElementById("player2Info").innerHTML = "Player 2 (Tagged):";
-        document.getElementById("player1Info").innerHTML = "Player 1:";
+        document.getElementById("player2Tag").style.visibility = "visible";
+        document.getElementById("player1Tag").style.visibility = "hidden";
         document.getElementById('player2').style.background = '#ff0000';
         document.getElementById('player1').style.background = '#0000ff';
         document.getElementById('p1Display').style.background = '#0000ff';
@@ -410,7 +452,7 @@ function update() {
         document.getElementById('player2').style.zIndex = 5;
     }
 
-    document.getElementById("gameTypeOption").innerHTML = "Game Type: " + settings.gameType + `${(settings.gameType === "Time Limited" || settings.gameType === "Tag Time Limited") ? " - " + settings.gameTimeLimit + "s" : ""}`
+    document.getElementById("gameTypeOption").innerHTML = "Game Type: " + settings.gameType + `${(settings.gameType === "Time Limited" || settings.gameType === "Tag Time Limited" || settings.gameType === "Tag Timer") ? " - " + settings.gameTimeLimit + "s" : ""}`
     document.getElementById("gameType").innerHTML = settings.gameType + ":"
 
     if (document.getElementById("gameTypeTime").value) {
@@ -420,7 +462,7 @@ function update() {
     document.getElementById("edgeBehavior").innerHTML = "Edge Behavior: " + settings.edgeBehavior
     document.getElementById("dashCooldownTime").innerHTML = "Dash Cooldown: " + settings.dashCooldown + "s"
     document.getElementById("tagCooldownTime").innerHTML = "Tag Cooldown: " + settings.tagCooldown + "s"
-    document.getElementById("playerSpeed").innerHTML = "Player Speed: " + settings.playerSpeed * 50 + "px/s"
+    document.getElementById("playerSpeed").innerHTML = "Player Speed: " + parseInt(settings.playerSpeed * 50) + "px/s"
 
     if (document.getElementById("dashInput").value) {
         settings.dashCooldown = Number(document.getElementById("dashInput").value);
@@ -449,6 +491,10 @@ document.getElementById("gameTimeLimit").addEventListener("click", () => {
 
 document.getElementById("gameTagTimeLimit").addEventListener("click", () => {
     settings.gameType = "Tag Time Limited";
+})
+
+document.getElementById("gameTagTimer").addEventListener("click", () => {
+    settings.gameType = "Tag Timer";
 })
 
 document.getElementById("edgeWrap").addEventListener("click", () => {
@@ -511,11 +557,12 @@ document.getElementById("saveButton").addEventListener("click", () => {
 })
 
 function unpause() {
-    if (((settings.gameType === "Time Limited" || settings.gameType === "Tag Time Limited") && (settings.gameTimeLimit >= 30 && (settings.gameTimeLimit % 2 === 0 || (settings.gameTimeLimit + 1) % 2 === 0))) || (settings.gameType === "Freeplay")) {
+    if (((settings.gameType === "Time Limited" || settings.gameType === "Tag Time Limited" || settings.gameType === "Tag Timer") && (settings.gameTimeLimit >= 30 && (settings.gameTimeLimit % 2 === 0 || (settings.gameTimeLimit + 1) % 2 === 0))) || (settings.gameType === "Freeplay")) {
         if ((settings.tagCooldown % 2 === 0 || (settings.tagCooldown + 1) % 2 === 0) && (settings.tagCooldown > 0)) {
             if ((settings.dashCooldown % 2 === 0 || (settings.dashCooldown + 1) % 2 === 0) && (settings.dashCooldown >= 0)) {
-                if ((settings.playerSpeed * 50 % 2 === 0 || (settings.playerSpeed * 50 + 1) % 2 === 0) && (settings.playerSpeed * 50 > 49)) {
+                if ((parseInt(settings.playerSpeed * 50) % 2 === 0 || (parseInt(settings.playerSpeed * 50) + 1) % 2 === 0) && (settings.playerSpeed * 50 > 49)) {
                     document.getElementById("menu").style.visibility = "hidden";
+                    document.getElementById('gameTypeTime').value = ''
                     paused = false;
                 }
                 else {

@@ -42,10 +42,11 @@
         border: 2px solid #fff;
         position: absolute !important;
         color: #fff;
-        left: calc(100% - 550px);
+        left: 1370px;
         top: 10px;
         line-height: 10px;
         width: 480px;
+        height: 180px;
         padding-left: 20px;
 
         & h1 {
@@ -62,11 +63,19 @@
         color: white;
         padding-left: 20px;
         line-height: 10px;
-        width: 480px;
+        width: 360px;
+        height: 222px;
 
         & h1 {
-            padding-bottom: 30px;
             text-align: center;
+        }
+
+        & #player1Tag {
+            text-align: center;
+            padding-bottom: 0px;
+            padding-top: 0px;
+            line-height: 0px;
+            visibility: hidden;
         }
     }
     #p2Display {
@@ -75,15 +84,23 @@
         border-radius: 10px;
         border: 2px solid #fff;
         top: 695px;
+        left: 400px;
         color: white;
         padding-left: 20px;
         line-height: 10px;
-        width: 480px;
-        left: 520px;
+        width: 360px;
+        height: 222px;
 
         & h1 {
-            padding-bottom: 30px;
             text-align: center;
+        }
+
+        & #player2Tag {
+            text-align: center;
+            padding-bottom: 0px;
+            padding-top: 0px;
+            line-height: 0px;
+            visibility: hidden;
         }
     }
     .player {
@@ -115,6 +132,9 @@
     }
     p {
         font-size: 30px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        line-height: 5px;
     }
     #menu {
         position: absolute;
@@ -175,6 +195,9 @@
     #settingsLabel {
         text-align: center;
     }
+    #tagTimer {
+        visibility: hidden;
+    }
 </style>
 <body>
     <div id="board"></div>
@@ -183,10 +206,12 @@
     <div id="sideDisplay">
         <h1 class="display" id="gameType">Freeplay:</h1>
         <p class="display" id="time">Time Elapsed: 0:00</p>
-        <p class="display" id="tagCooldown">Tag Cooldown: 0 seconds</p>
+        <p class="display" id="tagCooldown">Tag Cooldown: 0 seconds
+        <p class="display" id="tagTimer">Tag Timer: 0:00</p>
     </div>
 <div id="p1Display">
     <h1 class="display" id="player1Info">Player 1:</h1>
+    <h3 class="display" id="player1Tag">(tagged)</h3>
     <p class="display" id="p1Controls">Controls: W, A, S, D, LShift</p>
     <p class="display" id="p1Cooldown">Dash Cooldown: 0 seconds</p>
     <p class="display" id="p1TagTime">Total Time Tagged: 0:00</p>
@@ -194,6 +219,7 @@
 
 <div id="p2Display">
     <h1 class="display" id="player2Info">Player 2:</h1>
+    <h3 class="display" id="player2Tag">(tagged)</h3>
     <p class="display" id="p2Controls">Controls: 🠝, 🠜, 🠟, 🠞, RShift</p>
     <p class="display" id="p2Cooldown">Dash Cooldown: 0 seconds</p>
     <p class="display" id="p2TagTime">Total Time Tagged: 0:00</p>
@@ -209,6 +235,7 @@
         <div class="optionButton optionSelect" id="gameFreeplay">Freeplay</div>
         <div class="optionButton optionSelect" id="gameTimeLimit">Time Limited</div>
         <div class="optionButton optionSelect" id="gameTagTimeLimit">Tag Time Limit</div>
+        <div class="optionButton optionSelect" id="gameTagTimer">Tag Timer</div>
         <input class="optionInput optionSelect" id="gameTypeTime" min="30" type="number" placeholder="Time Limit"></input>
 
         <h2 class="optionDisplay" id="edgeBehavior">Edge Behavior: Wall</h2>
