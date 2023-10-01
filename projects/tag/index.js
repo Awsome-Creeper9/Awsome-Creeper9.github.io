@@ -14,7 +14,13 @@ let settings = {
     tagCooldown: 3,
     dashCooldown: 10,
     edgeBehavior: "Wall",
-    playerSpeed: 10
+    playerSpeed: 10,
+    players: {
+        player1: "player",
+        player2: "player",
+        player3: "off",
+        player4: "off"
+    }
 }
 
 let player1Info = {
@@ -41,16 +47,64 @@ let player2Info = {
     totalTagMinutes: 0,
     totalTagSeconds: 0
 }
-
-let startingPlayer = Math.round(Math.random())
-if (startingPlayer === 0) {
-    player1Info.tagged = true
+let player3Info = {
+    x: 1313 - 290,
+    y: 10 + 200,
+    speedx: 0,
+    speedy: 0,
+    direction: "",
+    dashCooldown: 0,
+    tagged: false,
+    totalTagTime: 0,
+    totalTagMinutes: 0,
+    totalTagSeconds: 0
 }
-else if (startingPlayer === 1) {
-    player2Info.tagged = true
+let player4Info = {
+    x: 10 + 250,
+    y: 675 - 240,
+    speedx: 0,
+    speedy: 0,
+    direction: "",
+    dashCooldown: 0,
+    tagged: false,
+    totalTagTime: 0,
+    totalTagMinutes: 0,
+    totalTagSeconds: 0
 }
 
-
+function startPlayer() {
+    let startingPlayer;
+    if (settings.players.player3 !== "off") {
+        if (settings.players.player4 !== "off") {
+            startingPlayer = Math.random()
+            if (startingPlayer < .25) {
+                player1Info.tagged = true
+            } else if (startingPlayer < .5) {
+                player2Info.tagged = true
+            } else if (startingPlayer < .75) {
+                player3Info.tagged = true
+            } else {
+                player4Info.tagged = true
+            }
+        }
+        startingPlayer = Math.random()
+        if (startingPlayer < .33) {
+            player1Info.tagged = true
+        } else if (startingPlayer < .66) {
+            player2Info.tagged = true
+        } else {
+            player3Info.tagged = true
+        }
+    } else {
+        startingPlayer = Math.round(Math.random())
+        if (startingPlayer === 0) {
+            player1Info.tagged = true
+        } else if (startingPlayer === 1) {
+            player2Info.tagged = true
+        }
+    }
+}
+startPlayer()
 
 document.addEventListener("keydown", (e) => {
     if (e.code === 'KeyW' && !paused) {
@@ -138,6 +192,90 @@ document.addEventListener("keydown", (e) => {
             document.getElementById("p2Cooldown").innerHTML = "Dash Cooldown: " + player2Info.dashCooldown + " seconds"
         }
     }
+    if (e.code === 'KeyI' && !paused) {
+        player3Info.speedy = -1 * settings.playerSpeed;
+        player3Info.direction = "up";
+    }
+    if (e.code === 'KeyK' && !paused) {
+        player3Info.speedy = settings.playerSpeed;
+        player3Info.direction = "down";
+    }
+    if (e.code === 'KeyJ' && !paused) {
+        player3Info.speedx = -1 * settings.playerSpeed;
+        player3Info.direction = "left";
+    }
+    if (e.code === 'KeyL' && !paused) {
+        player3Info.speedx = settings.playerSpeed;
+        player3Info.direction = "right";
+    }
+    if (e.code === 'Space' && player3Info.dashCooldown === 0 && !paused) {
+        if (player3Info.direction === "up") {
+            player3Info.speedy -= settings.playerSpeed;
+            player3Info.dashCooldown = settings.dashCooldown;
+            setTimeout(() => {player3Info.speedy += settings.playerSpeed;}, 500)
+            document.getElementById("p3Cooldown").innerHTML = "Dash Cooldown: " + player3Info.dashCooldown + " seconds"
+        }
+        if (player3Info.direction === "down") {
+            player3Info.speedy += settings.playerSpeed;
+            player3Info.dashCooldown = settings.dashCooldown;
+            setTimeout(() => {player3Info.speedy -= settings.playerSpeed;}, 500)
+            document.getElementById("p3Cooldown").innerHTML = "Dash Cooldown: " + player3Info.dashCooldown + " seconds"
+        }
+        if (player3Info.direction === "left") {
+            player3Info.speedx -= settings.playerSpeed;
+            player3Info.dashCooldown = settings.dashCooldown;
+            setTimeout(() => {player3Info.speedx += settings.playerSpeed;}, 500)
+            document.getElementById("p3Cooldown").innerHTML = "Dash Cooldown: " + player3Info.dashCooldown + " seconds"
+        }
+        if (player3Info.direction === "right") {
+            player3Info.speedx += settings.playerSpeed;
+            player3Info.dashCooldown = settings.dashCooldown;
+            setTimeout(() => {player3Info.speedx -= settings.playerSpeed;}, 500)
+            document.getElementById("p3Cooldown").innerHTML = "Dash Cooldown: " + player3Info.dashCooldown + " seconds"
+        }
+    }
+    if (e.code === 'Numpad8' && !paused) {
+        player4Info.speedy = -1 * settings.playerSpeed;
+        player4Info.direction = "up";
+    }
+    if (e.code === 'Numpad5' && !paused) {
+        player4Info.speedy = settings.playerSpeed;
+        player4Info.direction = "down";
+    }
+    if (e.code === 'Numpad4' && !paused) {
+        player4Info.speedx = -1 * settings.playerSpeed;
+        player4Info.direction = "left";
+    }
+    if (e.code === 'Numpad6' && !paused) {
+        player4Info.speedx = settings.playerSpeed;
+        player4Info.direction = "right";
+    }
+    if (e.code === 'Numpad0' && player4Info.dashCooldown === 0 && !paused) {
+        if (player4Info.direction === "up") {
+            player4Info.speedy -= settings.playerSpeed;
+            player4Info.dashCooldown = settings.dashCooldown;
+            setTimeout(() => {player4Info.speedy += settings.playerSpeed;}, 500)
+            document.getElementById("p4Cooldown").innerHTML = "Dash Cooldown: " + player4Info.dashCooldown + " seconds"
+        }
+        if (player4Info.direction === "down") {
+            player4Info.speedy += settings.playerSpeed;
+            player4Info.dashCooldown = settings.dashCooldown;
+            setTimeout(() => {player4Info.speedy -= settings.playerSpeed;}, 500)
+            document.getElementById("p4Cooldown").innerHTML = "Dash Cooldown: " + player4Info.dashCooldown + " seconds"
+        }
+        if (player4Info.direction === "left") {
+            player4Info.speedx -= settings.playerSpeed;
+            player4Info.dashCooldown = settings.dashCooldown;
+            setTimeout(() => {player4Info.speedx += settings.playerSpeed;}, 500)
+            document.getElementById("p4Cooldown").innerHTML = "Dash Cooldown: " + player4Info.dashCooldown + " seconds"
+        }
+        if (player4Info.direction === "right") {
+            player4Info.speedx += settings.playerSpeed;
+            player4Info.dashCooldown = settings.dashCooldown;
+            setTimeout(() => {player4Info.speedx -= settings.playerSpeed;}, 500)
+            document.getElementById("p4Cooldown").innerHTML = "Dash Cooldown: " + player4Info.dashCooldown + " seconds"
+        }
+    }
     if (e.code === 'Escape') {
         if (!paused) {
             settingsOpen();
@@ -182,14 +320,52 @@ document.addEventListener("keyup", (e) => {
         player2Info.speedx = 0;
         player2Info.direction = ""
     }
+
+    if (e.code === 'KeyI' && player3Info.direction !== "down") {
+        player3Info.speedy = 0;
+        player3Info.direction = ""
+    }
+    if (e.code === 'KeyK' && player3Info.direction !== "up") {
+        player3Info.speedy = 0;
+        player3Info.direction = ""
+    }
+    if (e.code === 'KeyJ' && player3Info.direction !== "right") {
+        player3Info.speedx = 0;
+        player3Info.direction = ""
+    }
+    if (e.code === 'KeyL' && player3Info.direction !== "left") {
+        player3Info.speedx = 0;
+        player3Info.direction = ""
+    }
+
+    if (e.code === 'Numpad8' && player4Info.direction !== "down") {
+        player4Info.speedy = 0;
+        player4Info.direction = ""
+    }
+    if (e.code === 'Numpad5' && player4Info.direction !== "up") {
+        player4Info.speedy = 0;
+        player4Info.direction = ""
+    }
+    if (e.code === 'Numpad4' && player4Info.direction !== "right") {
+        player4Info.speedx = 0;
+        player4Info.direction = ""
+    }
+    if (e.code === 'Numpad6' && player4Info.direction !== "left") {
+        player4Info.speedx = 0;
+        player4Info.direction = ""
+    }
 })
 
 setInterval( () => {
     if (!paused) {player1Info.dashCooldown = (player1Info.dashCooldown > 0) ? player1Info.dashCooldown - 1 : 0;}
     if (!paused) {player2Info.dashCooldown = (player2Info.dashCooldown > 0) ? player2Info.dashCooldown - 1 : 0;}
+    if (!paused) {player3Info.dashCooldown = (player3Info.dashCooldown > 0) ? player3Info.dashCooldown - 1 : 0;}
+    if (!paused) {player4Info.dashCooldown = (player4Info.dashCooldown > 0) ? player4Info.dashCooldown - 1 : 0;}
     if (!paused) {tagCooldown = (tagCooldown > 0) ? tagCooldown - 1 : 0;}
     document.getElementById("p1Cooldown").innerHTML = "Dash Cooldown: " + player1Info.dashCooldown + " seconds";
     document.getElementById("p2Cooldown").innerHTML = "Dash Cooldown: " + player2Info.dashCooldown + " seconds";
+    document.getElementById("p3Cooldown").innerHTML = "Dash Cooldown: " + player3Info.dashCooldown + " seconds";
+    document.getElementById("p4Cooldown").innerHTML = "Dash Cooldown: " + player4Info.dashCooldown + " seconds";
     document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
 
     if (!paused) {
@@ -244,16 +420,65 @@ setInterval( () => {
         player2Info.totalTagSeconds = "0" + player2Info.totalTagSeconds;
     }
 
+    if (player3Info.tagged === true && !paused) {
+        player3Info.totalTagTime++
+    }
+
+    if (player3Info.totalTagTime >= 60) {
+        player3Info.totalTagMinutes = Math.floor(player3Info.totalTagTime / 60);
+        player3Info.totalTagSeconds = player3Info.totalTagTime % 60;
+    }
+    else {
+        player3Info.totalTagMinutes = 0;
+        player3Info.totalTagSeconds = player3Info.totalTagTime;
+    }
+
+    if (player3Info.totalTagSeconds < 10) {
+        player3Info.totalTagSeconds = "0" + player3Info.totalTagSeconds;
+    }
+
+    if (player4Info.tagged === true && !paused) {
+        player4Info.totalTagTime++
+    }
+
+    if (player4Info.totalTagTime >= 60) {
+        player4Info.totalTagMinutes = Math.floor(player4Info.totalTagTime / 60);
+        player4Info.totalTagSeconds = player4Info.totalTagTime % 60;
+    }
+    else {
+        player4Info.totalTagMinutes = 0;
+        player4Info.totalTagSeconds = player4Info.totalTagTime;
+    }
+
+    if (player4Info.totalTagSeconds < 10) {
+        player4Info.totalTagSeconds = "0" + player4Info.totalTagSeconds;
+    }
+
     document.getElementById('p1TagTime').innerHTML = "Total Time Tagged: " + player1Info.totalTagMinutes + ":" + player1Info.totalTagSeconds;
     document.getElementById('p2TagTime').innerHTML = "Total Time Tagged: " + player2Info.totalTagMinutes + ":" + player2Info.totalTagSeconds;
+    document.getElementById('p3TagTime').innerHTML = "Total Time Tagged: " + player3Info.totalTagMinutes + ":" + player3Info.totalTagSeconds;
+    document.getElementById('p4TagTime').innerHTML = "Total Time Tagged: " + player4Info.totalTagMinutes + ":" + player4Info.totalTagSeconds;
 
     if (settings.gameType === "Time Limited") {
         if (timeElapsed >= settings.gameTimeLimit) {
-            alert(`Game Over!\n${(!player1Info.tagged) ? 'Player 1' : 'Player 2'} Wins!`);
+            if(player1Info.tagged) {
+                alert(`Game Over!\nPlayer 1 Loses!`)
+            }
+            else if (player2Info.tagged) {
+                alert(`Game Over!\nPlayer 2 Loses!`)
+            }
+            else if (player3Info.tagged) {
+                alert(`Game Over!\nPlayer 3 Loses!`)
+            }
+            else if (player4Info.tagged) {
+                alert(`Game Over!\nPlayer 4 Loses!`)
+            }
             paused = true;
             timeElapsed = 0;
             player1Info.totalTagTime = 0;
             player2Info.totalTagTime = 0;
+            player3Info.totalTagTime = 0;
+            player4Info.totalTagTime = 0;
             document.getElementById("menu").style.visibility = "visible";
         }
         if (settings.gameTimeLimit >= 60) {
@@ -273,19 +498,43 @@ setInterval( () => {
     if (settings.gameType === "Tag Time Limited") {
 
         if (player1Info.totalTagTime >= settings.gameTimeLimit) {
-            alert(`Game Over!\nPlayer 2 Wins!`)
+            alert(`Game Over!\nPlayer 1 Loses!`)
             paused = true;
             timeElapsed = 0;
             player1Info.totalTagTime = 0;
             player2Info.totalTagTime = 0;
+            player3Info.totalTagTime = 0;
+            player4Info.totalTagTime = 0;
             document.getElementById("menu").style.visibility = "visible";
         }
         if (player2Info.totalTagTime >= settings.gameTimeLimit) {
-            alert(`Game Over!\nPlayer 1 Wins!`)
+            alert(`Game Over!\nPlayer 2 Loses!`)
             paused = true;
             timeElapsed = 0;
             player1Info.totalTagTime = 0;
             player2Info.totalTagTime = 0;
+            player3Info.totalTagTime = 0;
+            player4Info.totalTagTime = 0;
+            document.getElementById("menu").style.visibility = "visible";
+        }
+        if (player3Info.totalTagTime >= settings.gameTimeLimit) {
+            alert(`Game Over!\nPlayer 3 Loses!`)
+            paused = true;
+            timeElapsed = 0;
+            player1Info.totalTagTime = 0;
+            player2Info.totalTagTime = 0;
+            player3Info.totalTagTime = 0;
+            player4Info.totalTagTime = 0;
+            document.getElementById("menu").style.visibility = "visible";
+        }
+        if (player4Info.totalTagTime >= settings.gameTimeLimit) {
+            alert(`Game Over!\nPlayer 4 Loses!`)
+            paused = true;
+            timeElapsed = 0;
+            player1Info.totalTagTime = 0;
+            player2Info.totalTagTime = 0;
+            player3Info.totalTagTime = 0;
+            player4Info.totalTagTime = 0;
             document.getElementById("menu").style.visibility = "visible";
         }
         if (settings.gameTimeLimit >= 60) {
@@ -310,9 +559,24 @@ setInterval( () => {
 
         if (!paused && tagTimer > 0) {tagTimer--;}
         if (tagTimer <= 0) {
-            alert(`Game Over!\n${(!player1Info.tagged) ? 'Player 1' : 'Player 2'} Wins!`);
+            if (player1Info.tagged) {
+                alert(`Game Over!\nPlayer 1 Loses!`)
+            }
+            if (player2Info.tagged) {
+                alert(`Game Over!\nPlayer 2 Loses!`)
+            }
+            if (player3Info.tagged) {
+                alert(`Game Over!\nPlayer 3 Loses!`)
+            }
+            if (player4Info.tagged) {
+                alert(`Game Over!\nPlayer 4 Loses!`)
+            }
             paused = true;
             timeElapsed = 0;
+            player1Info.totalTagTime = 0;
+            player2Info.totalTagTime = 0;
+            player3Info.totalTagTime = 0;
+            player4Info.totalTagTime = 0;
             tagTimer = settings.gameTimeLimit
             document.getElementById("menu").style.visibility = "visible";
         }
@@ -341,15 +605,39 @@ setInterval( () => {
 setInterval(update, 1000/50)
 
 function update() {
+    if (settings.players.player3 === "off") {
+        document.getElementById("player3").style.visibility = "hidden"
+        document.getElementById('p3Display').style.visibility = "hidden"
+    }
+    else {
+        document.getElementById("player3").style.visibility = "visible"
+        document.getElementById('p3Display').style.visibility = "visible"
+    }
+    if (settings.players.player4 === "off") {
+        document.getElementById("player4").style.visibility = "hidden"
+        document.getElementById('p4Display').style.visibility = "hidden"
+    }
+    else {
+        document.getElementById("player4").style.visibility = "visible"
+        document.getElementById('p4Display').style.visibility = "visible"
+    }
     player1Info.x += player1Info.speedx;
     player1Info.y += player1Info.speedy;
     player2Info.x += player2Info.speedx;
     player2Info.y += player2Info.speedy;
+    player3Info.x += player3Info.speedx;
+    player3Info.y += player3Info.speedy;
+    player4Info.x += player4Info.speedx;
+    player4Info.y += player4Info.speedy;
 
     document.getElementById("player1").style.top = player1Info.y + "px";
     document.getElementById("player1").style.left = player1Info.x + "px";
     document.getElementById("player2").style.left = player2Info.x + "px";
     document.getElementById("player2").style.top = player2Info.y + "px";
+    document.getElementById("player3").style.left = player3Info.x + "px";
+    document.getElementById("player3").style.top = player3Info.y + "px";
+    document.getElementById("player4").style.left = player4Info.x + "px";
+    document.getElementById("player4").style.top = player4Info.y + "px";
 
     if (settings.edgeBehavior === "Wrap") {
         if (player1Info.x < 0 + 10) {
@@ -376,6 +664,32 @@ function update() {
         }
         if (player2Info.y > 675 - 50 + 10) {
             player2Info.y = 0 + 10;
+        }
+
+        if (player3Info.x < 0 + 10) {
+            player3Info.x = 1313 - 50 + 10;
+        }
+        if (player3Info.x > 1313 - 50 + 10) {
+            player3Info.x = 0 + 10;
+        }
+        if (player3Info.y < 0 + 10) {
+            player3Info.y = 675 - 50 + 10;
+        }
+        if (player3Info.y > 675 - 50 + 10) {
+            player3Info.y = 0 + 10;
+        }
+
+        if (player4Info.x < 0 + 10) {
+            player4Info.x = 1313 - 50 + 10;
+        }
+        if (player4Info.x > 1313 - 50 + 10) {
+            player4Info.x = 0 + 10;
+        }
+        if (player4Info.y < 0 + 10) {
+            player4Info.y = 675 - 50 + 10;
+        }
+        if (player4Info.y > 675 - 50 + 10) {
+            player4Info.y = 0 + 10;
         }
     }
     else {
@@ -404,6 +718,32 @@ function update() {
         if (player2Info.y > 675 - 50 + 10) {
             player2Info.y = 675 - 50 + 10;
         }
+
+        if (player3Info.x < 0 + 10) {
+            player3Info.x = 0 + 10;
+        }
+        if (player3Info.x > 1313 - 50 + 10) {
+            player3Info.x = 1313 - 50 + 10;
+        }
+        if (player3Info.y < 0 + 10) {
+            player3Info.y = 0 + 10;
+        }
+        if (player3Info.y > 675 - 50 + 10) {
+            player3Info.y = 675 - 50 + 10;
+        }
+
+        if (player4Info.x < 0 + 10) {
+            player4Info.x = 0 + 10;
+        }
+        if (player4Info.x > 1313 - 50 + 10) {
+            player4Info.x = 1313 - 50 + 10;
+        }
+        if (player4Info.y < 0 + 10) {
+            player4Info.y = 0 + 10;
+        }
+        if (player4Info.y > 675 - 50 + 10) {
+            player4Info.y = 675 - 50 + 10;
+        }
     }
 
     if ((player1Info.x < player2Info.x + 50) && (player1Info.x + 50 > player2Info.x) && (player1Info.y < player2Info.y + 50) && (player1Info.y + 50 > player2Info.y)) {
@@ -430,26 +770,215 @@ function update() {
             }
         }
     }
+    if (settings.players.player3 !== "off") {
+        if ((player1Info.x < player3Info.x + 50) && (player1Info.x + 50 > player3Info.x) && (player1Info.y < player3Info.y + 50) && (player1Info.y + 50 > player3Info.y)) {
+            if (player1Info.tagged && tagCooldown === 0) {
+                player3Info.tagged = true;
+                player1Info.tagged = false;
+                player1Info.dashCooldown = 0;
+                tagCooldown = settings.tagCooldown;
+                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+
+                if (settings.gameType === "Tag Timer") {
+                    tagTimer = settings.gameTimeLimit
+                }
+            } else if (player3Info.tagged && tagCooldown === 0) {
+                player1Info.tagged = true;
+                player3Info.tagged = false;
+                player3Info.dashCooldown = 0;
+                tagCooldown = settings.tagCooldown;
+                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+
+                if (settings.gameType === "Tag Timer") {
+                    tagTimer = settings.gameTimeLimit
+                }
+            }
+        }
+        if ((player3Info.x < player2Info.x + 50) && (player3Info.x + 50 > player2Info.x) && (player3Info.y < player2Info.y + 50) && (player3Info.y + 50 > player2Info.y)) {
+            if (player3Info.tagged && tagCooldown === 0) {
+                player2Info.tagged = true;
+                player3Info.tagged = false;
+                player3Info.dashCooldown = 0;
+                tagCooldown = settings.tagCooldown;
+                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+
+                if (settings.gameType === "Tag Timer") {
+                    tagTimer = settings.gameTimeLimit
+                }
+            }
+            else if (player2Info.tagged && tagCooldown === 0) {
+                player3Info.tagged = true;
+                player2Info.tagged = false;
+                player2Info.dashCooldown = 0;
+                tagCooldown = settings.tagCooldown;
+                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+
+                if (settings.gameType === "Tag Timer") {
+                    tagTimer = settings.gameTimeLimit
+                }
+            }
+        }
+        if (settings.players.player4 !== "off") {
+            if ((player3Info.x < player4Info.x + 50) && (player3Info.x + 50 > player4Info.x) && (player3Info.y < player4Info.y + 50) && (player3Info.y + 50 > player4Info.y)) {
+                if (player3Info.tagged && tagCooldown === 0) {
+                    player4Info.tagged = true;
+                    player3Info.tagged = false;
+                    player3Info.dashCooldown = 0;
+                    tagCooldown = settings.tagCooldown;
+                    document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+
+                    if (settings.gameType === "Tag Timer") {
+                        tagTimer = settings.gameTimeLimit
+                    }
+                }
+                else if (player4Info.tagged && tagCooldown === 0) {
+                    player3Info.tagged = true;
+                    player4Info.tagged = false;
+                    player4Info.dashCooldown = 0;
+                    tagCooldown = settings.tagCooldown;
+                    document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+
+                    if (settings.gameType === "Tag Timer") {
+                        tagTimer = settings.gameTimeLimit
+                    }
+                }
+            }
+        }
+    }
+    if (settings.players.player4 !== "off") {
+        if ((player1Info.x < player4Info.x + 50) && (player1Info.x + 50 > player4Info.x) && (player1Info.y < player4Info.y + 50) && (player1Info.y + 50 > player4Info.y)) {
+            if (player1Info.tagged && tagCooldown === 0) {
+                player4Info.tagged = true;
+                player1Info.tagged = false;
+                player1Info.dashCooldown = 0;
+                tagCooldown = settings.tagCooldown;
+                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+
+                if (settings.gameType === "Tag Timer") {
+                    tagTimer = settings.gameTimeLimit
+                }
+            }
+            else if (player4Info.tagged && tagCooldown === 0) {
+                player1Info.tagged = true;
+                player4Info.tagged = false;
+                player4Info.dashCooldown = 0;
+                tagCooldown = settings.tagCooldown;
+                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+
+                if (settings.gameType === "Tag Timer") {
+                    tagTimer = settings.gameTimeLimit
+                }
+            }
+        }
+        if ((player4Info.x < player2Info.x + 50) && (player4Info.x + 50 > player2Info.x) && (player4Info.y < player2Info.y + 50) && (player4Info.y + 50 > player2Info.y)) {
+            if (player4Info.tagged && tagCooldown === 0) {
+                player2Info.tagged = true;
+                player4Info.tagged = false;
+                player4Info.dashCooldown = 0;
+                tagCooldown = settings.tagCooldown;
+                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+
+                if (settings.gameType === "Tag Timer") {
+                    tagTimer = settings.gameTimeLimit
+                }
+            }
+            else if (player2Info.tagged && tagCooldown === 0) {
+                player4Info.tagged = true;
+                player2Info.tagged = false;
+                player2Info.dashCooldown = 0;
+                tagCooldown = settings.tagCooldown;
+                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+
+                if (settings.gameType === "Tag Timer") {
+                    tagTimer = settings.gameTimeLimit
+                }
+            }
+        }
+    }
 
     if (player1Info.tagged) {
         document.getElementById("player1Tag").style.visibility = "visible";
         document.getElementById("player2Tag").style.visibility = "hidden";
+        document.getElementById("player3Tag").style.visibility = "hidden";
+        document.getElementById("player4Tag").style.visibility = "hidden";
         document.getElementById('player1').style.background = '#ff0000';
         document.getElementById('player2').style.background = '#cccc00';
+        document.getElementById('player3').style.background = '#550080';
+        document.getElementById('player4').style.background = '#008080';
         document.getElementById('p1Display').style.background = '#ff0000';
         document.getElementById('p2Display').style.background = '#cccc00';
+        document.getElementById('p3Display').style.background = '#550080';
+        document.getElementById('p4Display').style.background = '#008080';
         document.getElementById('player1').style.zIndex = 5;
         document.getElementById('player2').style.zIndex = 3;
+        document.getElementById('player3').style.zIndex = 3;
+        document.getElementById('player4').style.zIndex = 3;
+        player2Info.tagged = false
+        player3Info.tagged = false
+        player4Info.tagged = false
     }
     if (player2Info.tagged) {
         document.getElementById("player2Tag").style.visibility = "visible";
         document.getElementById("player1Tag").style.visibility = "hidden";
+        document.getElementById("player3Tag").style.visibility = "hidden";
+        document.getElementById("player4Tag").style.visibility = "hidden";
         document.getElementById('player2').style.background = '#ff0000';
         document.getElementById('player1').style.background = '#0000ff';
+        document.getElementById('player3').style.background = '#550080';
+        document.getElementById('player4').style.background = '#008080';
         document.getElementById('p1Display').style.background = '#0000ff';
         document.getElementById('p2Display').style.background = '#ff0000';
+        document.getElementById('p3Display').style.background = '#550080';
+        document.getElementById('p4Display').style.background = '#008080';
         document.getElementById('player1').style.zIndex = 3;
         document.getElementById('player2').style.zIndex = 5;
+        document.getElementById('player3').style.zIndex = 3;
+        document.getElementById('player4').style.zIndex = 3;
+        player1Info.tagged = false
+        player3Info.tagged = false
+        player4Info.tagged = false
+    }
+    if (player3Info.tagged) {
+        document.getElementById("player2Tag").style.visibility = "hidden";
+        document.getElementById("player1Tag").style.visibility = "hidden";
+        document.getElementById("player3Tag").style.visibility = "visible";
+        document.getElementById("player4Tag").style.visibility = "hidden";
+        document.getElementById('player2').style.background = '#cccc00';
+        document.getElementById('player1').style.background = '#0000ff';
+        document.getElementById('player3').style.background = '#ff0000';
+        document.getElementById('player4').style.background = '#008080';
+        document.getElementById('p1Display').style.background = '#0000ff';
+        document.getElementById('p2Display').style.background = '#cccc00';
+        document.getElementById('p3Display').style.background = '#ff0000';
+        document.getElementById('p4Display').style.background = '#008080';
+        document.getElementById('player1').style.zIndex = 3;
+        document.getElementById('player2').style.zIndex = 3;
+        document.getElementById('player3').style.zIndex = 5;
+        document.getElementById('player4').style.zIndex = 3;
+        player2Info.tagged = false
+        player1Info.tagged = false
+        player4Info.tagged = false
+    }
+    if (player4Info.tagged) {
+        document.getElementById("player2Tag").style.visibility = "hidden";
+        document.getElementById("player1Tag").style.visibility = "hidden";
+        document.getElementById("player3Tag").style.visibility = "hidden";
+        document.getElementById("player4Tag").style.visibility = "visible";
+        document.getElementById('player2').style.background = '#cccc00';
+        document.getElementById('player1').style.background = '#0000ff';
+        document.getElementById('player3').style.background = '#550080';
+        document.getElementById('player4').style.background = '#ff0000';
+        document.getElementById('p1Display').style.background = '#0000ff';
+        document.getElementById('p2Display').style.background = '#cccc00';
+        document.getElementById('p3Display').style.background = '#550080';
+        document.getElementById('p4Display').style.background = '#ff0000';
+        document.getElementById('player1').style.zIndex = 3;
+        document.getElementById('player2').style.zIndex = 3;
+        document.getElementById('player3').style.zIndex = 3;
+        document.getElementById('player4').style.zIndex = 5;
+        player2Info.tagged = false
+        player3Info.tagged = false
+        player1Info.tagged = false
     }
 
     document.getElementById("gameTypeOption").innerHTML = "Game Type: " + settings.gameType + `${(settings.gameType === "Time Limited" || settings.gameType === "Tag Time Limited" || settings.gameType === "Tag Timer") ? " - " + settings.gameTimeLimit + "s" : ""}`
@@ -550,6 +1079,43 @@ document.getElementById("speed500").addEventListener("click", () => {
 document.getElementById("speed1000").addEventListener("click", () => {
     settings.playerSpeed = 1000/50;
     document.getElementById("speedInput").value = ''
+})
+
+document.getElementById("players3").addEventListener("click", () => {
+    if (settings.players.player3 === "off") {
+        settings.players.player3 = "player"
+        document.getElementById("players3").innerHTML = "P3: On"
+        document.getElementById("players3").classList.add("on");
+        document.getElementById("players3").classList.remove("off")
+        document.getElementById("players4").style.display = "inline-block"
+    }
+    else if (settings.players.player3 === "player") {
+        settings.players.player3 = "off"
+        settings.players.player4 = "off"
+        document.getElementById("players3").innerHTML = "P3: Off"
+        document.getElementById("players4").innerHTML = "P4: Off"
+        document.getElementById("players3").classList.add("off");
+        document.getElementById("players3").classList.remove("on")
+        document.getElementById("players4").classList.add("off");
+        document.getElementById("players4").classList.remove("on")
+        document.getElementById("players4").style.display = "none"
+    }
+    startPlayer()
+})
+document.getElementById("players4").addEventListener("click", () => {
+    if (settings.players.player4 === "off") {
+        settings.players.player4 = "player"
+        document.getElementById("players4").innerHTML = "P4: On"
+        document.getElementById("players4").classList.add("on");
+        document.getElementById("players4").classList.remove("off")
+    }
+    else if (settings.players.player4 === "player") {
+        settings.players.player4 = "off"
+        document.getElementById("players4").innerHTML = "P4: Off"
+        document.getElementById("players4").classList.add("off");
+        document.getElementById("players4").classList.remove("on")
+    }
+    startPlayer()
 })
 
 document.getElementById("saveButton").addEventListener("click", () => {

@@ -18,7 +18,7 @@
     }
 
     body {
-        background: green;
+        background: #005500;
     }
     #board {
         width: 1313px;
@@ -103,6 +103,56 @@
             visibility: hidden;
         }
     }
+    #p3Display {
+        background: #550080;
+        position: absolute !important;
+        border-radius: 10px;
+        border: 2px solid #fff;
+        top: 695px;
+        left: 792px;
+        color: white;
+        padding-left: 20px;
+        line-height: 10px;
+        width: 360px;
+        height: 222px;
+
+        & h1 {
+            text-align: center;
+        }
+
+        & #player3Tag {
+            text-align: center;
+            padding-bottom: 0px;
+            padding-top: 0px;
+            line-height: 0px;
+            visibility: hidden;
+        }
+    }
+    #p4Display {
+        background: #008080;
+        position: absolute !important;
+        border-radius: 10px;
+        border: 2px solid #fff;
+        top: 695px;
+        left: 1184px;
+        color: white;
+        padding-left: 20px;
+        line-height: 10px;
+        width: 360px;
+        height: 222px;
+
+        & h1 {
+            text-align: center;
+        }
+
+        & #player4Tag {
+            text-align: center;
+            padding-bottom: 0px;
+            padding-top: 0px;
+            line-height: 0px;
+            visibility: hidden;
+        }
+    }
     .player {
         position: absolute;
         width: 50px;
@@ -122,6 +172,16 @@
         background: #cccc00;
         top: 675px;
         left: 1313px;
+    }
+    #player3 {
+        background: #550080;
+        top: 0px;
+        left: 1313px;
+    }
+    #player4 {
+        background: #008080;
+        top: 675px;
+        left: 0px;
     }
     h1 {
         font-size: 50px;
@@ -148,6 +208,9 @@
         border: 2px solid #fff;
         color: white;
         visibility: visible;
+    }
+    .optionDisplay {
+        line-height: 10px;
     }
     .optionButton {
         cursor: pointer;
@@ -176,6 +239,15 @@
         text-align: center;
         color: white;
     }
+    #players4 {
+        display: none;
+    }
+    .off {
+        background: #555555a0 !important;
+    }
+    .on {
+        background: #a0cc00a0 !important;
+    }
     #saveButton {
         position: absolute;
         top: calc(50% - 375px + 675px);
@@ -194,6 +266,7 @@
     }
     #settingsLabel {
         text-align: center;
+        line-height: 10px;
     }
     #tagTimer {
         visibility: hidden;
@@ -225,8 +298,27 @@
     <p class="display" id="p2TagTime">Total Time Tagged: 0:00</p>
 </div>
 
+<div id="p3Display">
+    <h1 class="display" id="player3Info">Player 3:</h1>
+    <h3 class="display" id="player3Tag">(tagged)</h3>
+    <p class="display" id="p3Controls">Controls: I, J, K, L, Space</p>
+    <p class="display" id="p3Cooldown">Dash Cooldown: 0 seconds</p>
+    <p class="display" id="p3TagTime">Total Time Tagged: 0:00</p>
+</div>
+
+<div id="p4Display">
+    <h1 class="display" id="player4Info">Player 4:</h1>
+    <h3 class="display" id="player4Tag">(tagged)</h3>
+    <p class="display" id="p4Controls">Controls: Num 8, 4, 5, 6, 0</p>
+    <p class="display" id="p4Cooldown">Dash Cooldown: 0 seconds</p>
+    <p class="display" id="p4TagTime">Total Time Tagged: 0:00</p>
+</div>
+
+
     <div id="player1" class="player">P1</div>
     <div id="player2" class="player">P2</div>
+    <div id="player3" class="player">P3</div>
+    <div id="player4" class="player">P4</div>
 
     <div id="menu">
         <h1 class="optionDisplay" id="settingsLabel">Settings:</h1>
@@ -261,6 +353,10 @@
         <div class="optionButton optionSelect" id="speed500">500</div>
         <div class="optionButton optionSelect" id="speed1000">1000</div>
         <input class="optionInput optionSelect" id="speedInput" min="50" type="number" placeholder="Speed"></input>
+
+        <h2 class="optionDisplay" id="players">Players:</h2>
+        <div class="optionButton optionSelect off" id="players3">P3: Off</div>
+        <div class="optionButton optionSelect off" id="players4">P4: Off</div>
 
         <div id="saveButton">Save</div>
     </div>
