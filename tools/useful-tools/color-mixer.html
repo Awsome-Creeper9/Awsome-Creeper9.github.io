@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Color Mixer | Awsome_Creeper9</title>
+        <link rel="icon" type="image/x-icon" href="/WebPageImages/favicon.png">
+        <link rel="stylesheet" href="/styles/tools.css" />
+    </head>
+    <style>
+        label ~ input{
+          display: block !important;
+          margin-bottom: .5vh !important;
+        }
+
+        div {
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        input[type="text"] {
+          width: 45vh;
+          margin-left: auto;
+          margin-right:auto;
+          padding: .5vh;
+          border: 1px solid #333 !important;
+          border-radius: .4vh;
+          margin-bottom: 1vh;
+          background: rgb(30, 30, 30);
+        }
+
+        .colors {
+          position: absolute;
+          width: 47vh;
+          height: 47vh;
+          background-color: #fff;
+          right: 0;
+          left: 0;
+        }
+        #result {
+          margin-top: 48vh;
+        }
+      </style>
+    <body>
+        <h1>Color Mixer</h1>
+        <div>
+          <label for="amount">Colors:</label>
+          <select id="amount">
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </div>
+        <div>
+          <div id="choice1">
+            <label for="hex1">Color 1:</label>
+            <input id="hex1" type="text" />
+          </div>
+          <div id="choice2">
+            <label for="hex2">Color 2:</label>
+            <input id="hex2" type="text" />
+            <div id="choice3">
+              <label for="hex3">Color 3:</label>
+              <input id="hex3" type="text" />
+            </div>
+            <div id="choice4">
+              <label for="hex4">Color 4:</label>
+              <input id="hex4" type="text" />
+            </div>
+            <div id="choice5">
+              <label for="hex5">Color 5:</label>
+              <input id="hex5" type="text" />
+            </div>
+          </div>
+        </div>
+        <div>
+          <div id="color1" class="colors"></div> 
+        </div>
+        <div id="result">
+          <label for="results">Result:</label>
+          <input id="results" type="text" />
+        </div>
+        <script>
+
+          ////////////////////
+          // Starting Color //
+          ////////////////////
+
+          function starterColor() { // Set a color from startup
+            let R = Math.round(Math.random() * 255) // Sets random R value
+            let G = Math.round(Math.random() * 255) // G
+            let B = Math.round(Math.random() * 255) // B
+            
+            let hexR = R.toString(16) // Converts R to hex
+            let hexG = G.toString(16) // G
+            let hexB = B.toString(16) // B
+
+            if (R < 16) {hexR = '0' + hexR} // Attaches a '0' to the front of the hex value for R if less than 16 (0-f)
+            if (G < 16) {hexG = '0' + hexG} // G
+            if (B < 16) {hexB = '0' + hexB} // B
+
+            return `#${hexR}${hexG}${hexB}` // Returns the hex value
+          }
+
+          document.getElementById("hex1").value = starterColor() // Sets the first color input (to the starting color)
+          document.getElementById("hex2").value = starterColor() // Second
+          document.getElementById("hex3").value = starterColor() // Third
+          document.getElementById("hex4").value = starterColor() // Fourth
+          document.getElementById("hex5").value = starterColor() // Fifth
+
+          /////////////////////
+          // Update Function //
+          /////////////////////
+
+          setInterval(update, 1000/20) // Sets update to run 20 times per second
+
+          function update() { // Update function
+            const amount = document.getElementById("amount").value // Gets the amount of colors being inputed
+
+            if (amount == 2) { // If amount is 2
+              document.getElementById("choice3").style.display = "none" // Hides the 3rd input
+              document.getElementById("choice4").style.display = "none" // 4th
+              document.getElementById("choice5").style.display = "none" // 5th
+
+              document.getElementById("color1").style.background = `color-mix(in srgb, ${document.getElementById("hex1").value}, ${document.getElementById("hex2").value})` // Mixes colors 1 and 2
+            }
+            else if (amount == 3) { // If amount is 3
+              document.getElementById("choice3").style.display = "unset" // Shows the 3rd
+              document.getElementById("choice4").style.display = "none" // Hides the 4th
+              document.getElementById("choice5").style.display = "none" // 5th
+
+              document.getElementById("color1").style.background = `color-mix(in srgb, ${document.getElementById("hex1").value}, ${document.getElementById("hex2").value})` // Mixes colors 1 and 2
+              const betweenColor1 = document.getElementById("color1").style.background // Sets the betweenColor constant to the mix of color 1 and 2
+              document.getElementById("color1").style.background = `color-mix(in srgb, ${betweenColor1} 66.6666%, ${document.getElementById("hex3").value})` // Mixes the betweenColor with color 3
+            }
+            else if (amount == 4) { // If amount is 4
+              document.getElementById("choice3").style.display = "unset" // Shows the 3rd
+              document.getElementById("choice4").style.display = "unset" // Shows the 4th
+              document.getElementById("choice5").style.display = "none" // Hides the 5th
+
+              document.getElementById("color1").style.background = `color-mix(in srgb, ${document.getElementById("hex1").value}, ${document.getElementById("hex2").value})` // Mixes colors 1 and 2
+              const betweenColor1 = document.getElementById("color1").style.background // Sets the betweenColor1 constant to the mix of color 1 and 2
+              document.getElementById("color1").style.background = `color-mix(in srgb, ${document.getElementById("hex3").value}, ${document.getElementById("hex4").value})` // Mixes colors 3 and 4
+              const betweenColor2 = document.getElementById("color1").style.background // Sets the betweenColor2 constant to the mix of color 3 and 4
+              document.getElementById("color1").style.background = `color-mix(in srgb, ${betweenColor1}, ${betweenColor2})` // Mixes the betweenColors
+            }
+            else if (amount == 5) { // If amount is 5
+              document.getElementById("choice3").style.display = "unset" // Shows the 3rd
+              document.getElementById("choice4").style.display = "unset" // Shows the 4th
+              document.getElementById("choice5").style.display = "unset" // Shows the 5th
+
+              document.getElementById("color1").style.background = `color-mix(in srgb, ${document.getElementById("hex1").value}, ${document.getElementById("hex2").value})` // Mixes colors 1 and 2
+              const betweenColor1 = document.getElementById("color1").style.background // Sets the betweenColor1 constant to the mix of color 1 and 2
+              document.getElementById("color1").style.background = `color-mix(in srgb, ${document.getElementById("hex3").value}, ${document.getElementById("hex4").value})` // Mixes colors 3 and 4
+              const betweenColor2 = document.getElementById("color1").style.background // Sets the betweenColor2 constant to the mix of color 3 and 4
+              document.getElementById("color1").style.background = `color-mix(in srgb, ${betweenColor1}, ${betweenColor2})` // Mixes the betweenColors
+              const betweenColor3 = document.getElementById("color1").style.background // Sets the betweenColor3 constant to the mix of betweenColors 1 and 2
+              document.getElementById("color1").style.background = `color-mix(in srgb, ${betweenColor3} 80%, ${document.getElementById("hex5").value})` // Mixes betweenColor3 with color 5
+            }
+          }
+
+          //////////////////////
+          // Grab Color Value //
+          //////////////////////
+
+          const colorDisplay = document.getElementById('color1'); // Gets the color display element
+
+          setInterval(grabColor, 1000/20) // Sets grabColor to run 20 times per second
+        
+          function grabColor() { // Grabs the Color of the Color Display
+            const canvas = document.createElement('canvas'); // Creates a new canvas
+            canvas.width = colorDisplay.offsetWidth; // Sets the canvas width
+            canvas.height = colorDisplay.offsetHeight; // Sets the canvas height
+            const ctx = canvas.getContext('2d'); // Gets the 2d context
+            ctx.fillStyle = getComputedStyle(colorDisplay).backgroundColor; // Sets the fill style to be of the color display color
+            ctx.fillRect(0, 0, canvas.width, canvas.height); // Fills the canvas with the color display color
+        
+            const pixelData = ctx.getImageData(50, 50, 1, 1).data; // Gets the color data
+        
+            const color = rgbToHex(pixelData[0], pixelData[1], pixelData[2]); // Converts the color data to a hex
+        
+            document.getElementById('results').value = color; // Sets the result value to the hex
+          }
+        
+          function rgbToHex(r, g, b) { // Converts rgb to hex
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1); // Returns the hex
+          }
+        </script>       
+    </body>
+</html>

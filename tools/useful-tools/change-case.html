@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<meta name="robots" content="noindex" />
+<html>
+  <head>
+    <title>Case Changer | Awsome_Creeper9</title>
+    <link rel="icon" type="image/x-icon" href="/WebPageImages/favicon.png">
+    <link rel="stylesheet" href="/styles/tools.css" />
+  </head>
+
+  <style>
+    label {
+      display: block;
+      margin-bottom: .5vh;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 97.5vw;
+      padding: .5vh;
+      border: 1px solid #333 !important;
+      border-radius: .4vh;
+      margin-bottom: 1vh;
+      background: rgb(30, 30, 30);
+    }
+
+    .radiolabel{
+      display: inline !important;
+    }
+  </style>
+  <body>
+    <h1>Case Changer</h1>
+    <div>
+      <label for="inputText">Enter Text:</label>
+      <textarea autocomplete="off" id="inputText" rows="10" cols="50"></textarea>
+    </div>
+    <div>
+      <label for="Case">Case:</label>
+      <div id="Case">
+        <input autocomplete="off" type="radio" id="uppercase" value="uppercase" name="case" />
+        <label for="uppercase" class="radiolabel">Uppercase</label><br>
+        <input autocomplete="off" type="radio" id="lowercase" value="lowercase" name="case" style="margin-bottom: 1.5vh;" />
+        <label for="lowercase" class="radiolabel">Lowercase</label>
+      </div>
+    </div>
+    <div>
+      <button id="changeButton">Change Case</button>
+      <label class="custom-file-upload">
+        Upload Text File...<input type="file" id="fileInput" style="display: none" />
+      </label>
+    </div>
+    <div>
+      <label for="outputText">Output:</label>
+      <textarea autocomplete="off" id="outputText" rows="10" cols="50"></textarea>
+    </div>
+    <div>
+      <button id="copyButton">Copy Text</button>
+    </div>
+
+    <script>
+      /////////////////////
+      // EVENT LISTENERS //
+      /////////////////////
+
+      const changeButton = document.getElementById("changeButton");
+      changeButton.addEventListener("click", changeCase);
+
+      const fileInput = document.getElementById("fileInput");
+      fileInput.addEventListener("change", uploadFile);
+
+      const copyButton = document.getElementById("copyButton")
+      copyButton.addEventListener("click", copyText);
+
+      ///////////////
+      // FUNCTIONS //
+      ///////////////
+
+      function changeCase() { // Swaps Case of String
+        const inputText = document.getElementById("inputText").value; //Gets Input String
+        const upperCase = document.getElementById("uppercase"); // Gets the Uppercase Radio Element
+        const lowerCase = document.getElementById("lowercase"); // Gets the Lowercase Radio Element
+        if (lowerCase.checked) {document.getElementById("outputText").value = inputText.toLowerCase();} // If Lowercase Checked - Converts Input to Lowercase
+        else if (upperCase.checked) {document.getElementById("outputText").value = inputText.toUpperCase()} // If Uppercase Checked - Converts Input to Uppercase
+        else {document.getElementById("outputText").value = inputText} // If None of the Radio Buttons are Checked - Does Nothing
+      }
+
+      function uploadFile() { // Uploads File to Input
+        const file = fileInput.files[0]; // Gets File (only the first if multiple are selected)
+        if (file) { // Checks to make sure a file was uploaded
+          const reader = new FileReader(); // Creates a new FileReader
+          reader.onload = function (event) { // When the file loads, runs this function
+            const fileContent = event.target.result; // Sets fileContent constant to the content given from the inputted file
+            document.getElementById("inputText").value = fileContent; // Sets Input Text to the content
+          };
+          reader.readAsText(file); // Reads the file (as a text file)
+        }
+      }
+
+      function copyText() { // Copies text from output to clipboard
+        document.getElementById("outputText").select(); // Selects the text in the output
+        document.execCommand('copy'); // Copies the text
+        copyButton.innerHTML = "Text Copied" // Changes the button text to confirm the text was coppied
+        setTimeout(function () {copyButton.innerHTML = "Copy Text"}, 1000) // Changes the button text back after 1 second
+      }
+    </script>
+  </body>
+</html>

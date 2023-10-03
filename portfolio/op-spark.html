@@ -2,8 +2,8 @@
 <html>
     <head>
         <title>Portfolio | Awsome_Creeper9</title>
-        <link rel="icon" type="image/x-icon" href="WebPageImages/favicon.png">
-        <link id="themesheet" rel="stylesheet" href="styles/frontpage-css.css" />
+        <link rel="icon" type="image/x-icon" href="/WebPageImages/favicon.png">
+        <link id="themesheet" rel="stylesheet" href="/styles/frontpage-css.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
     </head>
     <body>
@@ -16,13 +16,13 @@
             <h1>Awsome_Creeper9's Website</h1>
             <ul id="nav-ul">
                <li class="nav-li">
-               <a class="nav-a" href="index.html">Home</a>
+               <a class="nav-a" href="/index.html">Home</a>
              </li>
              <li class="nav-li location">
-               <a class="nav-a" href="portfolio.html">Portfolio</a>
+               <a class="nav-a" href="/portfolio/">Portfolio</a>
              </li>
              <li class="nav-li">
-                <a class="nav-a" href="tools.html">Tools</a>
+                <a class="nav-a" href="/tools/">Tools</a>
             </li>
          </ul>
      </nav>
@@ -31,10 +31,10 @@
             <nav id="portnav">
                 <ul id="portnav-ul">
                     <li class="nav-li">
-                    <a class="nav-a" href="portfolio.html">Personal</a>
+                    <a class="nav-a" href="/portfolio/">Personal</a>
                   </li>
                   <li class="nav-li location">
-                    <a class="nav-a" href="op-spark-portfolio.html">Operation Spark</a>
+                    <a class="nav-a" href="/portfolio/op-spark.html">Operation Spark</a>
                   </li>
               </ul>
             </nav>
@@ -75,13 +75,13 @@
                     darkmode.style.display = 'none'
                     lightmode.style.display = 'unset'
                     hasThemeCookie = true
-                    theme.setAttribute('href', 'styles/frontpage-css.css')
+                    theme.setAttribute('href', '/styles/frontpage-css.css')
                 }
                 else if (document.cookie[i]+document.cookie[i+1]+document.cookie[i+5]+document.cookie[i+6] === 'moli'){
                     darkmode.style.display = 'unset'
                     lightmode.style.display = 'none'
                     hasThemeCookie = true
-                    theme.setAttribute('href', 'styles/frontpage-css-light.css')
+                    theme.setAttribute('href', '/styles/frontpage-css-light.css')
                 }
             }
             if (!hasThemeCookie) {
