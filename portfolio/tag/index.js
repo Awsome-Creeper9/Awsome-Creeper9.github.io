@@ -340,7 +340,7 @@ setInterval( () => {
     document.getElementById("p2Cooldown").innerHTML = `Dash Cooldown: ${player2Info.dashCooldown} seconds`;
     document.getElementById("p3Cooldown").innerHTML = `Dash Cooldown: ${player3Info.dashCooldown} seconds`;
     document.getElementById("p4Cooldown").innerHTML = `Dash Cooldown: ${player4Info.dashCooldown} seconds`;
-    document.getElementById("tagCooldown").innerHTML = `Tag Cooldown: {$+ }tagCooldown} seconds`;
+    document.getElementById("tagCooldown").innerHTML = `Tag Cooldown: ${tagCooldown} seconds`;
     if (timeElapsed >= 60) {
         timeMinutes = Math.floor(timeElapsed / 60);
         timeSeconds = timeElapsed % 60;
@@ -564,7 +564,7 @@ function collisionCheck(p1, p2) {
         p1.tagged = false;
         p1.dashCooldown = 0;
         tagCooldown = settings.tagCooldown;
-        document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+        document.getElementById("tagCooldown").innerHTML = `Tag Cooldown: ${tagCooldown} seconds`;
         if (settings.gameType === "Tag Timer") {
             tagTimer = settings.gameTimeLimit;
         }
@@ -574,7 +574,7 @@ function collisionCheck(p1, p2) {
         p2.tagged = false;
         p2.dashCooldown = 0;
         tagCooldown = settings.tagCooldown;
-        document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+        document.getElementById("tagCooldown").innerHTML = `Tag Cooldown: ${tagCooldown} seconds`;
         if (settings.gameType === "Tag Timer") {
             tagTimer = settings.gameTimeLimit;
         }
