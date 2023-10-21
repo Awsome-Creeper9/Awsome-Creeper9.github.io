@@ -331,20 +331,19 @@ document.addEventListener("keyup", (e) => {
 })
 
 setInterval( () => {
-    if (!paused) {player1Info.dashCooldown = (player1Info.dashCooldown > 0) ? player1Info.dashCooldown - 1 : 0;}
-    if (!paused) {player2Info.dashCooldown = (player2Info.dashCooldown > 0) ? player2Info.dashCooldown - 1 : 0;}
-    if (!paused) {player3Info.dashCooldown = (player3Info.dashCooldown > 0) ? player3Info.dashCooldown - 1 : 0;}
-    if (!paused) {player4Info.dashCooldown = (player4Info.dashCooldown > 0) ? player4Info.dashCooldown - 1 : 0;}
-    if (!paused) {tagCooldown = (tagCooldown > 0) ? tagCooldown - 1 : 0;}
-    document.getElementById("p1Cooldown").innerHTML = "Dash Cooldown: " + player1Info.dashCooldown + " seconds";
-    document.getElementById("p2Cooldown").innerHTML = "Dash Cooldown: " + player2Info.dashCooldown + " seconds";
-    document.getElementById("p3Cooldown").innerHTML = "Dash Cooldown: " + player3Info.dashCooldown + " seconds";
-    document.getElementById("p4Cooldown").innerHTML = "Dash Cooldown: " + player4Info.dashCooldown + " seconds";
-    document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
-
     if (!paused) {
+        player1Info.dashCooldown = (player1Info.dashCooldown > 0) ? player1Info.dashCooldown - 1 : 0;
+        player2Info.dashCooldown = (player2Info.dashCooldown > 0) ? player2Info.dashCooldown - 1 : 0;
+        player3Info.dashCooldown = (player3Info.dashCooldown > 0) ? player3Info.dashCooldown - 1 : 0;
+        player4Info.dashCooldown = (player4Info.dashCooldown > 0) ? player4Info.dashCooldown - 1 : 0;
+        tagCooldown = (tagCooldown > 0) ? tagCooldown - 1 : 0;
         timeElapsed += 1;
     }
+    document.getElementById("p1Cooldown").innerHTML = `Dash Cooldown: ${player1Info.dashCooldown} seconds`;
+    document.getElementById("p2Cooldown").innerHTML = `Dash Cooldown: ${player2Info.dashCooldown} seconds`;
+    document.getElementById("p3Cooldown").innerHTML = `Dash Cooldown: ${player3Info.dashCooldown} seconds`;
+    document.getElementById("p4Cooldown").innerHTML = `Dash Cooldown: ${player4Info.dashCooldown} seconds`;
+    document.getElementById("tagCooldown").innerHTML = `Tag Cooldown: {$+ }tagCooldown} seconds`;
     if (timeElapsed >= 60) {
         timeMinutes = Math.floor(timeElapsed / 60);
         timeSeconds = timeElapsed % 60;
@@ -353,17 +352,14 @@ setInterval( () => {
         timeMinutes = 0;
         timeSeconds = timeElapsed;
     }
-
     if (timeSeconds < 10) {
         timeSeconds = "0" + timeSeconds;
     }
-
     document.getElementById("time").innerHTML = "Time Elapsed: " + timeMinutes + ":" + timeSeconds
 
     if (player1Info.tagged === true && !paused) {
         player1Info.totalTagTime++
     }
-
     if (player1Info.totalTagTime >= 60) {
         player1Info.totalTagMinutes = Math.floor(player1Info.totalTagTime / 60);
         player1Info.totalTagSeconds = player1Info.totalTagTime % 60;
@@ -372,7 +368,6 @@ setInterval( () => {
         player1Info.totalTagMinutes = 0;
         player1Info.totalTagSeconds = player1Info.totalTagTime;
     }
-
     if (player1Info.totalTagSeconds < 10) {
         player1Info.totalTagSeconds = "0" + player1Info.totalTagSeconds;
     }
@@ -380,7 +375,6 @@ setInterval( () => {
     if (player2Info.tagged === true && !paused) {
         player2Info.totalTagTime++
     }
-
     if (player2Info.totalTagTime >= 60) {
         player2Info.totalTagMinutes = Math.floor(player2Info.totalTagTime / 60);
         player2Info.totalTagSeconds = player2Info.totalTagTime % 60;
@@ -389,7 +383,6 @@ setInterval( () => {
         player2Info.totalTagMinutes = 0;
         player2Info.totalTagSeconds = player2Info.totalTagTime;
     }
-
     if (player2Info.totalTagSeconds < 10) {
         player2Info.totalTagSeconds = "0" + player2Info.totalTagSeconds;
     }
@@ -397,7 +390,6 @@ setInterval( () => {
     if (player3Info.tagged === true && !paused) {
         player3Info.totalTagTime++
     }
-
     if (player3Info.totalTagTime >= 60) {
         player3Info.totalTagMinutes = Math.floor(player3Info.totalTagTime / 60);
         player3Info.totalTagSeconds = player3Info.totalTagTime % 60;
@@ -406,7 +398,6 @@ setInterval( () => {
         player3Info.totalTagMinutes = 0;
         player3Info.totalTagSeconds = player3Info.totalTagTime;
     }
-
     if (player3Info.totalTagSeconds < 10) {
         player3Info.totalTagSeconds = "0" + player3Info.totalTagSeconds;
     }
@@ -414,7 +405,6 @@ setInterval( () => {
     if (player4Info.tagged === true && !paused) {
         player4Info.totalTagTime++
     }
-
     if (player4Info.totalTagTime >= 60) {
         player4Info.totalTagMinutes = Math.floor(player4Info.totalTagTime / 60);
         player4Info.totalTagSeconds = player4Info.totalTagTime % 60;
@@ -423,11 +413,9 @@ setInterval( () => {
         player4Info.totalTagMinutes = 0;
         player4Info.totalTagSeconds = player4Info.totalTagTime;
     }
-
     if (player4Info.totalTagSeconds < 10) {
         player4Info.totalTagSeconds = "0" + player4Info.totalTagSeconds;
     }
-
     document.getElementById('p1TagTime').innerHTML = "Total Time Tagged: " + player1Info.totalTagMinutes + ":" + player1Info.totalTagSeconds;
     document.getElementById('p2TagTime').innerHTML = "Total Time Tagged: " + player2Info.totalTagMinutes + ":" + player2Info.totalTagSeconds;
     document.getElementById('p3TagTime').innerHTML = "Total Time Tagged: " + player3Info.totalTagMinutes + ":" + player3Info.totalTagSeconds;
@@ -470,7 +458,6 @@ setInterval( () => {
     }
 
     if (settings.gameType === "Tag Time Limited") {
-
         if (player1Info.totalTagTime >= settings.gameTimeLimit) {
             alert(`Game Over!\nPlayer 1 Loses!`)
             paused = true;
@@ -530,7 +517,6 @@ setInterval( () => {
         document.getElementById('tagTimer').style.visibility = "visible";
         document.getElementById('sideDisplay').style.height= "210px";
         if (tagTimer < 0 || document.getElementById('gameTypeTime').value) {tagTimer = settings.gameTimeLimit}
-
         if (!paused && tagTimer > 0) {tagTimer--;}
         if (tagTimer <= 0) {
             if (player1Info.tagged) {
@@ -566,7 +552,6 @@ setInterval( () => {
         if (gameTimeSeconds < 10) {
             gameTimeSeconds = "0" + gameTimeSeconds;
         }
-
         document.getElementById('tagTimer').innerHTML = "Tag Timer: " + gameTimeMinutes + ":" + gameTimeSeconds
     }
     else {
@@ -575,6 +560,30 @@ setInterval( () => {
     }
 
 }, 1000)
+
+function collisionCheck(p1, p2) {
+    if (p1.tagged && tagCooldown === 0) {
+        p2.tagged = true;
+        p1.tagged = false;
+        p1.dashCooldown = 0;
+        tagCooldown = settings.tagCooldown;
+        document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+        if (settings.gameType === "Tag Timer") {
+            tagTimer = settings.gameTimeLimit
+        }
+    }
+    else if (p2.tagged && tagCooldown === 0) {
+        p1.tagged = true;
+        p2.tagged = false;
+        p2.dashCooldown = 0;
+        tagCooldown = settings.tagCooldown;
+        document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
+        if (settings.gameType === "Tag Timer") {
+            tagTimer = settings.gameTimeLimit
+        }
+    }
+
+}
 
 setInterval(update, 1000/50)
 
@@ -721,152 +730,25 @@ function update() {
     }
 
     if ((player1Info.x < player2Info.x + 50) && (player1Info.x + 50 > player2Info.x) && (player1Info.y < player2Info.y + 50) && (player1Info.y + 50 > player2Info.y)) {
-        if (player1Info.tagged && tagCooldown === 0) {
-            player2Info.tagged = true;
-            player1Info.tagged = false;
-            player1Info.dashCooldown = 0;
-            tagCooldown = settings.tagCooldown;
-            document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
-
-            if (settings.gameType === "Tag Timer") {
-                tagTimer = settings.gameTimeLimit
-            }
-        }
-        else if (player2Info.tagged && tagCooldown === 0) {
-            player1Info.tagged = true;
-            player2Info.tagged = false;
-            player2Info.dashCooldown = 0;
-            tagCooldown = settings.tagCooldown;
-            document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
-
-            if (settings.gameType === "Tag Timer") {
-                tagTimer = settings.gameTimeLimit
-            }
-        }
+        collisionCheck(player1Info, player2Info)
     }
     if (settings.players[2] !== "off") {
         if ((player1Info.x < player3Info.x + 50) && (player1Info.x + 50 > player3Info.x) && (player1Info.y < player3Info.y + 50) && (player1Info.y + 50 > player3Info.y)) {
-            if (player1Info.tagged && tagCooldown === 0) {
-                player3Info.tagged = true;
-                player1Info.tagged = false;
-                player1Info.dashCooldown = 0;
-                tagCooldown = settings.tagCooldown;
-                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
-
-                if (settings.gameType === "Tag Timer") {
-                    tagTimer = settings.gameTimeLimit
-                }
-            } else if (player3Info.tagged && tagCooldown === 0) {
-                player1Info.tagged = true;
-                player3Info.tagged = false;
-                player3Info.dashCooldown = 0;
-                tagCooldown = settings.tagCooldown;
-                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
-
-                if (settings.gameType === "Tag Timer") {
-                    tagTimer = settings.gameTimeLimit
-                }
-            }
+            collisionCheck(player1Info, player3Info)
         }
         if ((player3Info.x < player2Info.x + 50) && (player3Info.x + 50 > player2Info.x) && (player3Info.y < player2Info.y + 50) && (player3Info.y + 50 > player2Info.y)) {
-            if (player3Info.tagged && tagCooldown === 0) {
-                player2Info.tagged = true;
-                player3Info.tagged = false;
-                player3Info.dashCooldown = 0;
-                tagCooldown = settings.tagCooldown;
-                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
-
-                if (settings.gameType === "Tag Timer") {
-                    tagTimer = settings.gameTimeLimit
-                }
-            }
-            else if (player2Info.tagged && tagCooldown === 0) {
-                player3Info.tagged = true;
-                player2Info.tagged = false;
-                player2Info.dashCooldown = 0;
-                tagCooldown = settings.tagCooldown;
-                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
-
-                if (settings.gameType === "Tag Timer") {
-                    tagTimer = settings.gameTimeLimit
-                }
-            }
-        }
-        if (settings.players[3] !== "off") {
-            if ((player3Info.x < player4Info.x + 50) && (player3Info.x + 50 > player4Info.x) && (player3Info.y < player4Info.y + 50) && (player3Info.y + 50 > player4Info.y)) {
-                if (player3Info.tagged && tagCooldown === 0) {
-                    player4Info.tagged = true;
-                    player3Info.tagged = false;
-                    player3Info.dashCooldown = 0;
-                    tagCooldown = settings.tagCooldown;
-                    document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
-
-                    if (settings.gameType === "Tag Timer") {
-                        tagTimer = settings.gameTimeLimit
-                    }
-                }
-                else if (player4Info.tagged && tagCooldown === 0) {
-                    player3Info.tagged = true;
-                    player4Info.tagged = false;
-                    player4Info.dashCooldown = 0;
-                    tagCooldown = settings.tagCooldown;
-                    document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
-
-                    if (settings.gameType === "Tag Timer") {
-                        tagTimer = settings.gameTimeLimit
-                    }
-                }
-            }
+            collisionCheck(player3Info, player2Info)
         }
     }
     if (settings.players[3] !== "off") {
+        if ((player3Info.x < player4Info.x + 50) && (player3Info.x + 50 > player4Info.x) && (player3Info.y < player4Info.y + 50) && (player3Info.y + 50 > player4Info.y)) {
+            collisionCheck(player3Info, player4Info)
+        }
         if ((player1Info.x < player4Info.x + 50) && (player1Info.x + 50 > player4Info.x) && (player1Info.y < player4Info.y + 50) && (player1Info.y + 50 > player4Info.y)) {
-            if (player1Info.tagged && tagCooldown === 0) {
-                player4Info.tagged = true;
-                player1Info.tagged = false;
-                player1Info.dashCooldown = 0;
-                tagCooldown = settings.tagCooldown;
-                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
-
-                if (settings.gameType === "Tag Timer") {
-                    tagTimer = settings.gameTimeLimit
-                }
-            }
-            else if (player4Info.tagged && tagCooldown === 0) {
-                player1Info.tagged = true;
-                player4Info.tagged = false;
-                player4Info.dashCooldown = 0;
-                tagCooldown = settings.tagCooldown;
-                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
-
-                if (settings.gameType === "Tag Timer") {
-                    tagTimer = settings.gameTimeLimit
-                }
-            }
+            collisionCheck(player1Info, player4Info)
         }
         if ((player4Info.x < player2Info.x + 50) && (player4Info.x + 50 > player2Info.x) && (player4Info.y < player2Info.y + 50) && (player4Info.y + 50 > player2Info.y)) {
-            if (player4Info.tagged && tagCooldown === 0) {
-                player2Info.tagged = true;
-                player4Info.tagged = false;
-                player4Info.dashCooldown = 0;
-                tagCooldown = settings.tagCooldown;
-                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
-
-                if (settings.gameType === "Tag Timer") {
-                    tagTimer = settings.gameTimeLimit
-                }
-            }
-            else if (player2Info.tagged && tagCooldown === 0) {
-                player4Info.tagged = true;
-                player2Info.tagged = false;
-                player2Info.dashCooldown = 0;
-                tagCooldown = settings.tagCooldown;
-                document.getElementById("tagCooldown").innerHTML = "Tag Cooldown: " + tagCooldown + " seconds";
-
-                if (settings.gameType === "Tag Timer") {
-                    tagTimer = settings.gameTimeLimit
-                }
-            }
+            collisionCheck(player4Info, player2Info)
         }
     }
 
