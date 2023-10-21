@@ -10,17 +10,12 @@ let timeElapsed = 0,
 let settings = {
     gameType: "Freeplay",
     gameTimeLimit: 120,
-    players: 2, //for future needs
     tagCooldown: 3,
     dashCooldown: 10,
     edgeBehavior: "Wall",
     playerSpeed: 10,
-    players: {
-        player1: "player",
-        player2: "player",
-        player3: "off",
-        player4: "off"
-    }
+    players: ["player", "player", "off", "off"],
+    totalPlayerCount: 0,
 }
 
 let player1Info = {
@@ -74,35 +69,14 @@ let player4Info = {
 
 function startPlayer() {
     let startingPlayer;
-    if (settings.players.player3 !== "off") {
-        if (settings.players.player4 !== "off") {
-            startingPlayer = Math.random()
-            if (startingPlayer < .25) {
-                player1Info.tagged = true
-            } else if (startingPlayer < .5) {
-                player2Info.tagged = true
-            } else if (startingPlayer < .75) {
-                player3Info.tagged = true
-            } else {
-                player4Info.tagged = true
-            }
-        }
-        startingPlayer = Math.random()
-        if (startingPlayer < .33) {
-            player1Info.tagged = true
-        } else if (startingPlayer < .66) {
-            player2Info.tagged = true
-        } else {
-            player3Info.tagged = true
-        }
-    } else {
-        startingPlayer = Math.round(Math.random())
-        if (startingPlayer === 0) {
-            player1Info.tagged = true
-        } else if (startingPlayer === 1) {
-            player2Info.tagged = true
-        }
+    for (let i of settings.players) {
+        settings.totalPlayerCount = (i !== "off") ? settings.totalPlayerCount + 1 : settings.totalPlayerCount
     }
+    startingPlayer = Math.floor(Math.random() * settings.totalPlayerCount);
+    (startingPlayer === 0) && (player1Info.tagged = true);
+    (startingPlayer === 1) && (player2Info.tagged = true);
+    (startingPlayer === 2) && (player3Info.tagged = true);
+    (startingPlayer === 3) && (player4Info.tagged = true);
 }
 startPlayer()
 
@@ -605,7 +579,7 @@ setInterval( () => {
 setInterval(update, 1000/50)
 
 function update() {
-    if (settings.players.player3 === "off") {
+    if (settings.players[2] === "off") {
         document.getElementById("player3").style.visibility = "hidden"
         document.getElementById('p3Display').style.visibility = "hidden"
     }
@@ -613,7 +587,7 @@ function update() {
         document.getElementById("player3").style.visibility = "visible"
         document.getElementById('p3Display').style.visibility = "visible"
     }
-    if (settings.players.player4 === "off") {
+    if (settings.players[3] === "off") {
         document.getElementById("player4").style.visibility = "hidden"
         document.getElementById('p4Display').style.visibility = "hidden"
     }
@@ -770,7 +744,7 @@ function update() {
             }
         }
     }
-    if (settings.players.player3 !== "off") {
+    if (settings.players[2] !== "off") {
         if ((player1Info.x < player3Info.x + 50) && (player1Info.x + 50 > player3Info.x) && (player1Info.y < player3Info.y + 50) && (player1Info.y + 50 > player3Info.y)) {
             if (player1Info.tagged && tagCooldown === 0) {
                 player3Info.tagged = true;
@@ -818,7 +792,7 @@ function update() {
                 }
             }
         }
-        if (settings.players.player4 !== "off") {
+        if (settings.players[3] !== "off") {
             if ((player3Info.x < player4Info.x + 50) && (player3Info.x + 50 > player4Info.x) && (player3Info.y < player4Info.y + 50) && (player3Info.y + 50 > player4Info.y)) {
                 if (player3Info.tagged && tagCooldown === 0) {
                     player4Info.tagged = true;
@@ -845,7 +819,7 @@ function update() {
             }
         }
     }
-    if (settings.players.player4 !== "off") {
+    if (settings.players[3] !== "off") {
         if ((player1Info.x < player4Info.x + 50) && (player1Info.x + 50 > player4Info.x) && (player1Info.y < player4Info.y + 50) && (player1Info.y + 50 > player4Info.y)) {
             if (player1Info.tagged && tagCooldown === 0) {
                 player4Info.tagged = true;
@@ -1082,16 +1056,16 @@ document.getElementById("speed1000").addEventListener("click", () => {
 })
 
 document.getElementById("players3").addEventListener("click", () => {
-    if (settings.players.player3 === "off") {
-        settings.players.player3 = "player"
+    if (settings.players[2] === "off") {
+        settings.players[2] = "player"
         document.getElementById("players3").innerHTML = "P3: On"
         document.getElementById("players3").classList.add("on");
         document.getElementById("players3").classList.remove("off")
         document.getElementById("players4").style.display = "inline-block"
     }
-    else if (settings.players.player3 === "player") {
-        settings.players.player3 = "off"
-        settings.players.player4 = "off"
+    else if (settings.players[2] === "player") {
+        settings.players[2] = "off"
+        settings.players[3] = "off"
         document.getElementById("players3").innerHTML = "P3: Off"
         document.getElementById("players4").innerHTML = "P4: Off"
         document.getElementById("players3").classList.add("off");
@@ -1103,14 +1077,14 @@ document.getElementById("players3").addEventListener("click", () => {
     startPlayer()
 })
 document.getElementById("players4").addEventListener("click", () => {
-    if (settings.players.player4 === "off") {
-        settings.players.player4 = "player"
+    if (settings.players[3] === "off") {
+        settings.players[3] = "player"
         document.getElementById("players4").innerHTML = "P4: On"
         document.getElementById("players4").classList.add("on");
         document.getElementById("players4").classList.remove("off")
     }
-    else if (settings.players.player4 === "player") {
-        settings.players.player4 = "off"
+    else if (settings.players[3] === "player") {
+        settings.players[3] = "off"
         document.getElementById("players4").innerHTML = "P4: Off"
         document.getElementById("players4").classList.add("off");
         document.getElementById("players4").classList.remove("on")
