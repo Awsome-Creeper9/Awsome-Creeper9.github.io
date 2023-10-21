@@ -6,7 +6,6 @@ let timeElapsed = 0,
     gameTimeSeconds = 0,
     gameTimeMinutes = 0,
     tagTimer = -1;
-
 let settings = {
     gameType: "Freeplay",
     gameTimeLimit: 120,
@@ -17,7 +16,6 @@ let settings = {
     players: ["player", "player", "off", "off"],
     totalPlayerCount: 0,
 }
-
 let player1Info = {
     x: 10 + 250,
     y: 10 + 200,
@@ -259,7 +257,6 @@ document.addEventListener("keydown", (e) => {
         }
     }
 })
-
 document.addEventListener("keyup", (e) => {
     if (e.code === 'KeyW' && player1Info.direction !== "down") {
         player1Info.speedy = 0;
@@ -582,11 +579,9 @@ function collisionCheck(p1, p2) {
             tagTimer = settings.gameTimeLimit
         }
     }
-
 }
 
 setInterval(update, 1000/50)
-
 function update() {
     if (settings.players[2] === "off") {
         document.getElementById("player3").style.visibility = "hidden"
@@ -612,7 +607,6 @@ function update() {
     player3Info.y += player3Info.speedy;
     player4Info.x += player4Info.speedx;
     player4Info.y += player4Info.speedy;
-
     document.getElementById("player1").style.top = player1Info.y + "px";
     document.getElementById("player1").style.left = player1Info.x + "px";
     document.getElementById("player2").style.left = player2Info.x + "px";
@@ -635,7 +629,6 @@ function update() {
         if (player1Info.y > 675 - 50 + 10) {
             player1Info.y = 0 + 10;
         }
-
         if (player2Info.x < 0 + 10) {
             player2Info.x = 1313 - 50 + 10;
         }
@@ -648,7 +641,6 @@ function update() {
         if (player2Info.y > 675 - 50 + 10) {
             player2Info.y = 0 + 10;
         }
-
         if (player3Info.x < 0 + 10) {
             player3Info.x = 1313 - 50 + 10;
         }
@@ -661,7 +653,6 @@ function update() {
         if (player3Info.y > 675 - 50 + 10) {
             player3Info.y = 0 + 10;
         }
-
         if (player4Info.x < 0 + 10) {
             player4Info.x = 1313 - 50 + 10;
         }
@@ -688,7 +679,6 @@ function update() {
         if (player1Info.y > 675 - 50 + 10) {
             player1Info.y = 675 - 50 + 10;
         }
-
         if (player2Info.x < 0 + 10) {
             player2Info.x = 0 + 10;
         }
@@ -701,7 +691,6 @@ function update() {
         if (player2Info.y > 675 - 50 + 10) {
             player2Info.y = 675 - 50 + 10;
         }
-
         if (player3Info.x < 0 + 10) {
             player3Info.x = 0 + 10;
         }
@@ -714,7 +703,6 @@ function update() {
         if (player3Info.y > 675 - 50 + 10) {
             player3Info.y = 675 - 50 + 10;
         }
-
         if (player4Info.x < 0 + 10) {
             player4Info.x = 0 + 10;
         }
@@ -751,7 +739,6 @@ function update() {
             collisionCheck(player4Info, player2Info)
         }
     }
-
     if (player1Info.tagged) {
         document.getElementById("player1Tag").style.visibility = "visible";
         document.getElementById("player2Tag").style.visibility = "hidden";
@@ -839,15 +826,14 @@ function update() {
 
     document.getElementById("gameTypeOption").innerHTML = "Game Type: " + settings.gameType + `${(settings.gameType === "Time Limited" || settings.gameType === "Tag Time Limited" || settings.gameType === "Tag Timer") ? " - " + settings.gameTimeLimit + "s" : ""}`
     document.getElementById("gameType").innerHTML = settings.gameType + ":"
-
     if (document.getElementById("gameTypeTime").value) {
         settings.gameTimeLimit = Number(document.getElementById("gameTypeTime").value);
     }
 
-    document.getElementById("edgeBehavior").innerHTML = "Edge Behavior: " + settings.edgeBehavior
-    document.getElementById("dashCooldownTime").innerHTML = "Dash Cooldown: " + settings.dashCooldown + "s"
-    document.getElementById("tagCooldownTime").innerHTML = "Tag Cooldown: " + settings.tagCooldown + "s"
-    document.getElementById("playerSpeed").innerHTML = "Player Speed: " + parseInt(settings.playerSpeed * 50) + "px/s"
+    document.getElementById("edgeBehavior").innerHTML = `Edge Behavior: ${settings.edgeBehavior}`
+    document.getElementById("dashCooldownTime").innerHTML = `Dash Cooldown: ${settings.dashCooldown} s`
+    document.getElementById("tagCooldownTime").innerHTML = `Tag Cooldown: ${settings.tagCooldown} s`
+    document.getElementById("playerSpeed").innerHTML = `Player Speed: ${parseInt(settings.playerSpeed * 50)} px/s`
 
     if (document.getElementById("dashInput").value) {
         settings.dashCooldown = Number(document.getElementById("dashInput").value);
@@ -865,30 +851,24 @@ function settingsOpen() {
     document.getElementById("menu").style.visibility = "visible";
     paused = true;
 }
-
 document.getElementById("gameFreeplay").addEventListener("click", () => {
     settings.gameType = "Freeplay";
 })
-
 document.getElementById("gameTimeLimit").addEventListener("click", () => {
     settings.gameType = "Time Limited";
 })
-
 document.getElementById("gameTagTimeLimit").addEventListener("click", () => {
     settings.gameType = "Tag Time Limited";
 })
-
 document.getElementById("gameTagTimer").addEventListener("click", () => {
     settings.gameType = "Tag Timer";
 })
-
 document.getElementById("edgeWrap").addEventListener("click", () => {
     settings.edgeBehavior = "Wrap";
 })
 document.getElementById("edgeWall").addEventListener("click", () => {
     settings.edgeBehavior = "Wall";
 })
-
 document.getElementById("dash5s").addEventListener("click", () => {
     settings.dashCooldown = 5;
     document.getElementById("dashInput").value = ''
@@ -901,7 +881,6 @@ document.getElementById("dash30s").addEventListener("click", () => {
     settings.dashCooldown = 30;
     document.getElementById("dashInput").value = ''
 })
-
 document.getElementById("tag3s").addEventListener("click", () => {
     settings.tagCooldown = 3;
     document.getElementById("tagInput").value = ''
@@ -922,7 +901,6 @@ document.getElementById("tag60s").addEventListener("click", () => {
     settings.tagCooldown = 60;
     document.getElementById("tagInput").value = ''
 })
-
 document.getElementById("speed250").addEventListener("click", () => {
     settings.playerSpeed = 250/50;
     document.getElementById("speedInput").value = ''
@@ -936,7 +914,6 @@ document.getElementById("speed1000").addEventListener("click", () => {
     settings.playerSpeed = 1000/50;
     document.getElementById("speedInput").value = ''
 })
-
 document.getElementById("players3").addEventListener("click", () => {
     if (settings.players[2] === "off") {
         settings.players[2] = "player"
@@ -973,11 +950,9 @@ document.getElementById("players4").addEventListener("click", () => {
     }
     startPlayer()
 })
-
 document.getElementById("saveButton").addEventListener("click", () => {
     unpause()
 })
-
 function unpause() {
     if (((settings.gameType === "Time Limited" || settings.gameType === "Tag Time Limited" || settings.gameType === "Tag Timer") && (settings.gameTimeLimit >= 30 && (settings.gameTimeLimit % 2 === 0 || (settings.gameTimeLimit + 1) % 2 === 0))) || (settings.gameType === "Freeplay")) {
         if ((settings.tagCooldown % 2 === 0 || (settings.tagCooldown + 1) % 2 === 0) && (settings.tagCooldown > 0)) {
@@ -988,7 +963,7 @@ function unpause() {
                     paused = false;
                 }
                 else {
-                    alert("Player Speed must be a positive integer above 49");
+                    alert("Player Speed must be a positive number above 49");
                 }
             } else {
                 alert("Dash Cooldown must be a positive integer (or 0)");
