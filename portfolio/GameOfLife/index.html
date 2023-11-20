@@ -6,6 +6,10 @@
     <link rel="icon" type="image/x-icon" href="/WebPageImages/favicon.png">
 </head>
 <style>
+    * {
+        font-family: "Arial";
+    }
+
     body {
         background: #ffffdd;
     }
@@ -33,19 +37,27 @@
     }
 
     #start {
-        background:green;
+        background:#00aa00;
         width: 100px;
         height: 50px;
         color:white;
         text-align:center;
         line-height:50px;
         top:0px;
-        position:absolute;
+        position:fixed;
         user-select:none;
         cursor: pointer;
+        border-radius: 0px 0px 20px 20px;
+        transition: .25s;
+
+        &:hover {
+            background:#008800 !important;
+            height: 75px;
+            line-height:100px;
+        }
     }
     #stop {
-        background:red;
+        background:#ff0000;
         visibility:hidden;
         width: 100px;
         height: 50px;
@@ -53,12 +65,20 @@
         text-align:center;
         line-height:50px;
         top:0px;
-        position:absolute;
+        position:fixed;
         user-select:none;
         cursor: pointer;
+        border-radius: 0px 0px 20px 20px;
+        transition: .25s;
+
+        &:hover {
+            background:#dd0000 !important;
+            height: 75px;
+            line-height:100px;
+        }
     }
     #reset {
-        background:orange;
+        background:#ff8800;
         width: 100px;
         height: 50px;
         color:white;
@@ -66,12 +86,20 @@
         line-height:50px;
         left: 116px;
         top:0px;
-        position:absolute;
+        position:fixed;
         user-select:none;
         cursor: pointer;
+        border-radius: 0px 0px 20px 20px;
+        transition: .25s;
+
+        &:hover {
+            background:#dd6600 !important;
+            height: 75px;
+            line-height:100px;
+        }
     }
     #settings {
-        background:#808080;
+        background:#888888;
         width: 100px;
         height: 50px;
         color:white;
@@ -79,16 +107,24 @@
         line-height:50px;
         left: 224px;
         top:0px;
-        position:absolute;
+        position:fixed;
         user-select:none;
         cursor: pointer;
+        border-radius: 0px 0px 20px 20px;
+        transition: .25s;
+
+        &:hover {
+            background:#666666 !important;
+            height: 75px;
+            line-height:100px;
+        }
     }
 
     #options {
         background: #808080;
         width: 500px;
         height: 750px;
-        position: absolute;
+        position: fixed;
         left: calc(50% - 250px);
         visibility: hidden;
         border: 2px black solid;
@@ -168,6 +204,12 @@
         bottom: 25px;
         user-select:none;
         cursor: pointer;
+        border-radius: 10px;
+        transition: .25s;
+
+        &:hover {
+            background:#00dd00 !important;
+        }
     }
 </style>
 <body>

@@ -34,14 +34,6 @@ function createBoard() {
 function cellClick(element) {
     if (element.className === "dead") {
         element.setAttribute("class", "living");
-    } else if (element.className === "living") {
-        element.setAttribute("class", "dead");
-    }
-}
-
-function cellClick(element) {
-    if (element.className === "dead") {
-        element.setAttribute("class", "living");
     }
     else if (element.className === "living") {
         element.setAttribute("class", "dead");
