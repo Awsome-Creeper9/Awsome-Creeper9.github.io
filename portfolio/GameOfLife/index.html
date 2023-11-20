@@ -1,0 +1,195 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Conway's Game of Life | Awsome_Creeper9</title>
+    <link rel="icon" type="image/x-icon" href="/WebPageImages/favicon.png">
+</head>
+<style>
+    body {
+        background: #ffffdd;
+    }
+    #board {
+        background:black;
+        width: 750px;
+        height: 750px;
+        position:absolute;
+        left: calc(50% - 375px);
+    }
+
+    .living {
+        background:white;
+        width: 15px;
+        height: 15px;
+        position:absolute;
+        border:#555555 1px solid;
+    }
+    .dead {
+        background:black;
+        width: 15px;
+        height: 15px;
+        position:absolute;
+        border:#555555 1px solid;
+    }
+
+    #start {
+        background:green;
+        width: 100px;
+        height: 50px;
+        color:white;
+        text-align:center;
+        line-height:50px;
+        top:0px;
+        position:absolute;
+        user-select:none;
+        cursor: pointer;
+    }
+    #stop {
+        background:red;
+        visibility:hidden;
+        width: 100px;
+        height: 50px;
+        color:white;
+        text-align:center;
+        line-height:50px;
+        top:0px;
+        position:absolute;
+        user-select:none;
+        cursor: pointer;
+    }
+    #reset {
+        background:orange;
+        width: 100px;
+        height: 50px;
+        color:white;
+        text-align:center;
+        line-height:50px;
+        left: 116px;
+        top:0px;
+        position:absolute;
+        user-select:none;
+        cursor: pointer;
+    }
+    #settings {
+        background:#808080;
+        width: 100px;
+        height: 50px;
+        color:white;
+        text-align:center;
+        line-height:50px;
+        left: 224px;
+        top:0px;
+        position:absolute;
+        user-select:none;
+        cursor: pointer;
+    }
+
+    #options {
+        background: #808080;
+        width: 500px;
+        height: 750px;
+        position: absolute;
+        left: calc(50% - 250px);
+        visibility: hidden;
+        border: 2px black solid;
+        top: 50px;
+    }
+
+    .settingInput {
+        position: absolute;
+        width: 100px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        left: calc(50% - 50px);
+    }
+    #settingsTitle {
+        top: 0px !important;
+        translate: 0px -25px;
+    }
+    #widthLabel {
+        left: calc(50% - 225px) !important;
+        width: 450px !important;
+        position: absolute;
+        top: 30px;
+    }
+    #width {
+        position: absolute;
+        top: 80px;
+    }
+    #heightLabel {
+        left: calc(50% - 225px) !important;
+        width: 450px !important;
+        position: absolute;
+        top: 130px;
+    }
+    #height {
+        position: absolute;
+        top: 180px;
+    }
+    #deadCellLabel {
+        left: calc(50% - 225px) !important;
+        width: 450px !important;
+        position: absolute;
+        top: 230px;
+    }
+    #deadCell {
+        position: absolute;
+        top: 280px;
+    }
+    #livingCellLabel {
+        left: calc(50% - 225px) !important;
+        width: 450px !important;
+        position: absolute;
+        top: 330px;
+    }
+    #LivingCell {
+        position: absolute;
+        top: 380px;
+    }
+    #gridLabel {
+        left: calc(50% - 225px) !important;
+        width: 450px !important;
+        position: absolute;
+        top: 430px;
+    }
+    #grid {
+        position: absolute;
+        top: 480px;
+    }
+    #apply {
+        text-align: center;
+        position: absolute;
+        background:#00ff00;
+        line-height: 50px;
+        height: 50px;
+        width: 100px;
+        left: calc(50% - 50px);
+        bottom: 25px;
+        user-select:none;
+        cursor: pointer;
+    }
+</style>
+<body>
+    <div id="board"></div>
+    <div id="start">START</div>
+    <div id="stop">STOP</div>
+    <div id="reset">RESET</div>
+    <div id="settings">SETTINGS</div>
+    <div id="options">
+        <h1 id="settingsTitle" class="settingInput">Settings:</h1>
+        <label for="width" class="settingInput" id="widthLabel">Width (Default: 50):</label>
+        <input type="number" id="width" class="settingInput" value="50">
+        <label for="height" class="settingInput" id="heightLabel">Height (Default: 50):</label>
+        <input type="number" id="height" class="settingInput" value="50">
+        <label for="deadCell" class="settingInput" id="deadCellLabel"    >Dead Cell Color:</label>
+        <input type="color" id="deadCell" class="settingInput" value="#000000">
+        <label for="livingCell" class="settingInput" id="livingCellLabel">Living Cell Color:</label>
+        <input type="color" id="LivingCell" class="settingInput" value="#ffffff">
+        <label for="grid" class="settingInput" id="gridLabel">Grid Color:</label>
+        <input type="color" id="grid" class="settingInput" value="#555555">
+        <div id="apply">APPLY</div>
+    </div>
+</body>
+<script src="index.js"></script>
+</html>

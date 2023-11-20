@@ -103,12 +103,30 @@
         top: 0;
         color: white;
     }
+    p {
+        filter: drop-shadow(3.5px 3.5px 0px #353535);
+    }
+    splash {
+        text-align: center;
+        font-size: xx-large;
+        rotate: -30deg;
+        position: absolute;
+        z-index: 1000;
+        color: yellow;
+        left: calc(50% + 192px);
+        top: calc(20% - 10px);
+        filter: drop-shadow(3.5px 3.5px 0px #505035);
+        transition: 1s;
+        max-width: 500px;
+        min-width: 500px;
+    }
 </style>
 <body>
     <div id="title"></div>
+    <splash id="splash">Example Splash</splash>
     <div id="main-menu-buttons">
-        <div id="start-game" onclick="levelSet(1)">Start Game</div>
-        <div id="settings">Settings</div>
+        <div id="start-game" onclick="levelSet(1)"><p>Start Game</p></div>
+        <div id="settings"><p>Settings</p></div>
     </div>
     <div id="mini-title"></div>
     <div id="board" onclick="boardClick()"></div>
@@ -123,6 +141,10 @@
     ///////////////////////////////////////
     // STARTING VARIABLES / DECLARATIONS //
     ///////////////////////////////////////
+
+    let scaleCooldown = 0;
+    let splashes = ["Hello", "Clicked", "This is a splash message", "You will die", "I am inside of you computer."]
+    document.getElementById("splash").innerHTML = splashes[Math.floor(Math.random() * splashes.length)];
 
     let ClientWidth = window.innerWidth;
     let ClientHeight = window.innerHeight;
@@ -212,6 +234,8 @@
             document.getElementById("mini-title").style.visibility = "hidden";
             document.getElementById("title").style.visibility = "visible";
             document.getElementById("main-menu-buttons").style.visibility = "visible";
+            document.getElementById("splash").style.visibility = "visible";
+            scaleSplash();
         }
         else if (level == -1) {
             box.style.visibility = "hidden";
@@ -219,6 +243,7 @@
             document.getElementById("mini-title").style.visibility = "hidden";
             document.getElementById("title").style.visibility = "hidden";
             document.getElementById("main-menu-buttons").style.visibility = "hidden";
+            document.getElementById("splash").style.visibility = "hidden";
         }
         else if (level === -2) {
             box.style.visibility = "hidden";
@@ -226,6 +251,7 @@
             document.getElementById("mini-title").style.visibility = "hidden";
             document.getElementById("title").style.visibility = "hidden";
             document.getElementById("main-menu-buttons").style.visibility = "hidden";
+            document.getElementById("splash").style.visibility = "hidden";
         }
         else {
             box.style.visibility = "visible";
@@ -233,12 +259,25 @@
             document.getElementById("mini-title").style.visibility = "visible";
             document.getElementById("title").style.visibility = "hidden";
             document.getElementById("main-menu-buttons").style.visibility = "hidden";
+            document.getElementById("splash").style.visibility = "hidden";
         }
     }
 
     /////////////////////////////////////////
     // HELPER FUNCTIONS AND EVENT HANDLERS //
     /////////////////////////////////////////
+
+    function scaleSplash() {
+        if (document.getElementById("splash").style.scale === "1" && scaleCooldown <= 0) {
+            document.getElementById("splash").style.scale = "1.5";
+            scaleCooldown = 10;
+        }
+        else if (scaleCooldown <= 0) {
+            document.getElementById("splash").style.scale = "1";
+            scaleCooldown = 10;
+        }
+        scaleCooldown--;
+    }
 
     function boxClick() {
         console.log("clicked")
