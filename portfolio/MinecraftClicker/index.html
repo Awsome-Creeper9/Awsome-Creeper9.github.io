@@ -120,31 +120,36 @@
         max-width: 500px;
         min-width: 500px;
     }
+    #disclaimer {
+        position: absolute;
+        bottom: 0;
+        left: 20px;
+        color: white;
+        font-size: x-large;
+    }
 </style>
 <body>
     <div id="title"></div>
     <splash id="splash">Example Splash</splash>
     <div id="main-menu-buttons">
-        <div id="start-game" onclick="levelSet(1)"><p>Start Game</p></div>
+        <div id="start-game" onclick="increaseLevel()"><p>Start Game</p></div>
         <div id="settings"><p>Settings</p></div>
     </div>
     <div id="mini-title"></div>
-    <div id="board" onclick="boardClick()"></div>
+    <div id="board" onmousedown="boardClick()"></div>
     <div id="box" onmousedown="boxClick()"></div>
     <div id="info-box">
         <p id="player-health">Player Health: 20/20</p>
         <p id="enemy-health">Enemy Health: 20/20</p>
     </div>
+    <div id="disclaimer"><p>Minecraft Clicker is not affiliated with nor endorsed by Microsoft or Mojang Studios.</p></div>
 </body>
+<script src="scripts/splashes.js"></script>
+<script src="scripts/levelData.js"></script>
 <script>
-
     ///////////////////////////////////////
     // STARTING VARIABLES / DECLARATIONS //
     ///////////////////////////////////////
-
-    let scaleCooldown = 0;
-    let splashes = ["Hello", "Clicked", "This is a splash message", "You will die", "I am inside of you computer."]
-    document.getElementById("splash").innerHTML = splashes[Math.floor(Math.random() * splashes.length)];
 
     let ClientWidth = window.innerWidth;
     let ClientHeight = window.innerHeight;
@@ -160,6 +165,7 @@
     boardObj.right = (ClientWidth / 2) + (1500 / 2);
     boardObj.top = (ClientHeight / 2) - (750 / 2);
     boardObj.bottom = (ClientHeight / 2) + (750 / 2);
+
     let boxObj = {
         x: 500,
         y: 500,
@@ -168,12 +174,13 @@
         speedX: 10,
         speedY: 10,
         pathType: "linear",
+        maxEnemyHealth: 20
     }
 
     let playerHealth = 20;
     let enemyHealth = 20;
     let maxPlayerHealth = 20;
-    let maxEnemyHealth = 20;
+    // let maxEnemyHealth = 20;
 
     let level = 0;
 
@@ -220,7 +227,7 @@
         box.style.height = boxObj.height + "px";
 
         document.getElementById("player-health").innerHTML = `Player Health: ${playerHealth} / ${maxPlayerHealth}`;
-        document.getElementById("enemy-health").innerHTML = `Enemy Health: ${enemyHealth} / ${maxEnemyHealth}`;
+        document.getElementById("enemy-health").innerHTML = `Enemy Health: ${enemyHealth} / ${boxObj.maxEnemyHealth}`;
 
         if (enemyHealth <= 0) {
             increaseLevel();
@@ -234,24 +241,8 @@
             document.getElementById("mini-title").style.visibility = "hidden";
             document.getElementById("title").style.visibility = "visible";
             document.getElementById("main-menu-buttons").style.visibility = "visible";
-            document.getElementById("splash").style.visibility = "visible";
+            document.getElementById("splash").style.display = "unset";
             scaleSplash();
-        }
-        else if (level == -1) {
-            box.style.visibility = "hidden";
-            board.style.visibility = "hidden";
-            document.getElementById("mini-title").style.visibility = "hidden";
-            document.getElementById("title").style.visibility = "hidden";
-            document.getElementById("main-menu-buttons").style.visibility = "hidden";
-            document.getElementById("splash").style.visibility = "hidden";
-        }
-        else if (level === -2) {
-            box.style.visibility = "hidden";
-            board.style.visibility = "hidden";
-            document.getElementById("mini-title").style.visibility = "hidden";
-            document.getElementById("title").style.visibility = "hidden";
-            document.getElementById("main-menu-buttons").style.visibility = "hidden";
-            document.getElementById("splash").style.visibility = "hidden";
         }
         else {
             box.style.visibility = "visible";
@@ -259,24 +250,14 @@
             document.getElementById("mini-title").style.visibility = "visible";
             document.getElementById("title").style.visibility = "hidden";
             document.getElementById("main-menu-buttons").style.visibility = "hidden";
-            document.getElementById("splash").style.visibility = "hidden";
+            document.getElementById("splash").style.display = "none";
+            if (level == -1) {
+                // Options
+            }
+            else if (level === -2) {
+                //Dead
+            }
         }
-    }
-
-    /////////////////////////////////////////
-    // HELPER FUNCTIONS AND EVENT HANDLERS //
-    /////////////////////////////////////////
-
-    function scaleSplash() {
-        if (document.getElementById("splash").style.scale === "1" && scaleCooldown <= 0) {
-            document.getElementById("splash").style.scale = "1.5";
-            scaleCooldown = 10;
-        }
-        else if (scaleCooldown <= 0) {
-            document.getElementById("splash").style.scale = "1";
-            scaleCooldown = 10;
-        }
-        scaleCooldown--;
     }
 
     function boxClick() {
@@ -322,58 +303,16 @@
         boxObj.x = 0;
         boxObj.y = 0;
 
-        switch (level) {
-            case 0:
-                break;
-            case 1:
-                boxObj.pathType = "linear"
-                boxObj.speedX = 10;
-                boxObj.speedY = 10;
-                boxObj.height = 100;
-                boxObj.width = 100;
-                maxEnemyHealth = 20;
-                break;
-            case 2:
-                boxObj.pathType = "linear"
-                boxObj.speedX = 20;
-                boxObj.speedY = 20;
-                boxObj.height = 100;
-                boxObj.width = 100;
-                maxEnemyHealth = 30;
-                break;
-            case 3:
-                boxObj.pathType = "linear"
-                boxObj.speedX = 30;
-                boxObj.speedY = 30;
-                boxObj.height = 100;
-                boxObj.width = 100;
-                maxEnemyHealth = 40;
-                break;
-            case 4:
-                boxObj.pathType = "sin"
-                boxObj.speedX = 10;
-                boxObj.speedY = 10;
-                boxObj.height = 100;
-                boxObj.width = 100;
-                maxEnemyHealth = 20;
-                break;
-            case 5:
-                boxObj.pathType = "sin"
-                boxObj.speedX = 10;
-                boxObj.speedY = 10;
-                boxObj.height = 50;
-                boxObj.width = 50;
-                maxEnemyHealth = 30;
-                break;
-            default:
-                level = 1;
-                break;
-        }
-        enemyHealth = maxEnemyHealth;
+        boxObj = levelData[level];
+        enemyHealth = boxObj.maxEnemyHealth;
     }
 
-    function levelSet(num) {
+    function setLevel(num) {
         level = num;
+        if (level > 0) {
+            boxObj = levelData[level];
+            enemyHealth = boxObj.maxEnemyHealth;
+        }
     }
 </script>
 </html>
