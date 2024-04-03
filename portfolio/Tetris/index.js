@@ -18,6 +18,8 @@ const pieces = {
         [1, 1, 1, 1]] //Cyan (Line)
 }
 
+const pieceIDs = [["yellow", "#ff0"], ["purple", "#a0a"], ["blue", "#00f"], ["orange", "#ffa000"], ["green", "#0f0"], ["red", "#f00"], ["cyan", "#0ff"]];
+
 let boardCells = [];
 
 for (let i = 0; i < 10; i++) {
@@ -41,17 +43,81 @@ for (let i = 0; i < boardCells.length; i++) {
 
 // TEMP (Random Piece Button) (TRUE RANDOM; NOT 7-BAG)
 document.getElementById("rando").addEventListener("click", () => {
+    let color, pieceType;
     let randomInt = Math.floor(Math.random() * 6.99);
+    switch (randomInt) {
+        case 0:
+            color = "#ff0";
+            pieceType = "yellow";
+            break;
+        case 1:
+            color = "#a0a";
+            pieceType = "purple";
+            break;
+        case 2:
+            color = "#00f";
+            pieceType = "blue";
+            break;
+        case 3:
+            color = "#ffa000";
+            pieceType = "orange";
+            break;
+        case 4:
+            color = "#0f0";
+            pieceType = "green";
+            break;
+        case 5:
+            color = "#f00";
+            pieceType = "red";
+            break;
+        case 6:
+            color = "#0ff";
+            pieceType = "cyan";
+            break;
+    }
     let piece = pieces[randomInt];
     for (let i = 0; i < 2; i++) {
         for (let j = 0; j < 4; j++) {
             if (piece[i][j] === 1) {
                 console.log(`#${j+3},${i}`);
-                document.getElementById(`${j+3},${i}`).style.background = "#fff";
+                document.getElementById(`${j+3},${i}`).style.background = color;
+                document.getElementById(`${j+3},${i}`).classList.remove("yellow", "purple", "blue", "orange", "green", "red", "cyan");
+                document.getElementById(`${j+3},${i}`).classList.add(pieceType);
             }
             else {
                 document.getElementById(`${j+3},${i}`).style.background = "#000";
+                document.getElementById(`${j+3},${i}`).classList.remove("yellow", "purple", "blue", "orange", "green", "red", "cyan");
             }
         }
     }
 })
+
+setInterval(() => {
+    for (let k = 0; k < pieceIDs.length; k++) {
+        let keep = [];
+        document.querySelectorAll(`.${pieceIDs[k][0]}`).forEach((element) => {
+            let cellID = element.getAttribute("id");
+            let xCoord = cellID.split(",")[0];
+            let yCoord = cellID.split(",")[1];
+            keep.push(document.getElementById(`${xCoord},${parseInt(yCoord) + 1}`));
+            document.getElementById(`${xCoord},${parseInt(yCoord) + 1}`).classList.add(pieceIDs[k][0]);
+            document.getElementById(`${xCoord},${parseInt(yCoord) + 1}`).style.background = pieceIDs[k][1];
+        })
+        document.querySelectorAll(`.${pieceIDs[k][0]}`).forEach((element) => {
+            let inKeep = false;
+            for (let i = 0; i < keep.length; i++) {
+                if (element === keep[i]) {
+                    inKeep = true;
+                }
+            }
+            if (!inKeep) {
+                element.classList.remove(pieceIDs[k][0]);
+            }
+        })
+    }
+    document.querySelectorAll(".cell").forEach((element) => {
+        if (element.classList[1] !== "yellow" && element.classList[1] !== "purple" && element.classList[1] !== "blue" && element.classList[1] !== "orange" && element.classList[1] !== "green" && element.classList[1] !== "red" && element.classList[1] !== "cyan") {
+            element.style.background = "#000";
+        }
+    })
+}, 1000)
