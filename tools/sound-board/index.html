@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sound Board | Awsome_Creeper9</title>
+        <link rel="icon" type="image/x-icon" href="/WebPageImages/favicon.png">
+        <link rel="stylesheet" href="/styles/tools.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    </head>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 1,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 30
+        }
+        * :not(body) {
+            background: transparent;
+        }
+        #content {
+            display: flex;
+            flex-direction: row;
+            max-width: 100%;
+            flex-flow: wrap;
+        }
+        .soundItem {
+            border: #fff 2px solid;
+            border-radius: 20px;
+            background: #252525;
+            width: 200px;
+            height:290px;
+            display: flex;
+            flex-direction: column;
+            margin: 20px
+        }
+        .textLabel {
+            display: flex;
+            flex-direction: row;
+            margin-left: 10px;
+        }
+        .imgLabel {
+            position: relative;
+            margin: 20px auto;
+            left: 0;
+            right: 0;
+            height: 130px;
+        }
+        .soundName {
+            align-self: center;
+            text-align: center;
+            font-size: 30px;
+            max-width: 148px;
+            overflow-wrap: anywhere;
+            max-height: 75px;
+            overflow-y: hidden;
+        }
+        .playSound {
+            font-size: 30px;
+            align-self: center;
+            margin-right: 5px;
+            &:hover {
+                cursor: pointer;
+                color: #cccccc;
+            }
+        }
+        .keyBindLabel {
+            margin-left: 10px;
+            padding: 0 10px 0 10px;
+            font-size: 30px;
+            border: #fff 1px solid;
+            width: fit-content;
+            background: #151515;
+            max-width: 158px;
+            max-height: 36px;
+            overflow-y: auto;
+            overflow-wrap: anywhere;
+            &:hover {
+                cursor: pointer;
+                background: #1c1c1c;
+            }
+        }
+    </style>
+    <script>
+        let keyBinds = {
+            soundToKey: {
+                'creeper-hiss': 'KeyC',
+                'dolphin-noise': 'KeyD',
+                'censor-beep': 'KeyF',
+                'discord-notif': 'KeyP',
+                'vine-boom': 'KeyV',
+                'mario-mushroom': 'ShiftLeft',
+                'mario-jump': 'Space',
+                'mario-coin': 'Enter',
+                'skull-trumpet': 'Slash',
+                'wrong-buzzer': 'KeyX',
+                'car-horn': 'ArrowUp',
+                'wilhelm-scream': 'Escape',
+            },
+            keyToSound: {
+                KeyC: 'creeper-hiss',
+                KeyD: 'dolphin-noise',
+                KeyF: 'censor-beep',
+                KeyP: 'discord-notif',
+                KeyV: 'vine-boom',
+                ShiftLeft: 'mario-mushroom',
+                Space: 'mario-jump',
+                Enter: 'mario-coin',
+                Slash: 'skull-trumpet',
+                KeyX: 'wrong-buzzer',
+                ArrowUp: 'car-horn',
+                Escape: 'wilhelm-scream',
+            },
+        }
+
+        function setKeyBind(sound, element) {
+            document.addEventListener("keydown", (e) => {
+                let oldKey = keyBinds.soundToKey[sound];
+                delete keyBinds.keyToSound[oldKey];
+                keyBinds.keyToSound[e.code] = sound;
+                keyBinds.soundToKey[sound] = e.code;
+
+                let innerText = e.code;
+                if(innerText.slice(0, 3) === 'Key') {innerText = innerText[3]}
+                else if(innerText.slice(0, 5) === 'Digit') {innerText = innerText[5]}
+                else if(innerText.slice(0, 6) === 'Numpad') {innerText = `Num ${innerText.slice(6, innerText.length)}`}
+                else if(innerText.slice(innerText.length - 4, innerText.length) === 'Left' && innerText !== "ArrowLeft") {innerText = `L ${innerText.slice(0, innerText.length - 4)}`}
+                else if(innerText.slice(innerText.length - 5, innerText.length) === 'Right' && innerText !== "ArrowRight") {innerText = `R ${innerText.slice(0, innerText.length - 5)}`}
+                element.innerText = innerText;
+            }, {once: true})
+        }
+
+        function playSound(sound) {
+            let audio = new Audio(`sounds/${sound}.mp3`)
+            audio.play()
+        }
+
+        document.addEventListener("keydown", (e) => {
+            if(keyBinds.keyToSound[e.code]) {playSound(keyBinds.keyToSound[e.code])}
+        })
+    </script>
+    <body>
+        <div id="content">
+            <div class="soundItem">
+                <img class="imgLabel" src="images/creeper.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('creeper-hiss')">volume_up</span>
+                    <label class="soundName">Creeper Hiss</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('creeper-hiss', this)">C</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/dolphin.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('dolphin-noise')">volume_up</span>
+                    <label class="soundName">Dolphin Noise</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('dolphin-noise', this)">D</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/censored.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('censor-beep')">volume_up</span>
+                    <label class="soundName">Censor Beep</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('censor-beep', this)">F</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/discord.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('discord-notif')">volume_up</span>
+                    <label class="soundName">Discord Ping</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('discord-notif', this)">P</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/vine-logo.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('vine-boom')">volume_up</span>
+                    <label class="soundName">Vine Boom</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('vine-boom', this)">V</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/mario-mushroom.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('mario-mushroom')">volume_up</span>
+                    <label class="soundName">Mario Power-Up</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('mario-mushroom', this)">L Shift</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/mario-jump.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('mario-jump')">volume_up</span>
+                    <label class="soundName">Mario Jump</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('mario-jump', this)">Space</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/mario-coin.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('mario-coin')">volume_up</span>
+                    <label class="soundName">Mario Coin</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('mario-coin', this)">Enter</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/skull-trumpet.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('skull-trumpet')">volume_up</span>
+                    <label class="soundName">Skull Trumpet</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('skull-trumpet', this)">Slash</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/x-overlay.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('wrong-buzzer')">volume_up</span>
+                    <label class="soundName">Wrong Buzzer</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('wrong-buzzer', this)">X</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/car.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('car-horn')">volume_up</span>
+                    <label class="soundName">Car Horn Honk</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('car-horn', this)">ArrowUp</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/wilhelm.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('wilhelm-scream')">volume_up</span>
+                    <label class="soundName">Wilhelm Scream</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('wilhelm-scream', this)">Escape</label>
+            </div>
+        </div>
+    </body>
+</html>
