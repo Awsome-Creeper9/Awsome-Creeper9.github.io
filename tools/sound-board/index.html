@@ -28,7 +28,7 @@
             border-radius: 20px;
             background: #252525;
             width: 200px;
-            height:290px;
+            height: 280px;
             display: flex;
             flex-direction: column;
             margin: 20px
@@ -44,6 +44,7 @@
             left: 0;
             right: 0;
             height: 130px;
+            max-width: 190px;
         }
         .soundName {
             align-self: center;
@@ -65,13 +66,12 @@
         }
         .keyBindLabel {
             margin-left: 10px;
-            padding: 0 10px 0 10px;
-            font-size: 30px;
+            padding: 0 5px 0 5px;
+            font-size: 20px;
             border: #fff 1px solid;
             width: fit-content;
             background: #151515;
             max-width: 158px;
-            max-height: 36px;
             overflow-y: auto;
             overflow-wrap: anywhere;
             &:hover {
@@ -84,31 +84,63 @@
         let keyBinds = {
             soundToKey: {
                 'creeper-hiss': 'KeyC',
+                'end-portal': 'KeyO',
+                'villager-hrmmm': 'KeyH',
                 'dolphin-noise': 'KeyD',
                 'censor-beep': 'KeyF',
                 'discord-notif': 'KeyP',
                 'vine-boom': 'KeyV',
                 'mario-mushroom': 'ShiftLeft',
                 'mario-jump': 'Space',
-                'mario-coin': 'Enter',
+                'mario-coin': 'Period',
                 'skull-trumpet': 'Slash',
                 'wrong-buzzer': 'KeyX',
                 'car-horn': 'ArrowUp',
                 'wilhelm-scream': 'Escape',
+                'terraria-boss-spawn': 'KeyE',
+                'terraria-death': 'ShiftRight',
+                'dead': 'Backspace',
+                'airhorn.wav': 'KeyA',
+                'taco-bell': 'KeyT',
+                'emergency-meeting': 'KeyM',
+                'xp-startup': 'KeyS',
+                'xp-shutdown': 'Backquote',
+                'xp-error': 'KeyQ',
+                'bruh': 'KeyB',
+                'cash-register': 'Enter',
+                'kids-cheer': 'KeyY',
+                'wow': 'KeyW',
+                'crit-hit': 'ArrowDown'
             },
             keyToSound: {
                 KeyC: 'creeper-hiss',
+                KeyO: 'end-portal',
+                KeyH: 'villager-hrmmm',
                 KeyD: 'dolphin-noise',
                 KeyF: 'censor-beep',
                 KeyP: 'discord-notif',
                 KeyV: 'vine-boom',
                 ShiftLeft: 'mario-mushroom',
                 Space: 'mario-jump',
-                Enter: 'mario-coin',
+                Period: 'mario-coin',
                 Slash: 'skull-trumpet',
                 KeyX: 'wrong-buzzer',
                 ArrowUp: 'car-horn',
                 Escape: 'wilhelm-scream',
+                KeyE: 'terraria-boss-spawn',
+                ShiftRight: 'terraria-death',
+                Backspace: 'dead',
+                KeyA: 'airhorn.wav',
+                KeyT: 'taco-bell',
+                KeyM: 'emergency-meeting',
+                KeyS: 'xp-startup',
+                Backquote: 'xp-shutdown',
+                KeyQ: 'xp-error',
+                KeyB: 'bruh',
+                Enter: 'cash-register',
+                KeyY: 'kids-cheer',
+                KeyW: 'wow',
+                ArrowDown: 'crit-hit',
             },
         }
 
@@ -139,6 +171,7 @@
         })
     </script>
     <body>
+        <h1>Sound Board</h1>
         <div id="content">
             <div class="soundItem">
                 <img class="imgLabel" src="images/creeper.png" />
@@ -147,6 +180,22 @@
                     <label class="soundName">Creeper Hiss</label>
                 </div>
                 <label class="keyBindLabel" onclick="setKeyBind('creeper-hiss', this)">C</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/end-portal.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('end-portal')">volume_up</span>
+                    <label class="soundName">End Portal</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('end-portal', this)">O</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/villager.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('villager-hrmmm')">volume_up</span>
+                    <label class="soundName">Villager Hrmmm</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('villager-hrmmm', this)">H</label>
             </div>
             <div class="soundItem">
                 <img class="imgLabel" src="images/dolphin.png" />
@@ -202,7 +251,7 @@
                     <span class="material-symbols-outlined playSound" onclick="playSound('mario-coin')">volume_up</span>
                     <label class="soundName">Mario Coin</label>
                 </div>
-                <label class="keyBindLabel" onclick="setKeyBind('mario-coin', this)">Enter</label>
+                <label class="keyBindLabel" onclick="setKeyBind('mario-coin', this)">Period</label>
             </div>
             <div class="soundItem">
                 <img class="imgLabel" src="images/skull-trumpet.png" />
@@ -235,6 +284,118 @@
                     <label class="soundName">Wilhelm Scream</label>
                 </div>
                 <label class="keyBindLabel" onclick="setKeyBind('wilhelm-scream', this)">Escape</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/eye-of-cthulhu.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('terraria-boss-spawn')">volume_up</span>
+                    <label class="soundName">Terraria Boss</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('terraria-boss-spawn', this)">E</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/terraria-guide.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('terraria-death')">volume_up</span>
+                    <label class="soundName">Terraria Death</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('terraria-death', this)">R Shift</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/dead.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('dead')">volume_up</span>
+                    <label class="soundName">'Dead' Voice</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('dead', this)">Backspace</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/airhorn.wav.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('airhorn.wav')">volume_up</span>
+                    <label class="soundName">airhorn.wav</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('airhorn.wav', this)">A</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/taco-bell.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('taco-bell')">volume_up</span>
+                    <label class="soundName">Taco Bell</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('taco-bell', this)">T</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/emergency-meeting.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('emergency-meeting')">volume_up</span>
+                    <label class="soundName">Among Us Meeting</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('emergency-meeting', this)">M</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/windows-xp.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('xp-startup')">volume_up</span>
+                    <label class="soundName">Windows Startup</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('xp-startup', this)">S</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/windows-xp.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('xp-shutdown')">volume_up</span>
+                    <label class="soundName">Windows Shutdown</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('xp-shutdown', this)">Backquote</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/error-window.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('xp-error')">volume_up</span>
+                    <label class="soundName">Windows Error</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('xp-error', this)">Q</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/bruh.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('bruh')">volume_up</span>
+                    <label class="soundName">'Bruh' Voice</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('bruh', this)">B</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/dollar-sign.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('cash-register')">volume_up</span>
+                    <label class="soundName">Money Kaching</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('cash-register', this)">Enter</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/kids-cheer.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('kids-cheer')">volume_up</span>
+                    <label class="soundName">Kids Cheering</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('kids-cheer', this)">Y</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/wow.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('wow')">volume_up</span>
+                    <label class="soundName">'Wow' Voice</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('wow', this)">W</label>
+            </div>
+            <div class="soundItem">
+                <img class="imgLabel" src="images/crit-hit.png" />
+                <div class="textLabel">
+                    <span class="material-symbols-outlined playSound" onclick="playSound('crit-hit')">volume_up</span>
+                    <label class="soundName">Critical Hit</label>
+                </div>
+                <label class="keyBindLabel" onclick="setKeyBind('crit-hit', this)">ArrowDown</label>
             </div>
         </div>
     </body>
