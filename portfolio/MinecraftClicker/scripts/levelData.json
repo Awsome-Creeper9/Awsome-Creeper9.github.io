@@ -1,4 +1,4 @@
-let levelData = {
+{
     "1": {
         "x": 500,
         "y": 500,
@@ -60,5 +60,3 @@ let levelData = {
         "maxEnemyHealth": 40
     }
 }
-
-//JSONs don't like me (hence why this is a JS file)

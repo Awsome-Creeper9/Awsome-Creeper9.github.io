@@ -32,12 +32,12 @@
         position: absolute;
         width: 600px;
         left: calc(50% - 300px);
-        top: calc(50% - 30px);
+        top: calc(50% - 45px);
         z-index: 1000;
         font-size: xx-large;
         user-select: none;
 
-        #start-game {
+        #start-game, #settings, #how-to-play {
             width: 600px;
             height: 60px;
             background-image: url("images/unpressed_button.png");
@@ -45,24 +45,7 @@
             color: white;
             text-align: center;
             line-height: 60px;
-            margin-bottom: 10px;
             cursor: pointer;
-
-            &:hover {
-                background-image: url("images/pressed_button.png");
-            }
-        }
-        #settings {
-            width: 600px;
-            height: 60px;
-            background-image: url("images/unpressed_button.png");
-            background-size: 100%;
-            color: white;
-            text-align: center;
-            line-height: 60px;
-            margin-bottom: 10px;
-            cursor: pointer;
-
             &:hover {
                 background-image: url("images/pressed_button.png");
             }
@@ -81,6 +64,7 @@
         width: 1500px;
         height: 750px;
         background-color: black;
+        background-blend-mode: darken;
         position: absolute;
         left: calc(50% - 750px);
         top: calc(50% - 375px);
@@ -108,7 +92,6 @@
     }
     splash {
         text-align: center;
-        font-size: xx-large;
         rotate: -30deg;
         position: absolute;
         z-index: 1000;
@@ -116,9 +99,12 @@
         left: calc(50% + 192px);
         top: calc(20% - 10px);
         filter: drop-shadow(3.5px 3.5px 0px #505035);
-        transition: 1s;
-        max-width: 500px;
+        max-width: 750px;
         min-width: 500px;
+        overflow-x: visible;
+    }
+    #information {
+        color: white;
     }
     #disclaimer {
         position: absolute;
@@ -130,13 +116,23 @@
 </style>
 <body>
     <div id="title"></div>
-    <splash id="splash">Example Splash</splash>
+    <splash id="splash"></splash>
     <div id="main-menu-buttons">
         <div id="start-game" onclick="increaseLevel()"><p>Start Game</p></div>
-        <div id="settings"><p>Settings</p></div>
+        <div id="settings" onclick="setLevel(-1)"><p>Settings</p></div>
+        <div id="how-to-play" onclick="setLevel(-2)"><p>How to Play</p></div>
     </div>
     <div id="mini-title"></div>
-    <div id="board" onmousedown="boardClick()"></div>
+    <div id="board" onmousedown="boardClick()">
+        <div id="information">
+            <div id="settings-info">
+                <p>Settings: Empty atm</p>
+            </div>
+            <div id="how-to-play-info">
+                <p>How to Play: Empty atm</p>
+            </div>
+        </div>
+    </div>
     <div id="box" onmousedown="boxClick()"></div>
     <div id="info-box">
         <p id="player-health">Player Health: 20/20</p>
@@ -145,11 +141,13 @@
     <div id="disclaimer"><p>Minecraft Clicker is not affiliated with nor endorsed by Microsoft or Mojang Studios.</p></div>
 </body>
 <script src="scripts/splashes.js"></script>
-<script src="scripts/levelData.js"></script>
 <script>
     ///////////////////////////////////////
     // STARTING VARIABLES / DECLARATIONS //
     ///////////////////////////////////////
+
+    let levelData;
+    fetch("scripts/levelData.json").then(response => response.json()).then(data => {levelData = data;});
 
     let ClientWidth = window.innerWidth;
     let ClientHeight = window.innerHeight;
@@ -180,7 +178,6 @@
     let playerHealth = 20;
     let enemyHealth = 20;
     let maxPlayerHealth = 20;
-    // let maxEnemyHealth = 20;
 
     let level = 0;
 
@@ -242,20 +239,49 @@
             document.getElementById("title").style.visibility = "visible";
             document.getElementById("main-menu-buttons").style.visibility = "visible";
             document.getElementById("splash").style.display = "unset";
+            document.getElementById("disclaimer").style.visibility = "visible";
+            document.getElementById("information").style.visibility = "hidden";
             scaleSplash();
         }
-        else {
+        else if (level > 0) {
             box.style.visibility = "visible";
             board.style.visibility = "visible";
             document.getElementById("mini-title").style.visibility = "visible";
             document.getElementById("title").style.visibility = "hidden";
             document.getElementById("main-menu-buttons").style.visibility = "hidden";
             document.getElementById("splash").style.display = "none";
-            if (level == -1) {
-                // Options
+            document.getElementById("disclaimer").style.visibility = "hidden";
+            board.style.backgroundSize = 'unset';
+            document.getElementById("information").style.visibility = "hidden";
+        }
+        else if (level < 0) {
+            box.style.visibility = "hidden";
+            document.getElementById("title").style.visibility = "hidden";
+            document.getElementById("main-menu-buttons").style.visibility = "hidden";
+            document.getElementById("splash").style.display = "none";
+            document.getElementById("disclaimer").style.visibility = "hidden";
+            document.getElementById("information").style.visibility = "visible";
+            if (level == -1) { // Settings
+                board.style.visibility = "visible";
+                document.getElementById("mini-title").style.visibility = "visible";
+                board.style.background = 'url("images/dirt.png"), #00000088';
+                board.style.backgroundSize = '75px';
+                document.getElementById("settings-info").style.display = "unset";
+                document.getElementById("how-to-play-info").style.display = "none";
             }
-            else if (level === -2) {
-                //Dead
+            else if (level === -2) { // How to play
+                board.style.visibility = "visible";
+                document.getElementById("mini-title").style.visibility = "visible";
+                board.style.background = 'url("images/dirt.png"), #00000088';
+                board.style.backgroundSize = '75px';
+                document.getElementById("settings-info").style.display = "none";
+                document.getElementById("how-to-play-info").style.display = "unset";
+            }
+            else if (level === -3) { // Dead
+
+            }
+            else if (level === -4) { // Win
+
             }
         }
     }
@@ -266,8 +292,10 @@
     }
 
     function boardClick() {
-        console.log("misclicked")
-        playerHealth--
+        if (level > 0) {
+            console.log("misclicked")
+            playerHealth--
+        }
     }
 
     function handleResize() {
@@ -300,8 +328,6 @@
 
     function increaseLevel() {
         level++
-        boxObj.x = 0;
-        boxObj.y = 0;
 
         boxObj = levelData[level];
         enemyHealth = boxObj.maxEnemyHealth;
