@@ -8,24 +8,33 @@
     </head>
     <body>
       <div id="all-contents">
-        <nav>
-            <ul id="theme-ul">
-                <li id="lightmode" class="mode-li"><span class="material-symbols-outlined">light_mode</span></li>
-                <li id="darkmode" class="mode-li"><span class="material-symbols-outlined">dark_mode</span></li>
-            </ul>
-            <h1>Awsome_Creeper9's Website</h1>
-            <ul id="nav-ul">
-               <li class="nav-li">
-               <a class="nav-a" href="/">Home</a>
-             </li>
-             <li class="nav-li">
-               <a class="nav-a" href="/portfolio/">Portfolio</a>
-             </li>
-             <li class="nav-li location">
-                <a class="nav-a" href="/tools/">Tools</a>
-            </li>
-         </ul>
-     </nav>
+          <nav>
+              <h1>Awsome_Creeper9's Website</h1>
+              <div id="flexRow">
+                  <span id="leftArrow" class="material-symbols-outlined">arrow_left</span>
+                  <div id="block" style="transform:rotateX(-10deg) rotateY(-180deg) rotateZ(0deg);">
+                      <div class="face front">
+                          <li class="nav-li">
+                              <a class="nav-a" href="/">Home</a>
+                          </li>
+                      </div>
+                      <div class="face left"></div>
+                      <div class="face back">
+                          <li class="nav-li location">
+                              <a class="nav-a" href="tools/">Tools</a>
+                          </li>
+                      </div>
+                      <div class="face right">
+                          <li class="nav-li">
+                              <a class="nav-a" href="portfolio/">Portfolio</a>
+                          </li>
+                      </div>
+                      <div class="face top"></div>
+                      <div class="face bottom"></div>
+                  </div>
+                  <span id="rightArrow" class="material-symbols-outlined">arrow_right</span>
+              </div>
+          </nav>
      <main>
         <div class="content">
             <h1>Useful Tools</h1>
@@ -41,37 +50,5 @@
      </main>
       </div>
     </body>
-    <script>
-        let darkmode = document.getElementById("darkmode")
-        let lightmode = document.getElementById("lightmode")
-        let theme = document.getElementById("themesheet")
-        let hasThemeCookie;
-
-        darkmode.addEventListener("click", function () {
-            document.cookie = "mode=dark"
-        })
-        lightmode.addEventListener("click", function () {
-            document.cookie = "mode=light"
-        })
-
-        setInterval(function () {
-            for (let i = 0; i < document.cookie.length; i++) {
-                if (document.cookie[i]+document.cookie[i+1]+document.cookie[i+5]+document.cookie[i+6] === 'moda'){
-                    darkmode.style.display = 'none'
-                    lightmode.style.display = 'unset'
-                    hasThemeCookie = true
-                    theme.setAttribute('href', '/styles/frontpage-css.css')
-                }
-                else if (document.cookie[i]+document.cookie[i+1]+document.cookie[i+5]+document.cookie[i+6] === 'moli'){
-                    darkmode.style.display = 'unset'
-                    lightmode.style.display = 'none'
-                    hasThemeCookie = true
-                    theme.setAttribute('href', '/styles/frontpage-css-light.css')
-                }
-            }
-            if (!hasThemeCookie) {
-                document.cookie = "mode=dark"
-            }
-        }, 1000/50)
-    </script>
+    <script src="/scripts/nav-cube.js"></script>
 </html>
