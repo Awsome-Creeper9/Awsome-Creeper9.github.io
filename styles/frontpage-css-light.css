@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&display=swap');
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    background: rgb(0, 89, 89);
+    background-image: url(/WebPageImages/background.png);
+    background-size: 150px;
+    color: rgb(0, 0, 0);
+    padding: 10px;
+    font-family: arial;
+    font-size: 1.125rem;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overflow-y: visible;
+}
+#all-contents {
+  max-width: 99%;
+    margin: auto;
+}
+
+/* navigation menu */
+
+#portnav {
+    background-image: none;
+    background-color: transparent;
+    padding: 0px;
+
+    & .nav-a {
+        color: #fff;
+        margin: 0 10px 0 10px;
+    }
+}
+nav {
+    background-color: #255cbd;
+    background-image: url(/WebPageImages/navbackground-light.png);
+    background-size: 125px;
+    background-position-y: 25px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 30px;
+    align-content: center;
+    /*filter: hue-rotate(-55deg) brightness(2);*/
+
+    & h1 {
+        align-items: center;
+        color: black;
+        text-align: center;
+        font-size: 3rem;
+        font-family: 'JetBrains Mono';
+        padding-top: 0px;
+        margin-top: 0px;
+        margin-bottom: 20px;
+        display: inline-box;
+        user-select: none;
+        -webkit-user-drag: none;
+        -moz-window-dragging: none;
+    }
+    & #nav-ul {
+        list-style-image: none;
+        margin-left: calc(50% - 173px);
+        user-select: none;
+        -webkit-user-drag: none;
+        -moz-window-dragging: none;
+    }
+    & #theme-ul {
+        display: inline-box;
+        list-style-image: none;
+        margin-left: calc(100% - 85px);
+        user-select: none;
+        -webkit-user-drag: none;
+        -moz-window-dragging: none;
+        padding-bottom: 0px;
+        color: black;
+        & .mode-li {
+            display: inline-block;
+            padding-bottom: 0px;
+
+            & span {
+                cursor: pointer;
+            }
+        }
+    }
+    & #portnav-ul {
+        list-style-image: none;
+        margin-left: calc(50% - 188px);
+        user-select: none;
+        -webkit-user-drag: none;
+        -moz-window-dragging: none;
+    }
+    & .nav-li {
+        display: inline-block;
+        height: fit-content;
+        width: fit-content;
+        transition: transform 0.3s;
+
+        &:not(.location):hover {
+            transform: translateY(-5px);
+        }
+    }
+    
+    & .location {
+        & a {
+            font-style: oblique;
+            color: #000000a0;
+        }
+    } 
+    
+    & .nav-a {
+      color:#000;
+      font-size: 1.375rem;
+      -webkit-user-drag: none;
+      -moz-window-dragging: none;
+    }
+    & :link {
+        display: inline-block;
+    }
+}
+a {
+    text-decoration: none;
+    color: #000;
+}
+/* main container area beneath menu */
+main {
+    background: rgb(255, 255, 255);
+    border-radius: 30px;
+}
+.content {
+    padding: 15px;
+}
+
+.content h1 {
+    color: black;
+}
+#portfolio, #tools {
+    list-style-type: none;
+    padding-left: 0;
+}
+#portfolio li, #tools li {
+    background: rgb(200, 200, 200);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+#portfolio li:hover, #tools li:hover {
+    background: rgb(175, 175, 175);
+}
+#portfolio a, #tools a {
+    text-decoration: none;
+    color: #000;
+}
+
+#block {
+    /*position: relative;*/
+    /*left: calc(50% - 50px);*/
+    transform-style: preserve-3d;
+    width: 100px;
+    height: 100px;
+
+    font-size: 20px;
+    text-align: center;
+    line-height: 100px;
+    transition: .2s;
+}
+
+.face {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.front {
+    transform: translateZ(50px);
+    background: #ff0000;
+}
+
+.back {
+    transform: rotateY(180deg) translateZ(50px);
+    background: #ffff00;
+}
+
+.left {
+    transform: rotateY(-90deg) translateZ(50px);
+    background: #00ff00;
+}
+
+.right {
+    transform: rotateY(90deg) translateZ(50px);
+    background: #00ff00;
+}
+
+.top {
+    transform: rotateX(90deg) translateZ(50px);
+    background: #0000ff;
+}
+
+.bottom {
+    transform: rotateX(-90deg) translateZ(50px);
+    background: #0000ff;
+}
+
+#flexRow {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+#leftArrow, #rightArrow {
+    cursor: pointer;
+    margin: 0 20px 0 20px;
+    line-height: 100px;
+    font-size: 100px;
+    user-select: none;
+}

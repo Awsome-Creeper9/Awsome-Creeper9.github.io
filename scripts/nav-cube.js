@@ -38,16 +38,37 @@ leftArrow.addEventListener("click", () => {
 })
 
 setInterval (() => {
+    const isLightTheme = document.cookie.split(";").some((item) => item.includes("theme=light"))
     if (currentRotation <= -180) {
-        rightArrow.style.color = "#888"
+        if (isLightTheme) {
+            rightArrow.style.color = "#222"
+        }
+        else {
+            rightArrow.style.color = "#888"
+        }
     }
     else {
-        rightArrow.style.color = "#fff"
+        if (isLightTheme) {
+            rightArrow.style.color = "#000"
+        }
+        else {
+            rightArrow.style.color = "#fff"
+        }
     }
     if (currentRotation >= 0) {
-        leftArrow.style.color = "#888"
+        if (isLightTheme) {
+            leftArrow.style.color = "#222"
+        }
+        else {
+            leftArrow.style.color = "#888"
+        }
     }
     else {
-        leftArrow.style.color = "#fff"
+        if (isLightTheme) {
+            leftArrow.style.color = "#000"
+        }
+        else {
+            leftArrow.style.color = "#fff"
+        }
     }
 })

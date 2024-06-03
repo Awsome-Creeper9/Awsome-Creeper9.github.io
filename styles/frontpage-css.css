@@ -68,7 +68,7 @@ nav {
     & #theme-ul {
         display: inline-box;
         list-style-image: none;
-        margin-left: calc(100% - 100px);
+        margin-left: calc(100% - 85px);
         user-select: none;
         -webkit-user-drag: none;
         -moz-window-dragging: none;
@@ -92,9 +92,6 @@ nav {
     }
     & .nav-li {
         display: inline-block;
-        background-color: transparent;
-        border: transparent;
-        border-radius: 10px;
         width: fit-content;
         height: fit-content;
         transition: transform 0.3s;
@@ -162,7 +159,6 @@ main {
     width: 100px;
     height: 100px;
 
-    color: white;
     font-size: 20px;
     text-align: center;
     line-height: 100px;
