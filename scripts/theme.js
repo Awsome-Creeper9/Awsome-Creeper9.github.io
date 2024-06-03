@@ -1,8 +1,11 @@
 let currentTheme;
-setInterval(() => {
+setInterval(async () => {
+    const CookieOBJ = await cookieStore.get("theme")
+    const themeValue = CookieOBJ.value
+
     if (
         // document.cookie.split(";").some((item) => item.includes("theme=dark"))
-        cookieStore.get("theme") == "dark"
+        themeValue == "dark"
     ) {
         if (currentTheme !== "dark") {
             document.getElementById("themesheet").href = "/styles/frontpage-css.css"
@@ -13,7 +16,7 @@ setInterval(() => {
     }
     else if (
         // document.cookie.split(";").some((item) => item.includes("theme=light"))
-        cookieStore.get("theme") == "light"
+        themeValue == "light"
     ) {
         if (currentTheme !== "light") {
             document.getElementById("themesheet").href = "/styles/frontpage-css-light.css"
