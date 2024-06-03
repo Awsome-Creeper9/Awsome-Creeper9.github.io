@@ -17,15 +17,15 @@ setInterval(() => {
         }
     }
     else {
-        document.cookie = "theme=dark; samesite=strict; secure; domain=awsome-creeper9.github.io"
+        document.cookie = "theme=dark; samesite=strict; secure; Domain=awsome-creeper9.github.io; Path=/"
     }
 }, 10)
 
 function setTheme(e) {
     if (e.id == "lightmode") {
-        document.cookie = "theme=light; samesite=strict; secure; domain=awsome-creeper9.github.io"
+        document.cookie = "theme=light; samesite=strict; secure; Domain=awsome-creeper9.github.io; Path=/"
     }
     else if (e.id == "darkmode") {
-        document.cookie = "theme=dark; samesite=strict; secure; domain=awsome-creeper9.github.io"
+        document.cookie = "theme=dark; samesite=strict; secure; Domain=awsome-creeper9.github.io; Path=/"
     }
 }
