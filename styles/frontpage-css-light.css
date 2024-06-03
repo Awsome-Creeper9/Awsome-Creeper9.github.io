@@ -29,7 +29,7 @@ body {
     padding: 0px;
 
     & .nav-a {
-        color: #fff;
+        color: #000;
         margin: 0 10px 0 10px;
     }
 }
