@@ -1,7 +1,7 @@
 let currentTheme;
 setInterval(async () => {
     const CookieOBJ = await cookieStore.get("theme")
-    const themeValue = CookieOBJ.value
+    const themeValue = await CookieOBJ.value
 
     if (
         // document.cookie.split(";").some((item) => item.includes("theme=dark"))
