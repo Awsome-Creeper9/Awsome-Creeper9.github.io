@@ -58,5 +58,55 @@
         "height": 50,
         "width": 50,
         "maxEnemyHealth": 40
+    },
+    "7": {
+        "x": 500,
+        "y": 500,
+        "pathType": "tan",
+        "speedX": 10,
+        "speedY": 10,
+        "height": 100,
+        "width": 100,
+        "maxEnemyHealth": 40
+    },
+    "8": {
+        "x": 500,
+        "y": 500,
+        "pathType": "circle",
+        "speedX": 10,
+        "speedY": 10,
+        "height": 100,
+        "width": 100,
+        "maxEnemyHealth": 40
+    },
+    "9": {
+        "x": 500,
+        "y": 500,
+        "pathType": "ellipse",
+        "speedX": 10,
+        "speedY": 10,
+        "height": 100,
+        "width": 100,
+        "maxEnemyHealth": 40
+    },
+    "10": {
+        "x": 500,
+        "y": 500,
+        "pathType": "inf",
+        "speedX": 10,
+        "speedY": 10,
+        "height": 100,
+        "width": 100,
+        "maxEnemyHealth": 40
+    },
+    "11": {
+        "x": 500,
+        "y": 500,
+        "pathType": "multi-cross",
+        "speedX": 10,
+        "speedY": 10,
+        "height": 100,
+        "width": 100,
+        "maxEnemyHealth": 40
     }
 }
