@@ -7,7 +7,9 @@
         "speedY": 10,
         "height": 100,
         "width": 100,
-        "maxEnemyHealth": 20
+        "maxEnemyHealth": 20,
+        "enemyType": "zombie",
+        "background": "plains"
     },
     "2": {
         "x": 500,
@@ -17,7 +19,9 @@
         "speedY": 20,
         "height": 100,
         "width": 100,
-        "maxEnemyHealth": 30
+        "maxEnemyHealth": 30,
+        "enemyType": "zombie",
+        "background": "plains"
     },
     "3": {
         "x": 500,
@@ -27,7 +31,9 @@
         "speedY": 30,
         "height": 100,
         "width": 100,
-        "maxEnemyHealth": 40
+        "maxEnemyHealth": 40,
+        "enemyType": "zombie",
+        "background": "plains"
     },
     "4": {
         "x": 500,
@@ -37,7 +43,9 @@
         "speedY": 10,
         "height": 100,
         "width": 100,
-        "maxEnemyHealth": 20
+        "maxEnemyHealth": 20,
+        "enemyType": "zombie",
+        "background": "plains"
     },
     "5": {
         "x": 500,
@@ -47,7 +55,9 @@
         "speedY": 20,
         "height": 100,
         "width": 100,
-        "maxEnemyHealth": 30
+        "maxEnemyHealth": 30,
+        "enemyType": "zombie",
+        "background": "plains"
     },
     "6": {
         "x": 500,
@@ -57,7 +67,9 @@
         "speedY": 30,
         "height": 50,
         "width": 50,
-        "maxEnemyHealth": 40
+        "maxEnemyHealth": 40,
+        "enemyType": "zombie",
+        "background": "plains"
     },
     "7": {
         "x": 500,
@@ -67,7 +79,9 @@
         "speedY": 10,
         "height": 100,
         "width": 100,
-        "maxEnemyHealth": 40
+        "maxEnemyHealth": 40,
+        "enemyType": "zombie",
+        "background": "plains"
     },
     "8": {
         "x": 500,
@@ -77,7 +91,9 @@
         "speedY": 10,
         "height": 100,
         "width": 100,
-        "maxEnemyHealth": 40
+        "maxEnemyHealth": 40,
+        "enemyType": "zombie",
+        "background": "plains"
     },
     "9": {
         "x": 500,
@@ -87,7 +103,9 @@
         "speedY": 10,
         "height": 100,
         "width": 100,
-        "maxEnemyHealth": 40
+        "maxEnemyHealth": 40,
+        "enemyType": "zombie",
+        "background": "plains"
     },
     "10": {
         "x": 500,
@@ -97,7 +115,9 @@
         "speedY": 10,
         "height": 100,
         "width": 100,
-        "maxEnemyHealth": 40
+        "maxEnemyHealth": 40,
+        "enemyType": "zombie",
+        "background": "plains"
     },
     "11": {
         "x": 500,
@@ -107,6 +127,8 @@
         "speedY": 10,
         "height": 100,
         "width": 100,
-        "maxEnemyHealth": 40
+        "maxEnemyHealth": 40,
+        "enemyType": "zombie",
+        "background": "plains"
     }
 }

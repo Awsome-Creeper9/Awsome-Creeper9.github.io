@@ -11,16 +11,20 @@ let ClientWidth = window.innerWidth;
 let ClientHeight = window.innerHeight;
 const board = document.getElementById('board');
 const box = document.getElementById('box');
+const hitbox = document.getElementById('hitbox');
+const hotbar = document.getElementById('hotbar');
+
 let boardObj = {
     left: 0,
     right: 0,
     bottom: 0,
     top: 0
 }
+
 boardObj.left = (ClientWidth / 2) - (1500 / 2);
 boardObj.right = (ClientWidth / 2) + (1500 / 2);
-boardObj.top = (ClientHeight / 2) - (750 / 2);
-boardObj.bottom = (ClientHeight / 2) + (750 / 2);
+boardObj.top = (ClientHeight / 2) - (700 / 2) - 30;
+boardObj.bottom = (ClientHeight / 2) + (700 / 2) - 30;
 
 let boxObj = {
     x: 500,
@@ -33,11 +37,21 @@ let boxObj = {
     maxEnemyHealth: 20
 }
 
-let playerHealth = 20;
 let enemyHealth = 20;
-let maxPlayerHealth = 20;
+
+let playerAttributes = {
+    atkSpeed: 0, //normal
+    atkDmg: 0, //normal
+    atkAOE: 0, //normal
+    health: 20,
+    maxHealth: 20
+}
 
 let level = 0;
+
+let debug = {
+    showHitbox: false, //F13
+}
 
 /////////////////////
 // UPDATE FUNCTION //
@@ -97,7 +111,7 @@ function update() {
     box.style.width = boxObj.width + "px";
     box.style.height = boxObj.height + "px";
 
-    document.getElementById("player-health").innerHTML = `Player Health: ${playerHealth} / ${maxPlayerHealth}`;
+    document.getElementById("player-health").innerHTML = `Player Health: ${playerAttributes.health} / ${playerAttributes.maxHealth}`;
     document.getElementById("enemy-health").innerHTML = `Enemy Health: ${enemyHealth} / ${boxObj.maxEnemyHealth}`;
 
     if (enemyHealth <= 0) {
@@ -108,7 +122,9 @@ function update() {
 
     if (level === 0) {
         box.style.visibility = "hidden";
+        hitbox.style.visibility = "hidden";
         board.style.visibility = "hidden";
+        hotbar.style.visibility = "hidden";
         document.getElementById("mini-title").style.visibility = "hidden";
         document.getElementById("title").style.visibility = "visible";
         document.getElementById("main-menu-buttons").style.visibility = "visible";
@@ -119,7 +135,9 @@ function update() {
     }
     else if (level > 0) {
         box.style.visibility = "visible";
+        hitbox.style.visibility = "visible";
         board.style.visibility = "visible";
+        hotbar.style.visibility = "visible";
         document.getElementById("mini-title").style.visibility = "visible";
         document.getElementById("title").style.visibility = "hidden";
         document.getElementById("main-menu-buttons").style.visibility = "hidden";
@@ -127,9 +145,18 @@ function update() {
         document.getElementById("disclaimer").style.visibility = "hidden";
         board.style.backgroundSize = 'unset';
         document.getElementById("information").style.visibility = "hidden";
+
+        box.style.background = `url("images/enemies/${levelData[level].enemyType}.png")`;
+
+        hitbox.style.width = (boxObj.width + playerAttributes.atkAOE) + "px";
+        hitbox.style.height = (boxObj.height + playerAttributes.atkAOE) + "px";
+        hitbox.style.left = (boxObj.x - (playerAttributes.atkAOE / 2)) + "px";
+        hitbox.style.top = (boxObj.y - (playerAttributes.atkAOE / 2)) + "px";
     }
     else if (level < 0) {
         box.style.visibility = "hidden";
+        hitbox.style.visibility = "hidden";
+        hotbar.style.visibility = "hidden";
         document.getElementById("title").style.visibility = "hidden";
         document.getElementById("main-menu-buttons").style.visibility = "hidden";
         document.getElementById("splash").style.display = "none";
@@ -158,6 +185,13 @@ function update() {
 
         }
     }
+
+    if (debug.showHitbox) {
+        hitbox.style.backgroundColor = "#ff000080";
+    }
+    else {
+        hitbox.style.backgroundColor = "transparent";
+    }
 }
 
 function boxClick() {
@@ -168,7 +202,7 @@ function boxClick() {
 function boardClick() {
     if (level > 0) {
         console.log("misclicked")
-        playerHealth--
+        playerAttributes.health--
     }
 }
 
@@ -177,8 +211,8 @@ function handleResize() {
     ClientHeight = window.innerHeight;
     boardObj.left = (ClientWidth / 2) - (1500 / 2);
     boardObj.right = (ClientWidth / 2) + (1500 / 2);
-    boardObj.top = (ClientHeight / 2) - (750 / 2);
-    boardObj.bottom = (ClientHeight / 2) + (750 / 2);
+    boardObj.top = (ClientHeight / 2) - (700 / 2) - 30;
+    boardObj.bottom = (ClientHeight / 2) + (700 / 2) - 30;
 }
 
 function collisionCheck() {
@@ -217,3 +251,9 @@ function setLevel(num) {
         enemyHealth = boxObj.maxEnemyHealth;
     }
 }
+
+document.addEventListener("keydown", (e) => {
+    if (e.code === "F13") {
+        debug.showHitbox = !debug.showHitbox;
+    }
+})
