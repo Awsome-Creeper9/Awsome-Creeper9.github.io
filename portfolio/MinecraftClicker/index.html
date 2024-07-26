@@ -118,18 +118,62 @@
     }
     #hotbar {
         position: absolute;
-        left: calc(50% - 450px);
-        top: calc(50% - 375px + 715px);
-        border: 3.75px solid #000;
+        left: calc(50% - 337.5px);
+        top: calc(50% - 375px + 700px);
         visibility: hidden;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        width: calc(75px * 9);
 
-        .hotbar-slot {
-            width: 100px;
-            height: 100px;
-            background: url("images/hotbar_slot.png");
+        #hearts {
+            display: flex;
+            flex-direction: row;
+
+            .heart {
+                width: 35px;
+                height: calc(75px * 4/10);
+                background: url("images/full_heart.png");
+                background-size: 100% !important;
+                position: relative;
+                margin-left: -2px;
+                margin-right: -2px;
+            }
+        }
+
+        #xp-bar {
+            background: url("images/empty_xp_bar.png");
             background-size: 100%;
+            width: calc(75px * 9);
+            height: 18.5px;
+
+            #xp-level {
+                text-align: center;
+                font-size: 35px;
+                color: #8bbe60;
+                text-shadow: #000 4px 0px 0px, #000 -4px 0px 0px, #000 0px 4px 0px, #000 0px -4px 0px;
+                position: relative;
+                bottom: 60px;
+            }
+
+            #xp-filling {
+                background: url("images/full_xp_bar.png");
+                background-size: calc(75px * 9);
+                height: 18.5px;
+                width: calc(75px * 9 * 10/181 * 18); /* calc(75px * 9 * 10/181 * 1) = 1px -- calc(widthOfHBSlot * numberOfSlots * 10/181(ratio) * segmentsFilled) */
+            }
+        }
+
+        #hotbar-slots {
+            border: 3.75px solid #000;
+            display: flex;
+            flex-direction: row;
+
+            .hotbar-slot {
+                width: 75px;
+                height: 75px;
+                background: url("images/hotbar_slot.png");
+                background-size: 100%;
+            }
         }
     }
     #info-box {
@@ -139,7 +183,7 @@
         color: white;
     }
     p {
-        filter: drop-shadow(3.5px 3.5px 0px #353535);
+        text-shadow: 3px 3px 0px #353535;
         margin-block-start: 15px;
         margin-block-end: 15px;
         /* SCREW THE USER AGENT STYLESHEET */
@@ -192,15 +236,33 @@
     <div id="box" onmousedown="boardClick()"></div>
     <div id="enemy"></div>
     <div id="hotbar">
-        <div class="hotbar-slot" id="slot0"></div>
-        <div class="hotbar-slot" id="slot1"></div>
-        <div class="hotbar-slot" id="slot2"></div>
-        <div class="hotbar-slot" id="slot3"></div>
-        <div class="hotbar-slot" id="slot4"></div>
-        <div class="hotbar-slot" id="slot5"></div>
-        <div class="hotbar-slot" id="slot6"></div>
-        <div class="hotbar-slot" id="slot7"></div>
-        <div class="hotbar-slot" id="slot8"></div>
+        <div id="hearts">
+            <div class="heart" id="heart0"></div>
+            <div class="heart" id="heart1"></div>
+            <div class="heart" id="heart2"></div>
+            <div class="heart" id="heart3"></div>
+            <div class="heart" id="heart4"></div>
+            <div class="heart" id="heart5"></div>
+            <div class="heart" id="heart6"></div>
+            <div class="heart" id="heart7"></div>
+            <div class="heart" id="heart8"></div>
+            <div class="heart" id="heart9"></div>
+        </div>
+        <div id="xp-bar">
+            <div id="xp-filling"></div>
+            <p id="xp-level">0</p>
+        </div>
+        <div id="hotbar-slots">
+            <div class="hotbar-slot" id="slot0"></div>
+            <div class="hotbar-slot" id="slot1"></div>
+            <div class="hotbar-slot" id="slot2"></div>
+            <div class="hotbar-slot" id="slot3"></div>
+            <div class="hotbar-slot" id="slot4"></div>
+            <div class="hotbar-slot" id="slot5"></div>
+            <div class="hotbar-slot" id="slot6"></div>
+            <div class="hotbar-slot" id="slot7"></div>
+            <div class="hotbar-slot" id="slot8"></div>
+        </div>
     </div>
     <!--TEMP:-->
     <div id="info-box">

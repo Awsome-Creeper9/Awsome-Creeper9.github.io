@@ -26,16 +26,7 @@ boardObj.right = (ClientWidth / 2) + (1500 / 2);
 boardObj.top = (ClientHeight / 2) - (700 / 2) - 30;
 boardObj.bottom = (ClientHeight / 2) + (700 / 2) - 30;
 
-let boxObj = {
-    x: 500,
-    y: 500,
-    width: 100,
-    height: 100,
-    speedX: 10,
-    speedY: 10,
-    pathType: "linear",
-    maxEnemyHealth: 20
-}
+let boxObj = {}
 
 let enemyHealth = 20;
 
@@ -44,7 +35,10 @@ let playerAttributes = {
     atkDmg: 0, //normal
     atkAOE: 0, //normal
     health: 20,
-    maxHealth: 20
+    maxHealth: 20,
+    xpStored: 0,
+    xpLevel: 0,
+    xpTotal: 0,
 }
 
 let level = 0;
@@ -115,8 +109,13 @@ function update() {
     document.getElementById("enemy-health").innerHTML = `Enemy Health: ${enemyHealth} / ${boxObj.maxEnemyHealth}`;
 
     if (enemyHealth <= 0) {
+        playerAttributes.xpStored += levelData[level].xpReward;
         increaseLevel();
     }
+
+    updateHearts();
+
+    updateXP();
 
     collisionCheck();
 
@@ -237,6 +236,39 @@ function collisionCheck() {
     }
 }
 
+function updateHearts() {
+    if (playerAttributes.health % 2 === 0) {
+        for (let i = playerAttributes.health / 2; i <= 9; i++) {
+            document.getElementById(`heart${i}`).style.background = "url('images/empty_heart.png')";
+        }
+    }
+    else {
+        document.getElementById(`heart${(playerAttributes.health - 1) / 2}`).style.background = "url('images/half_heart.png')";
+        for (let i = ((playerAttributes.health - 1) / 2) + 1; i <= 9; i++) {
+            document.getElementById(`heart${i}`).style.background = "url('images/empty_heart.png')";
+        }
+    }
+}
+
+function updateXP() {
+    if (playerAttributes.xpLevel === 0) {
+        document.getElementById('xp-level').style.visibility = "hidden";
+    }
+    else {
+        document.getElementById('xp-level').style.visibility = "visible";
+        document.getElementById('xp-level').innerHTML = `${playerAttributes.xpLevel}`
+    }
+
+    if (playerAttributes.xpStored >= 18) {
+        playerAttributes.xpLevel++;
+        playerAttributes.xpStored -= 18;
+    }
+
+    playerAttributes.xpTotal = playerAttributes.xpStored + (playerAttributes.xpLevel * 18);
+
+    document.getElementById('xp-filling').style.width = `${75 * 9 * 10/181 * playerAttributes.xpStored}px`;
+}
+
 function increaseLevel() {
     level++
 
@@ -250,6 +282,10 @@ function setLevel(num) {
         boxObj = levelData[level];
         enemyHealth = boxObj.maxEnemyHealth;
     }
+}
+
+function setXpLevel(num) {
+    playerAttributes.xpLevel = num;
 }
 
 document.addEventListener("keydown", (e) => {
