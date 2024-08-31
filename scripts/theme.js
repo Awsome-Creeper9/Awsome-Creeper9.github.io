@@ -1,12 +1,13 @@
 let currentTheme;
+const expiryTime = 1000 * 60 * 60 * 24 * 365; // 1 year
 setInterval(async () => {
-    const CookieOBJ = await cookieStore.get("theme")
+    let CookieOBJ;
+    if (await cookieStore.get("theme")) {CookieOBJ = await cookieStore.get("theme");}
+    else {setTheme({ id : "darkmode" }); return;}
+
     const themeValue = await CookieOBJ.value
 
-    if (
-        // document.cookie.split(";").some((item) => item.includes("theme=dark"))
-        themeValue == "dark"
-    ) {
+    if (themeValue == "dark") {
         if (currentTheme !== "dark") {
             document.getElementById("themesheet").href = "/styles/frontpage-css.css"
             document.getElementById("lightmode").style.display = "unset"
@@ -14,10 +15,7 @@ setInterval(async () => {
             currentTheme = "dark"
         }
     }
-    else if (
-        // document.cookie.split(";").some((item) => item.includes("theme=light"))
-        themeValue == "light"
-    ) {
+    else if (themeValue == "light") {
         if (currentTheme !== "light") {
             document.getElementById("themesheet").href = "/styles/frontpage-css-light.css"
             document.getElementById("lightmode").style.display = "none"
@@ -26,30 +24,57 @@ setInterval(async () => {
         }
     }
     else {
-        // document.cookie = "theme=dark; samesite=strict; secure; Domain=awsome-creeper9.github.io; Path=/"
         cookieStore.set({
             name: "theme",
             value: "dark",
+            expires: Date.now() + expiryTime,
             domain: "awsome-creeper9.github.io",
         })
-    }
-}, 10)
 
-function setTheme(e) {
+        cookieStore.set({
+            name: "theme",
+            value: "dark",
+            expires: Date.now() + expiryTime,
+            domain: "localhost",
+        })
+
+        console.warn("The following error is because I needed the theme cookie in localhost for testing. This doesn't affect you.")
+    }
+}, 1)
+
+async function setTheme(e) {
     if (e.id == "lightmode") {
-        // document.cookie = "theme=light; samesite=strict; secure; Domain=awsome-creeper9.github.io; Path=/"
         cookieStore.set({
             name: "theme",
             value: "light",
+            expires: Date.now() + expiryTime,
             domain: "awsome-creeper9.github.io",
         })
+
+        cookieStore.set({
+            name: "theme",
+            value: "light",
+            expires: Date.now() + expiryTime,
+            domain: "localhost",
+        })
+
+        console.warn("The following error is because I needed the theme cookie in localhost for testing. This doesn't affect you.")
     }
     else if (e.id == "darkmode") {
-        // document.cookie = "theme=dark; samesite=strict; secure; Domain=awsome-creeper9.github.io; Path=/"
         cookieStore.set({
             name: "theme",
             value: "dark",
+            expires: Date.now() + expiryTime,
             domain: "awsome-creeper9.github.io",
         })
+
+        cookieStore.set({
+            name: "theme",
+            value: "dark",
+            expires: Date.now() + expiryTime,
+            domain: "localhost",
+        })
+
+        console.warn("The following error is because I needed the theme cookie in localhost for testing. This doesn't affect you.")
     }
 }

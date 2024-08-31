@@ -66,22 +66,34 @@ nav {
         -moz-window-dragging: none;
     }
     & #theme-ul {
-        display: inline-box;
-        list-style-image: none;
-        margin-left: calc(100% - 85px);
+        width: 0;
+        height: 0;
+        float: right;
+        margin-right: 45px;
         user-select: none;
         -webkit-user-drag: none;
         -moz-window-dragging: none;
-        padding-bottom: 0px;
         color: white;
         & .mode-li {
             display: inline-block;
-            padding-bottom: 0px;
 
             & span {
                 cursor: pointer;
             }
         }
+    }
+    & #clock {
+        width: 0;
+        height: 0;
+        float: left;
+        font-size: 1.3rem;
+        margin-left: 15px;
+        margin-top: 15px;
+        padding: 0;
+        user-select: none;
+        -webkit-user-drag: none;
+        -moz-window-dragging: none;
+        color: white;
     }
     & #portnav-ul {
         list-style-image: none;
