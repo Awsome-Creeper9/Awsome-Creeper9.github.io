@@ -75,6 +75,7 @@ nav {
         -webkit-user-drag: none;
         -moz-window-dragging: none;
         color: black;
+
         & .mode-li {
             display: inline-block;
 
