@@ -6,7 +6,7 @@ function getTime() {
 
     str += ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][time.getDay()] + ",\n";
 
-    str += (time.getMonth() < 10) ? '0' + time.getMonth() + "/" : time.getMonth() + "/";
+    str += ((time.getMonth() + 1) < 10) ? '0' + (time.getMonth() + 1) + "/" : (time.getMonth() + 1) + "/";
     str += (time.getDate() < 10) ? '0' + time.getDate() + "/" : time.getDate() + "/";
     str += time.getFullYear() + ",\n";
 
