@@ -81,6 +81,7 @@
         width: 258px;
         height: 69px;
         left: calc(50% - 129px);
+        top: 2px;
         visibility: hidden;
     }
     #board {
@@ -90,7 +91,7 @@
         background-blend-mode: darken;
         position: absolute;
         left: calc(50% - 750px);
-        top: calc(50% - 350px - 30px);
+        top: calc(50% - 350px - 40px);
         border: white 2px solid;
         visibility: hidden;
     }
@@ -98,10 +99,11 @@
         width: 100px;
         height: 100px;
         background-size: 100% !important;
+        background-blend-mode: overlay;
         position: absolute;
         left: 0;
         top: 0;
-        transition: .2s;
+        transition: .1s;
         visibility: hidden;
         -webkit-user-drag: none;
     }
@@ -113,13 +115,13 @@
         background-color: transparent;
         visibility: hidden;
         position: absolute;
-        transition: .2s;
+        transition: .1s;
         z-index: 1000;
     }
     #hotbar {
         position: absolute;
         left: calc(50% - 337.5px);
-        top: calc(50% - 375px + 700px);
+        top: calc(50% - 382.25px + 700px);
         visibility: hidden;
         display: flex;
         flex-direction: column;
@@ -128,10 +130,11 @@
         #hearts {
             display: flex;
             flex-direction: row;
+            padding-bottom: 3.75px;
 
             .heart {
                 width: 35px;
-                height: calc(75px * 4/10);
+                height: calc(75px * 4/10 + 5px);
                 background: url("images/full_heart.png");
                 background-size: 100% !important;
                 position: relative;
@@ -145,6 +148,7 @@
             background-size: 100%;
             width: calc(75px * 9);
             height: 18.5px;
+            margin-bottom: 3.75px;
 
             #xp-level {
                 text-align: center;

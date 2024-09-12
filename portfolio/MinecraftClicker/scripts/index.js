@@ -21,10 +21,10 @@ let boardObj = {
     top: 0
 }
 
-boardObj.left = (ClientWidth / 2) - (1500 / 2);
-boardObj.right = (ClientWidth / 2) + (1500 / 2);
-boardObj.top = (ClientHeight / 2) - (700 / 2) - 30;
-boardObj.bottom = (ClientHeight / 2) + (700 / 2) - 30;
+boardObj.left = (ClientWidth / 2) - (1500 / 2) - 5;
+boardObj.right = (ClientWidth / 2) + (1500 / 2) - 5;
+boardObj.top = (ClientHeight / 2) - (700 / 2) - 38;
+boardObj.bottom = (ClientHeight / 2) + (700 / 2) - 40;
 
 let boxObj = {}
 
@@ -62,35 +62,35 @@ function update() {
             break;
         case "sin":
             boxObj.x += boxObj.speedX;
-            boxObj.y = (Math.sin(boxObj.x / 100) * 250) + ((ClientHeight / 2) - 50);
+            boxObj.y = (Math.sin(boxObj.x / 100) * 250) + ((ClientHeight / 2) - 90);
             break;
         case "quadratic":
             boxObj.x += boxObj.speedX;
-            boxObj.y = ((boxObj.x - ((ClientWidth / 2) - 50)) ** 2) / 900 + boardObj.top;
+            boxObj.y = ((boxObj.x - ((ClientWidth / 2) - 45)) ** 2) / 900 + boardObj.top;
             break;
         case "tan":
             boxObj.x += boxObj.speedX;
-            boxObj.y =((Math.tan(boxObj.x / 100))/((1/20) * Math.cos(boxObj.x / 100))) + ((ClientHeight / 2) - 50);
+            boxObj.y =((Math.tan(boxObj.x / 100))/((1/20) * Math.cos(boxObj.x / 100))) + ((ClientHeight / 2) - 90);
             break;
         case "circle":
             kCounter += boxObj.speedX;
             boxObj.x = (Math.cos(kCounter / 100) * 280) + ((ClientWidth / 2) - 50);
-            boxObj.y = (Math.sin(kCounter / 100) * 280) + ((ClientHeight / 2) - 50);
+            boxObj.y = (Math.sin(kCounter / 100) * 280) + ((ClientHeight / 2) - 90);
             break;
         case "ellipse":
             kCounter += boxObj.speedX;
             boxObj.x = (Math.cos(kCounter / 100) * 600) + ((ClientWidth / 2) - 50);
-            boxObj.y = (Math.sin(kCounter / 100) * 300) + ((ClientHeight / 2) - 50);
+            boxObj.y = (Math.sin(kCounter / 100) * 300) + ((ClientHeight / 2) - 90);
             break;
         case "inf":
             kCounter += boxObj.speedX;
             boxObj.x = (Math.cos(kCounter / 200) * 560) + ((ClientWidth / 2) - 50);
-            boxObj.y = (Math.sin(kCounter / 100) * 280) + ((ClientHeight / 2) - 50);
+            boxObj.y = (Math.sin(kCounter / 100) * 280) + ((ClientHeight / 2) - 90);
             break;
         case "multi-cross":
             kCounter += boxObj.speedX;
             boxObj.x = (Math.cos(kCounter / 500) * 700) + ((ClientWidth / 2) - 50);
-            boxObj.y = (Math.sin(kCounter / 100) * 280) + ((ClientHeight / 2) - 50);
+            boxObj.y = (Math.sin(kCounter / 100) * 280) + ((ClientHeight / 2) - 90);
             break;
         default:
             boxObj.x += boxObj.speedX;
@@ -145,7 +145,8 @@ function update() {
         board.style.backgroundSize = 'unset';
         document.getElementById("information").style.visibility = "hidden";
 
-        box.style.background = `url("images/enemies/${levelData[level].enemyType}.png")`;
+        box.style.background = boxObj.image;
+        board.style.background = `url("images/backgrounds/${levelData[level].background}.png")`;
 
         hitbox.style.width = (boxObj.width + playerAttributes.atkAOE) + "px";
         hitbox.style.height = (boxObj.height + playerAttributes.atkAOE) + "px";
@@ -196,6 +197,21 @@ function update() {
 function boxClick() {
     console.log("clicked")
     enemyHealth--
+    boxObj.image = boxObj.image + ", #ff000060";
+    let rotation = (Math.random() * 60) - 30;
+    if (Math.abs(rotation) < 15) {
+        if (rotation > 0) {
+            rotation = 15
+        }
+        else {
+            rotation = -15
+        }
+    }
+    box.style.rotate = rotation + "deg";
+    setTimeout(() => {
+        boxObj.image = boxObj.image.replace(", #ff000060", "");
+        box.style.rotate = "0deg";
+    }, 100);
 }
 
 function boardClick() {
@@ -208,10 +224,10 @@ function boardClick() {
 function handleResize() {
     ClientWidth = window.innerWidth;
     ClientHeight = window.innerHeight;
-    boardObj.left = (ClientWidth / 2) - (1500 / 2);
-    boardObj.right = (ClientWidth / 2) + (1500 / 2);
-    boardObj.top = (ClientHeight / 2) - (700 / 2) - 30;
-    boardObj.bottom = (ClientHeight / 2) + (700 / 2) - 30;
+    boardObj.left = (ClientWidth / 2) - (1500 / 2) - 5;
+    boardObj.right = (ClientWidth / 2) + (1500 / 2) - 5;
+    boardObj.top = (ClientHeight / 2) - (700 / 2) - 38;
+    boardObj.bottom = (ClientHeight / 2) + (700 / 2) - 40;
 }
 
 function collisionCheck() {
