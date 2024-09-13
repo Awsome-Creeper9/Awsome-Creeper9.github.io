@@ -21,8 +21,8 @@ let boardObj = {
     top: 0
 }
 
-boardObj.left = (ClientWidth / 2) - (1500 / 2) - 5;
-boardObj.right = (ClientWidth / 2) + (1500 / 2) - 5;
+boardObj.left = (ClientWidth / 2) - (1500 / 2);
+boardObj.right = (ClientWidth / 2) + (1500 / 2);
 boardObj.top = (ClientHeight / 2) - (700 / 2) - 38;
 boardObj.bottom = (ClientHeight / 2) + (700 / 2) - 40;
 
@@ -89,7 +89,7 @@ function update() {
             break;
         case "multi-cross":
             kCounter += boxObj.speedX;
-            boxObj.x = (Math.cos(kCounter / 500) * 700) + ((ClientWidth / 2) - 50);
+            boxObj.x = (Math.cos(kCounter / 500) * 650) + ((ClientWidth / 2) - 50);
             boxObj.y = (Math.sin(kCounter / 100) * 280) + ((ClientHeight / 2) - 90);
             break;
         default:
@@ -109,7 +109,7 @@ function update() {
     document.getElementById("enemy-health").innerHTML = `Enemy Health: ${enemyHealth} / ${boxObj.maxEnemyHealth}`;
 
     if (enemyHealth <= 0) {
-        playerAttributes.xpStored += levelData[level].xpReward;
+        playerAttributes.xpStored += boxObj.xpReward;
         increaseLevel();
     }
 
@@ -146,7 +146,7 @@ function update() {
         document.getElementById("information").style.visibility = "hidden";
 
         box.style.background = boxObj.image;
-        board.style.background = `url("images/backgrounds/${levelData[level].background}.png")`;
+        board.style.background = `url("images/backgrounds/${boxObj.background}.png")`;
 
         hitbox.style.width = (boxObj.width + playerAttributes.atkAOE) + "px";
         hitbox.style.height = (boxObj.height + playerAttributes.atkAOE) + "px";
@@ -224,8 +224,8 @@ function boardClick() {
 function handleResize() {
     ClientWidth = window.innerWidth;
     ClientHeight = window.innerHeight;
-    boardObj.left = (ClientWidth / 2) - (1500 / 2) - 5;
-    boardObj.right = (ClientWidth / 2) + (1500 / 2) - 5;
+    boardObj.left = (ClientWidth / 2) - (1500 / 2);
+    boardObj.right = (ClientWidth / 2) + (1500 / 2);
     boardObj.top = (ClientHeight / 2) - (700 / 2) - 38;
     boardObj.bottom = (ClientHeight / 2) + (700 / 2) - 40;
 }
@@ -246,7 +246,7 @@ function collisionCheck() {
     else if (boxObj.y < boardObj.top) {
         boxObj.y = boardObj.top;
         boxObj.speedY *= -1;
-        if (levelData[level].pathType === "tan") {
+        if (boxObj.pathType === "tan") {
             tanDirection *= -1;
         }
     }
