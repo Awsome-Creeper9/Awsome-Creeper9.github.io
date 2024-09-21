@@ -3,7 +3,15 @@
 ///////////////////////////////////////
 
 let levelData;
+let itemData;
+let itemIds;
 fetch("scripts/levelData.json").then(response => response.json()).then(data => {levelData = data;});
+fetch("scripts/items.json").then(response => response.json()).then(data => {
+    itemData = data;
+    itemIds = [itemData["melee"]["swords"]["wood"], itemData["melee"]["swords"]["stone"], itemData["melee"]["swords"]["iron"], itemData["melee"]["swords"]["diamond"], itemData["melee"]["swords"]["netherite"], itemData["melee"]["axes"]["wood"], itemData["melee"]["axes"]["stone"], itemData["melee"]["axes"]["iron"], itemData["melee"]["axes"]["diamond"], itemData["melee"]["axes"]["netherite"], itemData["melee"]["pickaxes"]["wood"], itemData["melee"]["pickaxes"]["stone"], itemData["melee"]["pickaxes"]["iron"], itemData["melee"]["pickaxes"]["diamond"], itemData["melee"]["pickaxes"]["netherite"]]
+});
+
+// itemIds = [itemData["melee"]["swords"]["wood"], itemData["melee"]["swords"]["stone"], itemData["melee"]["swords"]["iron"], itemData["melee"]["swords"]["diamond"], itemData["melee"]["swords"]["netherite"], itemData["melee"]["axes"]["wood"], itemData["melee"]["axes"]["stone"], itemData["melee"]["axes"]["iron"], itemData["melee"]["axes"]["diamond"], itemData["melee"]["axes"]["netherite"], itemData["melee"]["pickaxes"]["wood"], itemData["melee"]["pickaxes"]["stone"], itemData["melee"]["pickaxes"]["iron"], itemData["melee"]["pickaxes"]["diamond"], itemData["melee"]["pickaxes"]["netherite"]]
 
 let kCounter = 0;
 
@@ -31,14 +39,17 @@ let boxObj = {}
 let enemyHealth = 20;
 
 let playerAttributes = {
-    atkSpeed: 0, //normal
-    atkDmg: 0, //normal
-    atkAOE: 0, //normal
+    atkSpeed: 0, //normal (larger num == worse)
+    atkDmg: 0, //normal (larger num == better)
+    atkAOE: 0, //normal (larger num == better)
+    currentCooldown: 0,
     health: 20,
     maxHealth: 20,
     xpStored: 0,
     xpLevel: 0,
     xpTotal: 0,
+    selectedSlot: 0,
+    inventory: new Array(9).fill("air")
 }
 
 let level = 0;
@@ -47,6 +58,12 @@ let debug = {
     showHitbox: false, //F13
 }
 
+let mousePos = [0, 0];
+
+document.addEventListener("mousemove", (e) => {
+    mousePos = [e.clientX, e.clientY];
+})
+
 /////////////////////
 // UPDATE FUNCTION //
 /////////////////////
@@ -54,6 +71,9 @@ let debug = {
 setInterval(update, 1000 / 20)
 function update() {
     handleResize()
+    updateAtkAttributes()
+    if (playerAttributes.currentCooldown > 0) {playerAttributes.currentCooldown--;}
+    updateCooldownProgress()
 
     switch (boxObj.pathType) {
         case "linear":
@@ -195,29 +215,36 @@ function update() {
 }
 
 function boxClick() {
-    console.log("clicked")
-    enemyHealth--
-    boxObj.image = boxObj.image + ", #ff000060";
-    let rotation = (Math.random() * 60) - 30;
-    if (Math.abs(rotation) < 15) {
-        if (rotation > 0) {
-            rotation = 15
+    if (playerAttributes.currentCooldown <= 0) {
+        console.log("clicked")
+        enemyHealth -= (playerAttributes.atkDmg == 0) ? 1 : playerAttributes.atkDmg;
+        boxObj.image = boxObj.image + ", #ff000060";
+        let rotation = (Math.random() * 60) - 30;
+        if (Math.abs(rotation) < 15) {
+            if (rotation > 0) {
+                rotation = 15
+            }
+            else {
+                rotation = -15
+            }
         }
-        else {
-            rotation = -15
-        }
+        box.style.rotate = rotation + "deg";
+        setTimeout(() => {
+            boxObj.image = boxObj.image.replace(", #ff000060", "");
+            box.style.rotate = "0deg";
+        }, 100);
+
+        playerAttributes.currentCooldown = playerAttributes.atkSpeed;
     }
-    box.style.rotate = rotation + "deg";
-    setTimeout(() => {
-        boxObj.image = boxObj.image.replace(", #ff000060", "");
-        box.style.rotate = "0deg";
-    }, 100);
 }
 
 function boardClick() {
-    if (level > 0) {
-        console.log("misclicked")
-        playerAttributes.health--
+    if (playerAttributes.currentCooldown <= 0) {
+        if (level > 0) {
+            console.log("misclicked")
+            playerAttributes.health--
+            playerAttributes.currentCooldown = playerAttributes.atkSpeed;
+        }
     }
 }
 
@@ -249,6 +276,27 @@ function collisionCheck() {
         if (boxObj.pathType === "tan") {
             tanDirection *= -1;
         }
+    }
+}
+
+function updateAtkAttributes() {
+    let selectedItem = playerAttributes.inventory[playerAttributes.selectedSlot];
+    playerAttributes.atkAOE = (selectedItem.atkAOE) ? selectedItem.atkAOE : 0;
+    playerAttributes.atkDmg = (selectedItem.atkDmg) ? selectedItem.atkDmg : 0;
+    playerAttributes.atkSpeed = (selectedItem.atkSpeed) ? selectedItem.atkSpeed : 0;
+}
+
+function updateCooldownProgress() {
+    let bar = document.getElementById("cooldownProgress");
+    bar.max = playerAttributes.atkSpeed;
+    bar.value = playerAttributes.currentCooldown;
+    if (playerAttributes.currentCooldown > 0) {
+        bar.style.visibility = "visible";
+        bar.style.left = (mousePos[0] + 15) + "px";
+        bar.style.top = (mousePos[1] + 15) + "px";
+    }
+    else {
+        bar.style.visibility = "hidden";
     }
 }
 
@@ -285,6 +333,19 @@ function updateXP() {
     document.getElementById('xp-filling').style.width = `${75 * 9 * 10/181 * playerAttributes.xpStored}px`;
 }
 
+function hotbarSlotClick(num) {
+    document.querySelectorAll(".hotbar-slot").forEach((element) => {
+        element.style.background = "url('images/hotbar_slot.png')";
+        element.style.scale = "100%";
+        element.style.zIndex = "0";
+    })
+    document.getElementById(`slot${num}`).style.background = "url('images/selected_hotbar_slot.png')";
+    document.getElementById(`slot${num}`).style.scale = "125%";
+    document.getElementById(`slot${num}`).style.zIndex = "1";
+    playerAttributes.selectedSlot = num;
+}
+hotbarSlotClick(0) //initial
+
 function increaseLevel() {
     level++
 
@@ -302,6 +363,11 @@ function setLevel(num) {
 
 function setXpLevel(num) {
     playerAttributes.xpLevel = num;
+}
+
+function setItem(item, slot) {
+    playerAttributes.inventory[slot] = itemIds[item];
+    document.querySelector(`#slot${slot} > .item`).style.background = itemIds[item].sprite;
 }
 
 document.addEventListener("keydown", (e) => {

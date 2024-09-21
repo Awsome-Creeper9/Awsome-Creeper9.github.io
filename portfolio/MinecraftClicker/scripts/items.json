@@ -1,0 +1,122 @@
+{
+  "melee": {
+    "swords": {
+      "wood": {
+        "atkSpeed": 13,
+        "atkDmg": 6,
+        "atkAOE": 10,
+        "sprite": "url(images/items/wooden_sword.png)"
+      },
+      "stone": {
+        "atkSpeed": 13,
+        "atkDmg": 7,
+        "atkAOE": 10,
+        "sprite": "url(images/items/stone_sword.png)"
+      },
+      "iron": {
+        "atkSpeed": 13,
+        "atkDmg": 8,
+        "atkAOE": 10,
+        "sprite": "url(images/items/iron_sword.png)"
+      },
+      "diamond": {
+        "atkSpeed": 13,
+        "atkDmg": 9,
+        "atkAOE": 10,
+        "sprite": "url(images/items/diamond_sword.png)"
+      },
+      "netherite": {
+        "atkSpeed": 13,
+        "atkDmg": 10,
+        "atkAOE": 10,
+        "sprite": "url(images/items/netherite_sword.png)"
+      }
+    },
+    "axes": {
+      "wood": {
+        "atkSpeed": 25,
+        "atkDmg": 9,
+        "atkAOE": 0,
+        "sprite": "url(images/items/wooden_axe.png)"
+      },
+      "stone": {
+        "atkSpeed": 25,
+        "atkDmg": 11,
+        "atkAOE": 0,
+        "sprite": "url(images/items/stone_axe.png)"
+      },
+      "iron": {
+        "atkSpeed": 22,
+        "atkDmg": 11,
+        "atkAOE": 0,
+        "sprite": "url(images/items/iron_axe.png)"
+      },
+      "diamond": {
+        "atkSpeed": 20,
+        "atkDmg": 11,
+        "atkAOE": 0,
+        "sprite": "url(images/items/diamond_axe.png)"
+      },
+      "netherite": {
+        "atkSpeed": 20,
+        "atkDmg": 11,
+        "atkAOE": 0,
+        "sprite": "url(images/items/netherite_axe.png)"
+      }
+    },
+    "pickaxes": {
+      "wood": {
+        "atkSpeed": 8,
+        "atkDmg": 4,
+        "atkAOE": 0,
+        "sprite": "url(images/items/wooden_pickaxe.png)"
+      },
+      "stone": {
+        "atkSpeed": 8,
+        "atkDmg": 5,
+        "atkAOE": 0,
+        "sprite": "url(images/items/stone_pickaxe.png)"
+      },
+      "iron": {
+        "atkSpeed": 8,
+        "atkDmg": 6,
+        "atkAOE": 0,
+        "sprite": "url(images/items/iron_pickaxe.png)"
+      },
+      "diamond": {
+        "atkSpeed": 8,
+        "atkDmg": 7,
+        "atkAOE": 0,
+        "sprite": "url(images/items/diamond_pickaxe.png)"
+      },
+      "netherite": {
+        "atkSpeed": 8,
+        "atkDmg": 8,
+        "atkAOE": 0,
+        "sprite": "url(images/items/netherite_pickaxe.png)"
+      }
+    }
+  },
+  "range": {
+    "arrows": {
+
+    },
+    "dispenser": {
+
+    },
+    "lingerHarmPotion": {
+
+    }
+  },
+  "other": {
+    "emerald": {
+
+    },
+    "totem": {
+
+    },
+    "healPotion": {
+
+    }
+  }
+}
