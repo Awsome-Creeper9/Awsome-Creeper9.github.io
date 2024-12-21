@@ -32,7 +32,7 @@
           position: absolute;
           width: 47vh;
           height: 47vh;
-          background-color: #fff;
+          background: #fff;
           right: 0;
           left: 0;
         }
@@ -43,39 +43,27 @@
     <body>
         <h1>Color Mixer</h1>
         <div>
-          <label for="amount">Colors:</label>
-          <select id="amount">
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
+            <label for="mode">Mode:</label>
+            <select id="mode">
+                <option>Hex</option>
+                <option>RGB</option>
+                <option>HSL</option>
+            </select>
         </div>
+        <br>
+        <div>Valid Formats:</div>
+        <div id="validFormats"></div>
+        <br>
         <div>
           <div id="choice1">
-            <label for="hex1">Color 1:</label>
-            <input id="hex1" type="text" />
+            <label for="color1">Color 1:</label>
+            <input id="color1" type="text" />
           </div>
           <div id="choice2">
-            <label for="hex2">Color 2:</label>
-            <input id="hex2" type="text" />
-            <div id="choice3">
-              <label for="hex3">Color 3:</label>
-              <input id="hex3" type="text" />
-            </div>
-            <div id="choice4">
-              <label for="hex4">Color 4:</label>
-              <input id="hex4" type="text" />
-            </div>
-            <div id="choice5">
-              <label for="hex5">Color 5:</label>
-              <input id="hex5" type="text" />
-            </div>
+            <label for="color2">Color 2:</label>
+            <input id="color2" type="text" />
           </div>
-        </div>
-        <div>
-          <div id="color1" class="colors"></div> 
-        </div>
+        </div><div id="output" class="colors"></div>
         <div id="result">
           <label for="results">Result:</label>
           <input id="results" type="text" />
@@ -102,11 +90,8 @@
             return `#${hexR}${hexG}${hexB}` // Returns the hex value
           }
 
-          document.getElementById("hex1").value = starterColor() // Sets the first color input (to the starting color)
-          document.getElementById("hex2").value = starterColor() // Second
-          document.getElementById("hex3").value = starterColor() // Third
-          document.getElementById("hex4").value = starterColor() // Fourth
-          document.getElementById("hex5").value = starterColor() // Fifth
+          document.getElementById("color1").value = starterColor() // Sets the first color input (to the starting color)
+          document.getElementById("color2").value = starterColor() // Second
 
           /////////////////////
           // Update Function //
@@ -115,75 +100,92 @@
           setInterval(update, 1000/20) // Sets update to run 20 times per second
 
           function update() { // Update function
-            const amount = document.getElementById("amount").value // Gets the amount of colors being inputed
+              let mode = document.getElementById("mode").value;
+              let colors = 2;
 
-            if (amount == 2) { // If amount is 2
-              document.getElementById("choice3").style.display = "none" // Hides the 3rd input
-              document.getElementById("choice4").style.display = "none" // 4th
-              document.getElementById("choice5").style.display = "none" // 5th
+              if (mode == "Hex") {
+                  document.getElementById("validFormats").innerHTML = "Hex - #ff00ff"
 
-              document.getElementById("color1").style.background = `color-mix(in srgb, ${document.getElementById("hex1").value}, ${document.getElementById("hex2").value})` // Mixes colors 1 and 2
-            }
-            else if (amount == 3) { // If amount is 3
-              document.getElementById("choice3").style.display = "unset" // Shows the 3rd
-              document.getElementById("choice4").style.display = "none" // Hides the 4th
-              document.getElementById("choice5").style.display = "none" // 5th
+                  let R1 = document.getElementById("color1").value.slice(1, 3) // Gets Red value of color 1
+                  let G1 = document.getElementById("color1").value.slice(3, 5) // Gets Green value of color 1
+                  let B1 = document.getElementById("color1").value.slice(5, 7) // Gets Blue value of color 1
 
-              document.getElementById("color1").style.background = `color-mix(in srgb, ${document.getElementById("hex1").value}, ${document.getElementById("hex2").value})` // Mixes colors 1 and 2
-              const betweenColor1 = document.getElementById("color1").style.background // Sets the betweenColor constant to the mix of color 1 and 2
-              document.getElementById("color1").style.background = `color-mix(in srgb, ${betweenColor1} 66.6666%, ${document.getElementById("hex3").value})` // Mixes the betweenColor with color 3
-            }
-            else if (amount == 4) { // If amount is 4
-              document.getElementById("choice3").style.display = "unset" // Shows the 3rd
-              document.getElementById("choice4").style.display = "unset" // Shows the 4th
-              document.getElementById("choice5").style.display = "none" // Hides the 5th
+                  let R2 = document.getElementById("color2").value.slice(1, 3) // Gets Red value of color 2
+                  let G2 = document.getElementById("color2").value.slice(3, 5) // Gets Green value of color 2
+                  let B2 = document.getElementById("color2").value.slice(5, 7) // Gets Blue value of color 2
 
-              document.getElementById("color1").style.background = `color-mix(in srgb, ${document.getElementById("hex1").value}, ${document.getElementById("hex2").value})` // Mixes colors 1 and 2
-              const betweenColor1 = document.getElementById("color1").style.background // Sets the betweenColor1 constant to the mix of color 1 and 2
-              document.getElementById("color1").style.background = `color-mix(in srgb, ${document.getElementById("hex3").value}, ${document.getElementById("hex4").value})` // Mixes colors 3 and 4
-              const betweenColor2 = document.getElementById("color1").style.background // Sets the betweenColor2 constant to the mix of color 3 and 4
-              document.getElementById("color1").style.background = `color-mix(in srgb, ${betweenColor1}, ${betweenColor2})` // Mixes the betweenColors
-            }
-            else if (amount == 5) { // If amount is 5
-              document.getElementById("choice3").style.display = "unset" // Shows the 3rd
-              document.getElementById("choice4").style.display = "unset" // Shows the 4th
-              document.getElementById("choice5").style.display = "unset" // Shows the 5th
+                  if (colors == 2) {
+                      var Ravg = Math.round((parseInt(R1, 16) + parseInt(R2, 16)) / 2) // Gets average red value
+                      var Gavg = Math.round((parseInt(G1, 16) + parseInt(G2, 16)) / 2) // Gets average green value
+                      var Bavg = Math.round((parseInt(B1, 16) + parseInt(B2, 16)) / 2) // Gets average blue value
+                  }
 
-              document.getElementById("color1").style.background = `color-mix(in srgb, ${document.getElementById("hex1").value}, ${document.getElementById("hex2").value})` // Mixes colors 1 and 2
-              const betweenColor1 = document.getElementById("color1").style.background // Sets the betweenColor1 constant to the mix of color 1 and 2
-              document.getElementById("color1").style.background = `color-mix(in srgb, ${document.getElementById("hex3").value}, ${document.getElementById("hex4").value})` // Mixes colors 3 and 4
-              const betweenColor2 = document.getElementById("color1").style.background // Sets the betweenColor2 constant to the mix of color 3 and 4
-              document.getElementById("color1").style.background = `color-mix(in srgb, ${betweenColor1}, ${betweenColor2})` // Mixes the betweenColors
-              const betweenColor3 = document.getElementById("color1").style.background // Sets the betweenColor3 constant to the mix of betweenColors 1 and 2
-              document.getElementById("color1").style.background = `color-mix(in srgb, ${betweenColor3} 80%, ${document.getElementById("hex5").value})` // Mixes betweenColor3 with color 5
-            }
-          }
+                  Ravg = Ravg.toString(16).length == 1 ? "0" + Ravg.toString(16) : Ravg.toString(16)
+                  Gavg = Gavg.toString(16).length == 1 ? "0" + Gavg.toString(16) : Gavg.toString(16)
+                  Bavg = Bavg.toString(16).length == 1 ? "0" + Bavg.toString(16) : Bavg.toString(16)
 
-          //////////////////////
-          // Grab Color Value //
-          //////////////////////
+                  let HexAvg = `#${Ravg}${Gavg}${Bavg}`
 
-          const colorDisplay = document.getElementById('color1'); // Gets the color display element
+                  document.getElementById("output").style.background = HexAvg; // Sets the background color
+                  document.getElementById("results").value = HexAvg; // Sets the result
+              }
+              else if (mode == "RGB") {
+                  document.getElementById("validFormats").innerHTML = "RGB - rgb(255, 0, 255)";
 
-          setInterval(grabColor, 1000/20) // Sets grabColor to run 20 times per second
-        
-          function grabColor() { // Grabs the Color of the Color Display
-            const canvas = document.createElement('canvas'); // Creates a new canvas
-            canvas.width = colorDisplay.offsetWidth; // Sets the canvas width
-            canvas.height = colorDisplay.offsetHeight; // Sets the canvas height
-            const ctx = canvas.getContext('2d'); // Gets the 2d context
-            ctx.fillStyle = getComputedStyle(colorDisplay).backgroundColor; // Sets the fill style to be of the color display color
-            ctx.fillRect(0, 0, canvas.width, canvas.height); // Fills the canvas with the color display color
-        
-            const pixelData = ctx.getImageData(50, 50, 1, 1).data; // Gets the color data
-        
-            const color = rgbToHex(pixelData[0], pixelData[1], pixelData[2]); // Converts the color data to a hex
-        
-            document.getElementById('results').value = color; // Sets the result value to the hex
-          }
-        
-          function rgbToHex(r, g, b) { // Converts rgb to hex
-            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1); // Returns the hex
+                  let RGB1 = document.getElementById("color1").value.split('rgb')[1].split(',')
+
+                  let R1 = RGB1[0].split("(")[1] // Gets Red value of color 1
+                  let G1 = RGB1[1] // Gets Green value of color 1
+                  let B1 = RGB1[2].split(")")[0] // Gets Blue value of color 1
+
+                  let RGB2 = document.getElementById("color2").value.split('rgb')[1].split(',')
+
+                  let R2 = RGB2[0].split("(")[1] // Gets Red value of color 1
+                  let G2 = RGB2[1] // Gets Green value of color 1
+                  let B2 = RGB2[2].split(")")[0] // Gets Blue value of color 1
+
+                  if (colors == 2) {
+                      var Ravg = Math.round((parseInt(R1) + parseInt(R2)) / 2) // Gets average red value
+                      var Gavg = Math.round((parseInt(G1) + parseInt(G2)) / 2) // Gets average green value
+                      var Bavg = Math.round((parseInt(B1) + parseInt(B2)) / 2) // Gets average blue value
+                  }
+
+                  let RGBavg = `rgb(${Ravg}, ${Gavg}, ${Bavg})` // Formats the rgb value
+
+                  document.getElementById("output").style.background = RGBavg; // Sets the background color
+                  document.getElementById("results").value = RGBavg; // Sets the result
+              }
+              else if (mode == "HSL") {
+                  document.getElementById("validFormats").innerHTML = "HSL - hsl(360 100% 100%)"
+
+                  let HSL1 = document.getElementById("color1").value.split('hsl')[1].split(' ')
+
+                  let H1 = HSL1[0].split("(")[1] // Gets Red value of color 1
+                  let S1 = HSL1[1] // Gets Green value of color 1
+                  let L1 = HSL1[2].split(")")[0] // Gets Blue value of color 1
+
+                  let HSL2 = document.getElementById("color2").value.split('hsl')[1].split(' ')
+
+                  let H2 = HSL2[0].split("(")[1] // Gets Red value of color 1
+                  let S2 = HSL2[1] // Gets Green value of color 1
+                  let L2 = HSL2[2].split(")")[0] // Gets Blue value of color 1
+
+                  if (colors == 2) {
+
+                      if (Math.abs(parseInt(H1) - parseInt(H2)) > 180) {
+                          H1 = parseInt(H1) + 360;
+                      } // Find shortest average hue difference
+
+                      var Havg = Math.round((parseInt(H1) + parseInt(H2)) / 2) // Gets average hue value
+                      var Savg = Math.round((parseInt(S1) + parseInt(S2)) / 2) // Gets average sat value
+                      var Lavg = Math.round((parseInt(L1) + parseInt(L2)) / 2) // Gets average light value
+                  }
+
+                  let HSLavg = `hsl(${Havg} ${Savg}% ${Lavg}%)` // Formats the rgb value
+
+                  document.getElementById("output").style.background = HSLavg; // Sets the background color
+                  document.getElementById("results").value = HSLavg; // Sets the result
+              }
           }
         </script>       
     </body>
