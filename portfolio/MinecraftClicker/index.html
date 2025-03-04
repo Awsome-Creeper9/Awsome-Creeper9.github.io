@@ -187,7 +187,7 @@
                     position: relative;
                     top: 12.5px;
                     left: 12.5px;
-                    scale = 100% !important;
+                    scale: 100% !important;
                 }
             }
         }
@@ -246,8 +246,8 @@
     <splash id="splash"></splash>
     <div id="main-menu-buttons">
         <div id="start-game" onclick="increaseLevel()"><p>Start Game</p></div>
-        <div id="settings" onclick="setLevel(-1)"><p>Settings</p></div>
-        <div id="how-to-play" onclick="setLevel(-2)"><p>How to Play</p></div>
+        <div id="settings" onclick="setLevel(-1); location += '#settings';"><p>Settings</p></div>
+        <div id="how-to-play" onclick="setLevel(-2); location += '#how-to-play';"><p>How to Play</p></div>
     </div>
     <div id="mini-title"></div>
     <div id="board" onmousedown="boardClick()">
@@ -255,7 +255,7 @@
             <div id="settings-info">
                 <p>Settings: Empty atm</p>
             </div>
-            <div id="main-menu-button" onclick="setLevel(0)"><p>Return to Main Menu</p></div>
+            <div id="main-menu-button" onclick="setLevel(0); location = location.href.split('#')[0];"><p>Return to Main Menu</p></div>
             <div id="how-to-play-info">
                 <p>How to Play: Empty atm</p>
             </div>
@@ -303,4 +303,5 @@
 </body>
 <script src="scripts/splashes.js"></script>
 <script src="scripts/index.js"></script>
+<script src="scripts/hashLinkCheck.js"></script>
 </html>

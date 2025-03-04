@@ -182,7 +182,7 @@ function update() {
         document.getElementById("splash").style.display = "none";
         document.getElementById("disclaimer").style.visibility = "hidden";
         document.getElementById("information").style.visibility = "visible";
-        if (level == -1) { // Settings
+        if (level === -1) { // Settings
             board.style.visibility = "visible";
             document.getElementById("mini-title").style.visibility = "visible";
             board.style.background = 'url("images/dirt.png"), #00000088';
