@@ -133,6 +133,10 @@ function update() {
         increaseLevel();
     }
 
+    if (boxObj.hasAutoAttack) {
+        autoAttack();
+    }
+
     updateHearts();
 
     updateXP();
@@ -242,9 +246,17 @@ function boardClick() {
     if (playerAttributes.currentCooldown <= 0) {
         if (level > 0) {
             console.log("misclicked")
-            playerAttributes.health--
+            playerAttributes.health -= boxObj.damage;
             playerAttributes.currentCooldown = playerAttributes.atkSpeed;
         }
+    }
+}
+
+function autoAttack() {
+    boxObj.currentAutoCooldown--;
+    if (boxObj.currentAutoCooldown <= 0) {
+        playerAttributes.health -= boxObj.autoDmg;
+        boxObj.currentAutoCooldown = boxObj.autoAtkCooldown;
     }
 }
 
