@@ -74,6 +74,74 @@
         }
     }
 
+    #trade {
+        position: absolute;
+        left: calc(50% - 129px - 450px);
+        top: 5px;
+        z-index: 1000;
+        font-size: xx-large;
+        user-select: none;
+
+        width: 300px;
+        height: 60px;
+        background-image: url("images/unpressed_button_small.png");
+        background-size: 100%;
+        color: white;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+        &:hover {
+            background-image: url("images/pressed_button_small.png");
+        }
+        > img {
+            margin-top: 6px;
+            width: 32px;
+            display: inline-flex;
+            position: relative;
+            right: 5px;
+        }
+        > p {
+            display: inline-flex;
+            position: relative;
+            bottom: 10px;
+            left: 5px;
+        }
+    }
+
+    #enchant {
+        position: absolute;
+        left: calc(50% + 129px + 150px);
+        top: 5px;
+        z-index: 1000;
+        font-size: xx-large;
+        user-select: none;
+
+        width: 300px;
+        height: 60px;
+        background-image: url("images/unpressed_button_small.png");
+        background-size: 100%;
+        color: white;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+        &:hover {
+            background-image: url("images/pressed_button_small.png");
+        }
+        > img {
+            margin-top: 6px;
+            width: 48px;
+            display: inline-flex;
+            position: relative;
+            right: 5px;
+        }
+        > p {
+            display: inline-flex;
+            position: relative;
+            bottom: 15px;
+            left: 5px;
+        }
+    }
+
     #mini-title {
         position: absolute;
         background-image: url("images/title.png");
@@ -164,6 +232,27 @@
                 background-size: calc(75px * 9);
                 height: 18.5px;
                 width: calc(75px * 9 * 10/181 * 18); /* calc(75px * 9 * 10/181 * 1) = 1px -- calc(widthOfHBSlot * numberOfSlots * 10/181(ratio) * segmentsFilled) */
+            }
+        }
+
+        #emerald-count {
+            display: flex;
+            position: absolute;
+            right: 700px;
+            bottom: -8px;
+
+            > img {
+                width: 40px;
+                height: 48px;
+            }
+
+            > p {
+                font-size: 35px;
+                color: #17dd62;
+                text-shadow: #002d00 4px 0px 0px, #005300 -4px 0px 0px, #002d00 0px 4px 0px, #005300 0px -4px 0px;
+                position: relative;
+                bottom: 10px;
+                right: 5px;
             }
         }
 
@@ -265,6 +354,10 @@
     <div id="box" onmousedown="boardClick()"></div>
     <div id="enemy"></div>
     <div id="hotbar">
+        <div id="emerald-count">
+            <p>0</p>
+            <img src="images/emerald.png">
+        </div>
         <div id="hearts">
             <div class="heart" id="heart0"></div>
             <div class="heart" id="heart1"></div>
@@ -293,6 +386,8 @@
             <div class="hotbar-slot" id="slot8" onclick="hotbarSlotClick(8)"><div class="item"></div></div>
         </div>
     </div>
+    <div id="trade"><img src="images/villager.png"><p>Trade</p></div>
+    <div id="enchant"><img src="images/enchanting_table.png"><p>Enchant</p></div>
     <progress id="cooldownProgress" max="100" value="0"></progress>
     <!--TEMP:-->
     <div id="info-box">

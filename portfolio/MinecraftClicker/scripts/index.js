@@ -49,6 +49,7 @@ let playerAttributes = {
     xpLevel: 0,
     xpTotal: 0,
     selectedSlot: 0,
+    emeralds: 0,
     inventory: new Array(9).fill("air")
 }
 
@@ -130,6 +131,7 @@ function update() {
 
     if (enemyHealth <= 0) {
         playerAttributes.xpStored += boxObj.xpReward;
+        playerAttributes.emeralds += boxObj.emeraldReward;
         increaseLevel();
     }
 
@@ -139,9 +141,24 @@ function update() {
 
     updateHearts();
 
+    updateEmeralds();
+
     updateXP();
 
     collisionCheck();
+
+    if (level > 3) {
+        document.getElementById("trade").style.visibility = "visible";
+    }
+    else {
+        document.getElementById("trade").style.visibility = "hidden";
+    }
+    if (level > 12) {
+        document.getElementById("enchant").style.visibility = "visible";
+    }
+    else {
+        document.getElementById("enchant").style.visibility = "hidden";
+    }
 
     if (level === 0) {
         box.style.visibility = "hidden";
@@ -343,6 +360,11 @@ function updateXP() {
     playerAttributes.xpTotal = playerAttributes.xpStored + (playerAttributes.xpLevel * 18);
 
     document.getElementById('xp-filling').style.width = `${75 * 9 * 10/181 * playerAttributes.xpStored}px`;
+}
+
+function updateEmeralds() {
+    document.querySelector('#emerald-count > p').textContent = `${playerAttributes.emeralds}`
+
 }
 
 function hotbarSlotClick(num) {
