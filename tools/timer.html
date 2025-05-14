@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Timer | Awsome_Creeper9</title>
+    <link rel="icon" type="image/x-icon" href="/WebPageImages/favicon.png">
+    <link rel="stylesheet" href="/styles/tools.css" />
+</head>
+<style>
+    #timerSel {
+        display: flex;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    div {
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    label ~ input{
+        display: block;
+        margin-bottom: .5vh;
+    }
+    input[type="number"] {
+        width: 45vh;
+        margin-left: auto;
+        margin-right: auto;
+        padding: .5vh;
+        border: 1px solid #333 !important;
+        border-radius: .4vh;
+        margin-bottom: 1vh;
+        background: rgb(30, 30, 30);
+    }
+    .timeSel {
+        width: 10vh ! important;
+        display: inline;
+        margin-top: 2.5vh;
+    }
+    timer {
+        width: fit-content;
+        font-size: 10rem;
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 5vh;
+        padding-right: 5vh;
+        margin-top: 1vh;
+        border: 2px white solid;
+        flex-direction: column;
+    }
+    #buttons {
+        display: flex;
+        & div {
+            margin-left: 1vh;
+            margin-right: 1vh;
+            width: 14vw;
+            height: 7vh;
+            line-height: 7vh;
+            font-size: 2.5rem;
+            padding: 0px;
+            margin-bottom: 2vh;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        & #start {
+            background: #00aa00;
+            &:hover {
+                background: #008800;
+            }
+        }
+        & #pause {
+            background: #4466aa;
+            &:hover {
+                background: #335599;
+            }
+        }
+        & #reset {
+            background: #cc4400;
+            &:hover {
+                background: #bb3300;
+            }
+        }
+    }
+</style>
+<body>
+    <h1>Timer</h1>
+    <select id="timerSel">
+        <option value="cd">Countdown Timer</option>
+        <option value="sw">Stopwatch</option>
+    </select>
+
+    <div>
+        <label for="hours" id="hlab">Hours: </label>
+        <input type="number" id="hours" class="timeSel" min=0 max="23" value=0 />
+        <label for="minutes" id="mlab">Minutes: </label>
+        <input type="number" id="minutes" class="timeSel" min=0 max=59 value=0 />
+        <label for="seconds" id="slab">Seconds: </label>
+        <input type="number" id="seconds" class="timeSel" min=0 max=59 value=0 />
+    </div>
+    <timer>
+        <div><Hours>00</Hours>:<Minutes>00</Minutes>:<Seconds>00</Seconds></div>
+        <div id="buttons">
+            <div id="start">Start</div>
+            <div id="pause">Pause</div>
+            <div id="reset">Start</div>
+        </div>
+    </timer>
+</body>
+<script>
+    let mode = document.getElementById("timerSel").value;
+
+    let sIn = document.getElementById("seconds");
+    let mIn = document.getElementById("minutes");
+    let hIn = document.getElementById("hours");
+    let hours = document.querySelector("Hours");
+    let mins = document.querySelector("Minutes");
+    let secs = document.querySelector("Seconds");
+    let isRunning = false;
+
+    document.getElementById("start").style.display = "none";
+
+    if (mode == "cd") {
+        sIn.style.display = "unset";
+        document.getElementById("slab").style.display = "unset";
+        mIn.style.display = "unset";
+        document.getElementById("mlab").style.display = "unset";
+        hIn.style.display = "unset";
+        document.getElementById("hlab").style.display = "unset";
+    }
+    else if (mode == "sw") {
+        sIn.style.display = "none";
+        document.getElementById("slab").style.display = "none";
+        mIn.style.display = "none";
+        document.getElementById("mlab").style.display = "none";
+        hIn.style.display = "none";
+        document.getElementById("hlab").style.display = "none";
+    }
+
+    document.getElementById("timerSel").addEventListener("change", () => {
+        mode = document.getElementById("timerSel").value;
+
+        if (mode == "cd") {
+            sIn.style.display = "unset";
+            document.getElementById("slab").style.display = "unset";
+            mIn.style.display = "unset";
+            document.getElementById("mlab").style.display = "unset";
+            hIn.style.display = "unset";
+            document.getElementById("hlab").style.display = "unset";
+        }
+        else if (mode == "sw") {
+            sIn.style.display = "none";
+            document.getElementById("slab").style.display = "none";
+            mIn.style.display = "none";
+            document.getElementById("mlab").style.display = "none";
+            hIn.style.display = "none";
+            document.getElementById("hlab").style.display = "none";
+        }
+
+        isRunning = false;
+        document.getElementById("pause").style.display = "unset";
+        document.getElementById("start").style.display = "none";
+        document.getElementById("reset").innerHTML = "Start";
+
+        hours.innerHTML = "00";
+        mins.innerHTML = "00";
+        secs.innerHTML = "00";
+    })
+
+    document.getElementById("reset").addEventListener("click", () => {
+        isRunning = true;
+        if (mode == "cd") {
+            if (hIn.value < 10) { hours.innerHTML = "0" + hIn.value; }
+            else { hours.innerHTML = hIn.value; }
+            if (mIn.value < 10) { mins.innerHTML = "0" + mIn.value; }
+            else { mins.innerHTML = mIn.value; }
+            if (sIn.value < 10) { secs.innerHTML = "0" + sIn.value; }
+            else { secs.innerHTML = sIn.value; }
+        }
+        else if (mode == "sw") {
+            hours.innerHTML = "00";
+            mins.innerHTML = "00";
+            secs.innerHTML = "00";
+        }
+        document.getElementById("reset").innerHTML = "Reset";
+        document.getElementById("pause").style.display = "unset";
+        document.getElementById("start").style.display = "none";
+    })
+    document.getElementById("pause").addEventListener("click", () => {
+        isRunning = false;
+        document.getElementById("pause").style.display = "none";
+        document.getElementById("start").style.display = "unset";
+    })
+    document.getElementById("start").addEventListener("click", () => {
+        isRunning = true;
+        document.getElementById("pause").style.display = "unset";
+        document.getElementById("start").style.display = "none";
+    })
+
+    setInterval(() => {
+        if (mode == "cd") {
+            if (parseInt(hours.innerHTML) == 0 && parseInt(mins.innerHTML) == 0 && parseInt(secs.innerHTML) == 0 && isRunning) {
+                isRunning = false;
+                console.log("finished");
+                document.getElementById("pause").style.display = "unset";
+                document.getElementById("start").style.display = "none";
+                document.getElementById("reset").innerHTML = "Start";
+            }
+            if (isRunning) {
+                if (parseInt(secs.innerHTML) > 0) {
+                    secs.innerHTML = parseInt(secs.innerHTML) - 1;
+                    if (parseInt(secs.innerHTML) < 10) { secs.innerHTML = "0" + parseInt(secs.innerHTML); }
+                    if (parseInt(secs.innerHTML) == 0) {
+                        if (parseInt(mins.innerHTML) > 0) {
+                            secs.innerHTML = "59";
+                            mins.innerHTML = parseInt(mins.innerHTML) - 1;
+                            if (parseInt(mins.innerHTML) < 10) { mins.innerHTML = "0" + parseInt(mins.innerHTML); }
+                            if (parseInt(mins.innerHTML) == 0) {
+                                if (parseInt(hours.innerHTML) > 0) {
+                                    mins.innerHTML = "59";
+                                    hours.innerHTML = parseInt(hours.innerHTML) - 1;
+                                    if (parseInt(hours.innerHTML) < 10) { hours.innerHTML = "0" + parseInt(hours.innerHTML); }
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (parseInt(secs.innerHTML) == 0) {
+                    if (parseInt(mins.innerHTML) > 0) {
+                        mins.innerHTML = parseInt(mins.innerHTML) - 1;
+                        if (parseInt(mins.innerHTML) < 10) { mins.innerHTML = "0" + parseInt(mins.innerHTML); }
+                        secs.innerHTML = "59";
+                    }
+                    else if (parseInt(mins.innerHTML) == 0) {
+                        if (parseInt(hours.innerHTML) > 0) {
+                            hours.innerHTML = parseInt(hours.innerHTML) - 1;
+                            if (parseInt(hours.innerHTML) < 10) { hours.innerHTML = "0" + parseInt(hours.innerHTML); }
+                            mins.innerHTML = "59";
+                            secs.innerHTML = "59";
+                        }
+                    }
+                }
+
+            }
+        }
+        else if (mode == "sw") {
+            if (isRunning) {
+                secs.innerHTML = parseInt(secs.innerHTML) + 1;
+                if (parseInt(secs.innerHTML) < 10) { secs.innerHTML = "0" + parseInt(secs.innerHTML); }
+                if (parseInt(secs.innerHTML) == 60) {
+                    secs.innerHTML = "00";
+                    mins.innerHTML = parseInt(mins.innerHTML) + 1;
+                    if (parseInt(mins.innerHTML) < 10) { mins.innerHTML = "0" + parseInt(mins.innerHTML); }
+                    if (parseInt(mins.innerHTML) == 60) {
+                        mins.innerHTML = "00";
+                        hours.innerHTML = parseInt(hours.innerHTML) + 1;
+                        if (parseInt(hours.innerHTML) < 10) { hours.innerHTML = "0" + parseInt(hours.innerHTML); }
+                    }
+                }
+            }
+        }
+    }, 1000)
+</script>
+</html>
