@@ -119,6 +119,7 @@
     let mins = document.querySelector("Minutes");
     let secs = document.querySelector("Seconds");
     let isRunning = false;
+    let runningMS = 0;
 
     document.getElementById("start").style.display = "none";
 
@@ -170,6 +171,7 @@
     })
 
     document.getElementById("reset").addEventListener("click", () => {
+        runningMS = 0;
         isRunning = true;
         if (mode == "cd") {
             if (hIn.value < 10) { hours.innerHTML = "0" + hIn.value; }
@@ -209,58 +211,64 @@
                 document.getElementById("reset").innerHTML = "Start";
             }
             if (isRunning) {
-                if (parseInt(secs.innerHTML) > 0) {
-                    secs.innerHTML = parseInt(secs.innerHTML) - 1;
-                    if (parseInt(secs.innerHTML) < 10) { secs.innerHTML = "0" + parseInt(secs.innerHTML); }
-                    if (parseInt(secs.innerHTML) == 0) {
-                        if (parseInt(mins.innerHTML) > 0) {
-                            secs.innerHTML = "59";
-                            mins.innerHTML = parseInt(mins.innerHTML) - 1;
-                            if (parseInt(mins.innerHTML) < 10) { mins.innerHTML = "0" + parseInt(mins.innerHTML); }
-                            if (parseInt(mins.innerHTML) == 0) {
-                                if (parseInt(hours.innerHTML) > 0) {
-                                    mins.innerHTML = "59";
-                                    hours.innerHTML = parseInt(hours.innerHTML) - 1;
-                                    if (parseInt(hours.innerHTML) < 10) { hours.innerHTML = "0" + parseInt(hours.innerHTML); }
+                runningMS += 5;
+                if (runningMS % 1000 == 0) {
+                    if (parseInt(secs.innerHTML) > 0) {
+                        secs.innerHTML = parseInt(secs.innerHTML) - 1;
+                        if (parseInt(secs.innerHTML) < 10) { secs.innerHTML = "0" + parseInt(secs.innerHTML); }
+                        if (parseInt(secs.innerHTML) == 0) {
+                            if (parseInt(mins.innerHTML) > 0) {
+                                secs.innerHTML = "59";
+                                mins.innerHTML = parseInt(mins.innerHTML) - 1;
+                                if (parseInt(mins.innerHTML) < 10) { mins.innerHTML = "0" + parseInt(mins.innerHTML); }
+                                if (parseInt(mins.innerHTML) == 0) {
+                                    if (parseInt(hours.innerHTML) > 0) {
+                                        mins.innerHTML = "59";
+                                        hours.innerHTML = parseInt(hours.innerHTML) - 1;
+                                        if (parseInt(hours.innerHTML) < 10) { hours.innerHTML = "0" + parseInt(hours.innerHTML); }
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                else if (parseInt(secs.innerHTML) == 0) {
-                    if (parseInt(mins.innerHTML) > 0) {
-                        mins.innerHTML = parseInt(mins.innerHTML) - 1;
-                        if (parseInt(mins.innerHTML) < 10) { mins.innerHTML = "0" + parseInt(mins.innerHTML); }
-                        secs.innerHTML = "59";
-                    }
-                    else if (parseInt(mins.innerHTML) == 0) {
-                        if (parseInt(hours.innerHTML) > 0) {
-                            hours.innerHTML = parseInt(hours.innerHTML) - 1;
-                            if (parseInt(hours.innerHTML) < 10) { hours.innerHTML = "0" + parseInt(hours.innerHTML); }
-                            mins.innerHTML = "59";
+                    else if (parseInt(secs.innerHTML) == 0) {
+                        if (parseInt(mins.innerHTML) > 0) {
+                            mins.innerHTML = parseInt(mins.innerHTML) - 1;
+                            if (parseInt(mins.innerHTML) < 10) { mins.innerHTML = "0" + parseInt(mins.innerHTML); }
                             secs.innerHTML = "59";
                         }
+                        else if (parseInt(mins.innerHTML) == 0) {
+                            if (parseInt(hours.innerHTML) > 0) {
+                                hours.innerHTML = parseInt(hours.innerHTML) - 1;
+                                if (parseInt(hours.innerHTML) < 10) { hours.innerHTML = "0" + parseInt(hours.innerHTML); }
+                                mins.innerHTML = "59";
+                                secs.innerHTML = "59";
+                            }
+                        }
                     }
-                }
 
+                }
             }
         }
         else if (mode == "sw") {
             if (isRunning) {
-                secs.innerHTML = parseInt(secs.innerHTML) + 1;
-                if (parseInt(secs.innerHTML) < 10) { secs.innerHTML = "0" + parseInt(secs.innerHTML); }
-                if (parseInt(secs.innerHTML) == 60) {
-                    secs.innerHTML = "00";
-                    mins.innerHTML = parseInt(mins.innerHTML) + 1;
-                    if (parseInt(mins.innerHTML) < 10) { mins.innerHTML = "0" + parseInt(mins.innerHTML); }
-                    if (parseInt(mins.innerHTML) == 60) {
-                        mins.innerHTML = "00";
-                        hours.innerHTML = parseInt(hours.innerHTML) + 1;
-                        if (parseInt(hours.innerHTML) < 10) { hours.innerHTML = "0" + parseInt(hours.innerHTML); }
+                runningMS += 5;
+                if (runningMS % 1000 == 0) {
+                    secs.innerHTML = parseInt(secs.innerHTML) + 1;
+                    if (parseInt(secs.innerHTML) < 10) { secs.innerHTML = "0" + parseInt(secs.innerHTML); }
+                    if (parseInt(secs.innerHTML) == 60) {
+                        secs.innerHTML = "00";
+                        mins.innerHTML = parseInt(mins.innerHTML) + 1;
+                        if (parseInt(mins.innerHTML) < 10) { mins.innerHTML = "0" + parseInt(mins.innerHTML); }
+                        if (parseInt(mins.innerHTML) == 60) {
+                            mins.innerHTML = "00";
+                            hours.innerHTML = parseInt(hours.innerHTML) + 1;
+                            if (parseInt(hours.innerHTML) < 10) { hours.innerHTML = "0" + parseInt(hours.innerHTML); }
+                        }
                     }
                 }
             }
         }
-    }, 1000)
+    }, 5)
 </script>
 </html>
