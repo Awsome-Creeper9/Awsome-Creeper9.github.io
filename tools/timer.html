@@ -169,6 +169,62 @@
         mins.innerHTML = "00";
         secs.innerHTML = "00";
     })
+    document.addEventListener("keydown", (e) => {
+        console.log(e.key)
+        if (e.key == "ArrowUp") {
+            if (mode == "cd") { mode = "sw"; }
+            else { mode = "cd"; }
+
+            if (mode == "cd") {
+                sIn.style.display = "unset";
+                document.getElementById("slab").style.display = "unset";
+                mIn.style.display = "unset";
+                document.getElementById("mlab").style.display = "unset";
+                hIn.style.display = "unset";
+                document.getElementById("hlab").style.display = "unset";
+            }
+            else if (mode == "sw") {
+                sIn.style.display = "none";
+                document.getElementById("slab").style.display = "none";
+                mIn.style.display = "none";
+                document.getElementById("mlab").style.display = "none";
+                hIn.style.display = "none";
+                document.getElementById("hlab").style.display = "none";
+            }
+        }
+        if (e.key == " ") {
+            if (isRunning) {
+                isRunning = false;
+                document.getElementById("pause").style.display = "none";
+                document.getElementById("start").style.display = "unset";
+            }
+            else {
+                isRunning = true;
+                document.getElementById("pause").style.display = "unset";
+                document.getElementById("start").style.display = "none";
+            }
+        }
+        if (e.key == "Enter") {
+            runningMS = 0;
+            isRunning = true;
+            if (mode == "cd") {
+                if (hIn.value < 10) { hours.innerHTML = "0" + hIn.value; }
+                else { hours.innerHTML = hIn.value; }
+                if (mIn.value < 10) { mins.innerHTML = "0" + mIn.value; }
+                else { mins.innerHTML = mIn.value; }
+                if (sIn.value < 10) { secs.innerHTML = "0" + sIn.value; }
+                else { secs.innerHTML = sIn.value; }
+            }
+            else if (mode == "sw") {
+                hours.innerHTML = "00";
+                mins.innerHTML = "00";
+                secs.innerHTML = "00";
+            }
+            document.getElementById("reset").innerHTML = "Reset";
+            document.getElementById("pause").style.display = "unset";
+            document.getElementById("start").style.display = "none";
+        }
+    })
 
     document.getElementById("reset").addEventListener("click", () => {
         runningMS = 0;
