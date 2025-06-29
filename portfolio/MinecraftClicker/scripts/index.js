@@ -38,6 +38,8 @@ let boxObj = {}
 
 let enemyHealth = 20;
 
+let tpTimer = 60;
+
 let playerAttributes = {
     atkSpeed: 0, //normal (larger num == worse)
     atkDmg: 0, //normal (larger num == better)
@@ -91,7 +93,18 @@ function update() {
             break;
         case "tan":
             boxObj.x += boxObj.speedX;
-            boxObj.y =((Math.tan(boxObj.x / 100))/((1/20) * Math.cos(boxObj.x / 100))) + ((ClientHeight / 2) - 90);
+            if (((Math.tan(boxObj.x / 100))/((1/20) * Math.cos(boxObj.x / 100))) + ((ClientHeight / 2) - 90) < boardObj.top) {
+                boxObj.y = boardObj.top;
+            }
+            else if (((Math.tan(boxObj.x / 100))/((1/20) * Math.cos(boxObj.x / 100))) + ((ClientHeight / 2) - 90) > boardObj.bottom) {
+                boxObj.y = boardObj.bottom - boxObj.height;
+            }
+            else if (!((Math.tan(boxObj.x / 100))/((1/20) * Math.cos(boxObj.x / 100))) + ((ClientHeight / 2) - 90)) {
+                boxObj.y = ((Math.tan((boxObj.x-1) / 100))/((1/20) * Math.cos((boxObj.x-1) / 100))) + ((ClientHeight / 2) - 90)
+            }
+            else {
+                boxObj.y = ((Math.tan(boxObj.x / 100))/((1/20) * Math.cos(boxObj.x / 100))) + ((ClientHeight / 2) - 90);
+            }
             break;
         case "circle":
             kCounter += boxObj.speedX;
@@ -112,6 +125,65 @@ function update() {
             kCounter += boxObj.speedX;
             boxObj.x = (Math.cos(kCounter / 500) * 650) + ((ClientWidth / 2) - 50);
             boxObj.y = (Math.sin(kCounter / 100) * 280) + ((ClientHeight / 2) - 90);
+            break;
+        case "tp":
+            boxObj.x += boxObj.speedX;
+            boxObj.y += boxObj.speedY;
+            tpTimer -= 1;
+            if (tpTimer <= 0) {
+                for (let i = 0; i < 10; i++) {
+                    let element = document.createElement("div");
+                    element.classList.add("tpParticle");
+                    element.style.position = "absolute";
+                    element.style.width = "25px";
+                    element.style.height = "25px";
+                    element.style.zIndex = "1000";
+                    element.style.left = (Math.floor(Math.random() * boxObj.width) + boxObj.x - 12) + "px";
+                    element.style.top = (Math.floor(Math.random() * boxObj.height) + boxObj.y - 12) + "px";
+                    document.querySelector("body").appendChild(element);
+                    element.style.background = "url('images/tp_particles/generic_7.png')";
+                    element.style.backgroundSize = "100%";
+                    element.style.backgroundRepeat = "no-repeat";
+
+                    setTimeout(() => {element.style.background = "url('images/tp_particles/generic_6.png')"; element.style.backgroundSize = "100%"; element.style.backgroundRepeat = "no-repeat";}, 100);
+                    setTimeout(() => {element.style.background = "url('images/tp_particles/generic_5.png')"; element.style.backgroundSize = "100%"; element.style.backgroundRepeat = "no-repeat";}, 200);
+                    setTimeout(() => {element.style.background = "url('images/tp_particles/generic_4.png')"; element.style.backgroundSize = "100%"; element.style.backgroundRepeat = "no-repeat";}, 300);
+                    setTimeout(() => {element.style.background = "url('images/tp_particles/generic_3.png')"; element.style.backgroundSize = "100%"; element.style.backgroundRepeat = "no-repeat";}, 400);
+                    setTimeout(() => {element.style.background = "url('images/tp_particles/generic_2.png')"; element.style.backgroundSize = "100%"; element.style.backgroundRepeat = "no-repeat";}, 500);
+                    setTimeout(() => {element.style.background = "url('images/tp_particles/generic_1.png')"; element.style.backgroundSize = "100%"; element.style.backgroundRepeat = "no-repeat";}, 600);
+                    setTimeout(() => {element.style.background = "url('images/tp_particles/generic_0.png')"; element.style.backgroundSize = "100%"; element.style.backgroundRepeat = "no-repeat";}, 700);
+                    setTimeout(() => {element.remove();}, 800);
+                }
+
+                boxObj.x = Math.floor(Math.random() * (boardObj.right - boardObj.left)) + boardObj.left;
+                boxObj.y = Math.floor(Math.random() * (boardObj.bottom - boardObj.top)) + boardObj.top;
+
+                for (let i = 0; i < 10; i++) {
+                    let element = document.createElement("div");
+                    element.classList.add("tpParticle");
+                    element.style.position = "absolute";
+                    element.style.width = "25px";
+                    element.style.height = "25px";
+                    element.style.zIndex = "1000";
+                    element.style.left = (Math.floor(Math.random() * boxObj.width) + boxObj.x - 12) + "px";
+                    element.style.top = (Math.floor(Math.random() * boxObj.height) + boxObj.y - 12) + "px";
+                    document.querySelector("body").appendChild(element);
+                    element.style.background = "url('images/tp_particles/generic_7.png')";
+                    element.style.backgroundSize = "100%";
+                    element.style.backgroundRepeat = "no-repeat";
+
+                    setTimeout(() => {element.style.background = "url('images/tp_particles/generic_6.png')"; element.style.backgroundSize = "100%"; element.style.backgroundRepeat = "no-repeat";}, 100);
+                    setTimeout(() => {element.style.background = "url('images/tp_particles/generic_5.png')"; element.style.backgroundSize = "100%"; element.style.backgroundRepeat = "no-repeat";}, 200);
+                    setTimeout(() => {element.style.background = "url('images/tp_particles/generic_4.png')"; element.style.backgroundSize = "100%"; element.style.backgroundRepeat = "no-repeat";}, 300);
+                    setTimeout(() => {element.style.background = "url('images/tp_particles/generic_3.png')"; element.style.backgroundSize = "100%"; element.style.backgroundRepeat = "no-repeat";}, 400);
+                    setTimeout(() => {element.style.background = "url('images/tp_particles/generic_2.png')"; element.style.backgroundSize = "100%"; element.style.backgroundRepeat = "no-repeat";}, 500);
+                    setTimeout(() => {element.style.background = "url('images/tp_particles/generic_1.png')"; element.style.backgroundSize = "100%"; element.style.backgroundRepeat = "no-repeat";}, 600);
+                    setTimeout(() => {element.style.background = "url('images/tp_particles/generic_0.png')"; element.style.backgroundSize = "100%"; element.style.backgroundRepeat = "no-repeat";}, 700);
+                    setTimeout(() => {element.remove();}, 800);
+                }
+
+                tpTimer = Math.floor(Math.random() * 60) + 60; //3 - 6 seconds
+            }
             break;
         default:
             boxObj.x += boxObj.speedX;
