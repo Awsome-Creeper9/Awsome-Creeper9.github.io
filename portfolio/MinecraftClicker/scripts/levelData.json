@@ -3,6 +3,8 @@
         "x": 500,
         "y": 250,
         "pathType": "linear",
+        "minSpeed": 10,
+        "maxSpeed": 10,
         "speedX": 10,
         "speedY": 10,
         "height": 150,
@@ -16,12 +18,17 @@
         "hasAutoAttack": false,
         "autoDmg": 0,
         "autoAtkCooldown": 0,
-        "currentAutoCooldown": 0
+        "currentAutoCooldown": 0,
+        "specialMovementCooldown": 0,
+        "specialMovementCooldownVary": 0,
+        "currentSpecialMovementCooldown": 0
     },
     "2": {
         "x": 750,
         "y": 500,
         "pathType": "linear",
+        "minSpeed": 15,
+        "maxSpeed": 15,
         "speedX": 15,
         "speedY": 15,
         "height": 144,
@@ -35,12 +42,17 @@
         "hasAutoAttack": false,
         "autoDmg": 0,
         "autoAtkCooldown": 0,
-        "currentAutoCooldown": 0
+        "currentAutoCooldown": 0,
+        "specialMovementCooldown": 0,
+        "specialMovementCooldownVary": 0,
+        "currentSpecialMovementCooldown": 0
     },
     "3": {
         "x": 1000,
         "y": 400,
         "pathType": "linear",
+        "minSpeed": 12,
+        "maxSpeed": 12,
         "speedX": 12,
         "speedY": 12,
         "height": 128,
@@ -54,12 +66,17 @@
         "hasAutoAttack": false,
         "autoDmg": 0,
         "autoAtkCooldown": 0,
-        "currentAutoCooldown": 0
+        "currentAutoCooldown": 0,
+        "specialMovementCooldown": 0,
+        "specialMovementCooldownVary": 0,
+        "currentSpecialMovementCooldown": 0
     },
     "4": {
         "x": 1000,
         "y": 400,
         "pathType": "linear",
+        "minSpeed": 12,
+        "maxSpeed": 12,
         "speedX": 12,
         "speedY": 12,
         "height": 128,
@@ -73,12 +90,17 @@
         "hasAutoAttack": false,
         "autoDmg": 0,
         "autoAtkCooldown": 0,
-        "currentAutoCooldown": 0
+        "currentAutoCooldown": 0,
+        "specialMovementCooldown": 0,
+        "specialMovementCooldownVary": 0,
+        "currentSpecialMovementCooldown": 0
     },
     "5": {
         "x": 1000,
         "y": 400,
         "pathType": "linear",
+        "minSpeed": 20,
+        "maxSpeed": 25,
         "speedX": 25,
         "speedY": 20,
         "height": 128,
@@ -92,12 +114,17 @@
         "hasAutoAttack": false,
         "autoDmg": 0,
         "autoAtkCooldown": 0,
-        "currentAutoCooldown": 0
+        "currentAutoCooldown": 0,
+        "specialMovementCooldown": 0,
+        "specialMovementCooldownVary": 0,
+        "currentSpecialMovementCooldown": 0
     },
     "6": {
         "x": 1000,
         "y": 400,
         "pathType": "linear",
+        "minSpeed": 22,
+        "maxSpeed": 22,
         "speedX": 22,
         "speedY": 22,
         "height": 128,
@@ -111,12 +138,17 @@
         "hasAutoAttack": true,
         "autoDmg": 1,
         "autoAtkCooldown": 400,
-        "currentAutoCooldown": 400
+        "currentAutoCooldown": 400,
+        "specialMovementCooldown": 0,
+        "specialMovementCooldownVary": 0,
+        "currentSpecialMovementCooldown": 0
     },
     "7": {
         "x": 1000,
         "y": 400,
         "pathType": "linear",
+        "minSpeed": 22,
+        "maxSpeed": 22,
         "speedX": 22,
         "speedY": 22,
         "height": 96,
@@ -130,6 +162,9 @@
         "hasAutoAttack": false,
         "autoDmg": 0,
         "autoAtkCooldown": 0,
-        "currentAutoCooldown": 0
+        "currentAutoCooldown": 0,
+        "specialMovementCooldown": 0,
+        "specialMovementCooldownVary": 0,
+        "currentSpecialMovementCooldown": 0
     }
 }

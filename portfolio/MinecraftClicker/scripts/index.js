@@ -38,8 +38,6 @@ let boxObj = {}
 
 let enemyHealth = 20;
 
-let tpTimer = 60;
-
 let playerAttributes = {
     atkSpeed: 0, //normal (larger num == worse)
     atkDmg: 0, //normal (larger num == better)
@@ -129,8 +127,8 @@ function update() {
         case "tp":
             boxObj.x += boxObj.speedX;
             boxObj.y += boxObj.speedY;
-            tpTimer -= 1;
-            if (tpTimer <= 0) {
+            boxObj.currentSpecialMovementCooldown -= 1;
+            if (boxObj.currentSpecialMovementCooldown <= 0) {
                 for (let i = 0; i < 10; i++) {
                     let element = document.createElement("div");
                     element.classList.add("tpParticle");
@@ -182,7 +180,23 @@ function update() {
                     setTimeout(() => {element.remove();}, 800);
                 }
 
-                tpTimer = Math.floor(Math.random() * 60) + 60; //3 - 6 seconds
+                boxObj.currentSpecialMovementCooldown = Math.floor(Math.random() * (boxObj.specialMovementCooldownVary*20)) + (boxObj.specialMovementCooldown*20);
+            }
+            break;
+        case "random":
+            boxObj.x += boxObj.speedX;
+            boxObj.y += boxObj.speedY;
+            boxObj.currentSpecialMovementCooldown -= 1;
+            if (boxObj.currentSpecialMovementCooldown <= 0) {
+                boxObj.speedX = Math.max(Math.floor(Math.random() * boxObj.maxSpeed), boxObj.minSpeed);
+                boxObj.speedY = Math.max(Math.floor(Math.random() * boxObj.maxSpeed), boxObj.minSpeed);
+                if (Math.random() < 0.5) {
+                    boxObj.speedX *= -1;
+                }
+                if (Math.random() < 0.5) {
+                    boxObj.speedY *= -1;
+                }
+                boxObj.currentSpecialMovementCooldown = Math.floor(Math.random() * (boxObj.specialMovementCooldownVary*20)) + (boxObj.specialMovementCooldown*20);
             }
             break;
         default:
@@ -457,6 +471,7 @@ function increaseLevel() {
 
     boxObj = levelData[level];
     enemyHealth = boxObj.maxEnemyHealth;
+    boxObj.currentSpecialMovementCooldown = Math.floor(Math.random() * (boxObj.specialMovementCooldownVary*20)) + (boxObj.specialMovementCooldown*20);
 }
 
 function setLevel(num) {
@@ -464,6 +479,7 @@ function setLevel(num) {
     if (level > 0) {
         boxObj = levelData[level];
         enemyHealth = boxObj.maxEnemyHealth;
+        boxObj.currentSpecialMovementCooldown = Math.floor(Math.random() * (boxObj.specialMovementCooldownVary*20)) + (boxObj.specialMovementCooldown*20);
     }
 }
 
