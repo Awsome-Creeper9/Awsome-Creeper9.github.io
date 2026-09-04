@@ -9,7 +9,7 @@ setInterval(async () => {
 
     if (themeValue == "dark") {
         if (currentTheme !== "dark") {
-            document.getElementById("themesheet").href = "/styles/frontpage-css.css"
+            document.getElementById("themesheet").href = "/styles/dark-vars.css"
             document.getElementById("lightmode").style.display = "unset"
             document.getElementById("darkmode").style.display = "none"
             currentTheme = "dark"
@@ -17,7 +17,7 @@ setInterval(async () => {
     }
     else if (themeValue == "light") {
         if (currentTheme !== "light") {
-            document.getElementById("themesheet").href = "/styles/frontpage-css-light.css"
+            document.getElementById("themesheet").href = "/styles/light-vars.css"
             document.getElementById("lightmode").style.display = "none"
             document.getElementById("darkmode").style.display = "unset"
             currentTheme = "light"

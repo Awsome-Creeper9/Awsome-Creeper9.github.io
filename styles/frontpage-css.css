@@ -8,7 +8,7 @@ body {
     background: rgb(0, 89, 89);
     background-image: url(/WebPageImages/background.png);
     background-size: 150px;
-    color: rgb(255, 255, 255);
+    color: var(--text-color);
     padding: 10px;
     font-family: arial;
     font-size: 1.125rem;
@@ -29,13 +29,13 @@ body {
     padding: 0px;
 
     & .nav-a {
-        color: #fff;
+        color: var(--text-color);
         margin: 0 10px 0 10px;
     }
 }
 nav {
-    background-color: #0000b3;
-    background-image: url(/WebPageImages/navbackground.png);
+    background-color: var(--nav-background-color);
+    background-image: var(--nav-background-img);
     background-size: 125px;
     background-position-y: 25px;
     margin: 0 auto;
@@ -46,7 +46,7 @@ nav {
 
     & h1 {
         align-items: center;
-        color: white;
+        color: var(--text-color);
         text-align: center;
         font-size: 3rem;
         font-family: 'JetBrains Mono';
@@ -73,7 +73,7 @@ nav {
         user-select: none;
         -webkit-user-drag: none;
         -moz-window-dragging: none;
-        color: white;
+        color: var(--text-color);
         & .mode-li {
             display: inline-block;
 
@@ -93,7 +93,7 @@ nav {
         user-select: none;
         -webkit-user-drag: none;
         -moz-window-dragging: none;
-        color: white;
+        color: var(--text-color);
     }
     & #portnav-ul {
         list-style-image: none;
@@ -132,11 +132,11 @@ nav {
 }
 a {
     text-decoration: none;
-    color: #fff;
+    color: var(--text-color);
 }
 /* main container area beneath menu */
 main {
-    background: rgb(25, 25, 25);
+    background: var(--background-color);
     border-radius: 30px;
 }
 .content {
@@ -144,24 +144,24 @@ main {
 }
 
 .content h1 {
-    color: white;
+    color: var(--text-color);
 }
 #portfolio, #tools {
     list-style-type: none;
     padding-left: 0;
 }
 #portfolio li, #tools li {
-    background: rgb(0, 0, 0);
+    background: var(--list-item-background);
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 10px;
 }
 #portfolio li:hover, #tools li:hover {
-    background: rgb(15, 15, 15);
+    background: var(--list-item-background-hover);
 }
 #portfolio a, #tools a {
     text-decoration: none;
-    color: #fff;
+    color: var(--text-color);
 }
 
 #block {
@@ -227,4 +227,111 @@ main {
     line-height: 100px;
     font-size: 100px;
     user-select: none;
+}
+
+#header {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+
+    & #header_img {
+        max-width: 250px;
+        max-height: 250px;
+        padding: 20px;
+        margin-top: 10px;
+        margin-bottom: -20px;
+        filter: drop-shadow(var(--header-img-bg-color) 0px 0px 10px);
+
+        user-select: none;
+        -webkit-user-drag: none;
+        -moz-window-dragging: none;
+    }
+
+    & h1 {
+        margin: 10px;
+    }
+
+    & info {
+        & * {
+            text-align: center;
+            color: var(--dimmer-text-color);
+        }
+
+        & a {
+            text-decoration: underline;
+        }
+
+        margin-bottom: 20px;
+    }
+
+    & p {
+        margin: 5px;
+
+        &:last-child {
+            margin-bottom: 20px;
+        }
+    }
+}
+#contacts {
+    margin-top: 10px;
+
+    & h2 {
+        width:fit-content;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 10px;
+        margin-bottom: 0;
+    }
+
+    & div {
+        width:fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    & #socials-list {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        & a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: default;
+            margin: 10px;
+
+            & h3 {
+                margin: 0;
+                margin-bottom: 10px;
+                padding: 0;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            & img {
+                margin-bottom: 10px;
+                width: 150px;
+                background: #fff;
+                border-radius: 20px;
+                cursor: pointer;
+            }
+
+            & p {
+                margin: 0;
+                padding: 0;
+                text-align: center;
+                cursor: pointer;
+            }
+        }
+    }
+}
+#copySuccess {
+    position:absolute;
+    background: white;
+    color: black;
+    font-size: 15px;
+    border: black 1px solid;
+    box-shadow: 1px 1px 2px black;
 }

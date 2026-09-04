@@ -1,0 +1,10 @@
+:root {
+    --text-color: #fff;
+    --dimmer-text-color: #aaa;
+    --background-color: #191919;
+    --nav-background-img: url(/WebPageImages/navbackground.png);
+    --nav-background-color: #0000b3;
+    --header-img-bg-color: #0aa;
+    --list-item-background: #000;
+    --list-item-background-hover: #0f0f0f;
+}
