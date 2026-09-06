@@ -22,17 +22,6 @@ body {
 }
 
 /* navigation menu */
-
-#portnav {
-    background-image: none;
-    background-color: transparent;
-    padding: 0px;
-
-    & .nav-a {
-        color: var(--text-color);
-        margin: 0 10px 0 10px;
-    }
-}
 nav {
     background-color: var(--nav-background-color);
     background-image: var(--nav-background-img);
