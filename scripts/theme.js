@@ -28,7 +28,7 @@ setInterval(async () => {
             name: "theme",
             value: "dark",
             expires: Date.now() + expiryTime,
-            domain: "awsome-creeper9.github.io",
+            domain: "www.awsome-creeper9.dev",
         })
 
         cookieStore.set({
@@ -48,7 +48,7 @@ async function setTheme(e) {
             name: "theme",
             value: "light",
             expires: Date.now() + expiryTime,
-            domain: "awsome-creeper9.github.io",
+            domain: "www.awsome-creeper9.dev",
         })
 
         cookieStore.set({
@@ -65,7 +65,7 @@ async function setTheme(e) {
             name: "theme",
             value: "dark",
             expires: Date.now() + expiryTime,
-            domain: "awsome-creeper9.github.io",
+            domain: "www.awsome-creeper9.dev",
         })
 
         cookieStore.set({
